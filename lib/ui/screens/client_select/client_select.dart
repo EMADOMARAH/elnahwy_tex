@@ -9,14 +9,14 @@ class Client_Select extends StatelessWidget {
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
-            gradient: new LinearGradient(
+            /*gradient: new LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
                 Color(0xffC3FCF2),
                 Color(0xff659B91),
               ],
-            ),
+            ),*/
           ),
           child: SingleChildScrollView(
             child: Padding(
