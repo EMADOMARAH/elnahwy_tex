@@ -56,7 +56,7 @@ class CustomContainer extends StatelessWidget {
             child: Image.asset(image,height: 80,width: 80,),
           ),
           SizedBox(height: 15,),
-          Text(title,style: TextStyle(fontSize: 18,color: Colors.black,fontFamily:"Cairo" ),),
+          Text(title,style: TextStyle(fontSize: 19,color: Colors.black,fontFamily:"Cairo" ),),
         ],
       ),
     );
