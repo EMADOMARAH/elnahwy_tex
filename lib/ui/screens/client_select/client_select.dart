@@ -89,30 +89,84 @@ class Client_Select extends StatelessWidget {
                                 topRight: Radius.circular(40)),
                             color: Colors.white),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 27),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              SizedBox(
-                                height: 20,
-                              ),
-                            Text(
-                              "عماد عماره",
-                              textDirection: TextDirection.rtl,
-                              style:
-                              TextStyle(fontFamily: "Cairo", fontSize: 20),
-
-                            ),
-                            Text(
-                              "عدد الاصناف : 15",
-                              textDirection: TextDirection.rtl,
-                              style:
-                              TextStyle(fontFamily: "Cairo", fontSize: 12),
-                            ),
-                            Image.asset("images/ic_keyboard_arrow_left_48px.png")
-                            ],
-                          ),
-                        )
+                          padding:
+                              EdgeInsets.only(top: 27, left: 5, right: 5),
+                          child: Container(
+                              width: double.infinity,
+                              height: 1000,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(40),
+                                      topRight: Radius.circular(40)),
+                                  color: Colors.white),
+                              child: ListView(
+                                padding: EdgeInsets.symmetric(horizontal: 0),
+                                children: <Widget>[
+                                  Container(
+                                    color: Colors.grey[400],
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Image.asset(
+                                            "images/ic_keyboard_arrow_left_48px.png",height: 48,width: 48,),
+                                        Spacer(flex: 1),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: <Widget>[
+                                            Padding(padding: EdgeInsets.only(right: 15),child: Text(
+                                              "عماد عمارة",
+                                              style: TextStyle(
+                                                fontFamily: "Cairo",
+                                                fontSize: 17,
+                                              ),
+                                            ),),
+                                            Padding(padding: EdgeInsets.only(right: 30),
+                                            child:Text("عدد الاصناف : 15",style: TextStyle(
+                                              fontFamily: "Cairo",fontSize: 14
+                                            ),),)
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    color: Colors.black38,
+                                    thickness: 2,
+                                  ),
+                                  Container(
+                                    color: Colors.grey[400],
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Image.asset(
+                                          "images/ic_keyboard_arrow_left_48px.png",height: 48,width: 48,),
+                                        Spacer(flex: 1),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: <Widget>[
+                                            Padding(padding: EdgeInsets.only(right: 15),child: Text(
+                                              "عماد عمارة",
+                                              style: TextStyle(
+                                                fontFamily: "Cairo",
+                                                fontSize: 17,
+                                              ),
+                                            ),),
+                                            Padding(padding: EdgeInsets.only(right: 30),
+                                              child:Text("عدد الاصناف : 15",style: TextStyle(
+                                                  fontFamily: "Cairo",fontSize: 14
+                                              ),),)
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ),
                       ),
                     ],
                   ),
