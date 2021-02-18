@@ -18,26 +18,38 @@ class Client_Select extends StatelessWidget {
                   ],
                 ),
               ),
-              child: Column(
-                children: <Widget>[
-                  Flexible(child: TextField(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                          hintText: 'Search',
-                          prefixStyle: TextStyle(color: Color(0xff078547)),
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15,
-                          ),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                              borderSide: new BorderSide(color: Color(0xff078547))),
-                          contentPadding: EdgeInsets.all(10)
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Flexible(child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                fillColor: Colors.white.withOpacity(0.54),
+                                  filled: true,
+                                  hintText: 'بحــث',
+                                  focusColor: Colors.white,
+                                  hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontFamily:"Cairo",
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(100),),
+                                  contentPadding: EdgeInsets.all(10)
+                              )
+                          ),),
+                          SizedBox(width: 20,),
+                          Image(image: AssetImage('images/Client.png'),height: 66,width: 66,)
+                        ],
                       )
-                  ),),
-                  SizedBox(width: 10,),
-                  Image(image: AssetImage("images/Search.png"))
-                ],
+                    ],
+                  ),
+                ),
               )
           ),
         )
