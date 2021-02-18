@@ -10,21 +10,22 @@ class Home_Screen extends StatelessWidget {
           child: Container(
             child: Column(
               children: [
-                SizedBox(height: 100,),
+                Spacer(flex: 1,),
                 GestureDetector(
                   onTap: (){},
                   child: CustomContainer('المصنع', 'images/Factory.png', Colors.white),
                 ),
-                SizedBox(height: 50,),
+                Spacer(flex: 1,),
                 GestureDetector(
                   onTap: (){},
                   child: CustomContainer('لا تيكس', 'images/LeTex.png', Colors.white),
                 ),
-                SizedBox(height: 50,),
+                Spacer(flex: 1,),
                 GestureDetector(
                   onTap: (){},
                   child: CustomContainer('العملاء', 'images/Client.png', Colors.white),
                 ),
+                Spacer(flex: 1,),
               ],
             ),
           ),
@@ -42,7 +43,6 @@ class CustomContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
       height: 150,
       width: 150,
       decoration: BoxDecoration(
@@ -52,10 +52,10 @@ class CustomContainer extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(10.0),
             child: Image.asset(image,height: 80,width: 80,),
           ),
-          SizedBox(height: 15,),
+          Spacer(flex: 1,),
           Text(title,style: TextStyle(fontSize: 19,color: Colors.black,fontFamily:"Cairo" ),),
         ],
       ),
