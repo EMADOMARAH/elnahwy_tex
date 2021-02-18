@@ -8,7 +8,7 @@ class Client_Select extends StatelessWidget {
       child: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: BoxDecoration(
+          /*decoration: BoxDecoration(
             gradient: new LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -17,7 +17,7 @@ class Client_Select extends StatelessWidget {
                 Color(0xff659B91),
               ],
             ),
-          ),
+          ),*/
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(15),
