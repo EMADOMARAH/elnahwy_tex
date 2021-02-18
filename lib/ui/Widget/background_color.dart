@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 class Background_color extends StatelessWidget {
   @override
+  Widget child ;
+  Background_color ({Widget child});
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -13,6 +15,7 @@ class Background_color extends StatelessWidget {
           ],
         ),
       ),
+      child: child,
     );
   }
 }
