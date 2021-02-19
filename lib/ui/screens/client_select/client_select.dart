@@ -1,4 +1,7 @@
+
+import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Client_Select extends StatelessWidget {
   @override
@@ -89,8 +92,7 @@ class Client_Select extends StatelessWidget {
                                 topRight: Radius.circular(40)),
                             color: Colors.white),
                         child: Padding(
-                          padding:
-                              EdgeInsets.only(top: 27, left: 5, right: 5),
+                          padding: EdgeInsets.only(top: 27, left: 5, right: 5),
                           child: Container(
                               width: double.infinity,
                               height: 1000,
@@ -102,41 +104,23 @@ class Client_Select extends StatelessWidget {
                               child: ListView(
                                 padding: EdgeInsets.symmetric(horizontal: 1),
                                 children: <Widget>[
-                                  custom_data("عماد عمارة","15"),
+                                  GestureDetector(
+                                      onTap: () {
+                                        print('emad selected');
+                                        Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType.rightToLeft,
+                                            child:Home_Screen(),
+                                          ),
+                                        );
+                                      },
+                                      child: custom_data("Title", "No_title")
+                                  ),
                                   Divider(
                                     color: Colors.black38,
                                     thickness: 2,
-                                  ),
-                                  Container(
-                                    color: Colors.grey[400],
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Image.asset(
-                                          "images/ic_keyboard_arrow_left_48px.png",height: 48,width: 48,),
-                                        Spacer(flex: 1),
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: <Widget>[
-                                            Padding(padding: EdgeInsets.only(right: 15),child: Text(
-                                              "عماد عمارة",
-                                              style: TextStyle(
-                                                fontFamily: "Cairo",
-                                                fontSize: 17,
-                                              ),
-                                            ),),
-                                            Padding(padding: EdgeInsets.only(right: 30),
-                                              child:Text("عدد الاصناف : 15",style: TextStyle(
-                                                  fontFamily: "Cairo",fontSize: 14
-                                              ),),)
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                  ),],
                               )),
                         ),
                       ),
@@ -146,41 +130,48 @@ class Client_Select extends StatelessWidget {
               )),
         ));
   }
-Widget custom_data(String Title,String No_title){
-    return GestureDetector(
-      onTap: (){
 
-      },
-      child: Container(
-        color: Colors.grey[400],
+  Widget custom_data(String Title, String No_title) {
+    return  Container(
+        decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(10)
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              "images/ic_keyboard_arrow_left_48px.png",height: 48,width: 48,),
+              "images/ic_keyboard_arrow_left_48px.png",
+              height: 48,
+              width: 48,
+            ),
             Spacer(flex: 1),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Padding(padding: EdgeInsets.only(right: 15),child: Text(
-                  Title,
-                  style: TextStyle(
-                    fontFamily: "Cairo",
-                    fontSize: 17,
+                Padding(
+                  padding: EdgeInsets.only(right: 15),
+                  child: Text(
+                    Title,
+                    style: TextStyle(
+                      fontFamily: "Cairo",
+                      fontSize: 17,
+                    ),
                   ),
-                ),),
-                Padding(padding: EdgeInsets.only(right: 30),
-                  child:Text(No_title,style: TextStyle(
-                      fontFamily: "Cairo",fontSize: 14
-                  ),),)
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 30),
+                  child: Text(
+                    No_title,
+                    style: TextStyle(fontFamily: "Cairo", fontSize: 14),
+                  ),
+                )
               ],
             ),
           ],
         ),
-      ),
     );
+  }
 }
-}
-

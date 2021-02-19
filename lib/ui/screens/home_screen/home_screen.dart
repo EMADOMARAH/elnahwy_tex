@@ -1,4 +1,6 @@
+import 'package:elnahwy_tex/ui/screens/client_select/client_select.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Home_Screen extends StatelessWidget {
 
@@ -12,13 +14,19 @@ class Home_Screen extends StatelessWidget {
               children: [
                 Spacer(flex: 1,),
                 GestureDetector(
-                  onTap: (){},
+                  onTap: (){Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child:Client_Select(),
+                    ),
+                  );},
                   child: CustomContainer('المصنع', 'images/Factory.png', Colors.white),
                 ),
                 Spacer(flex: 1,),
                 GestureDetector(
                   onTap: (){},
-                  child: CustomContainer('لا تيكس', 'images/LeTex.png', Colors.white),
+                  child: CustomContainer('لى تيكس', 'images/LeTex.png', Colors.white),
                 ),
                 Spacer(flex: 1,),
                 GestureDetector(
