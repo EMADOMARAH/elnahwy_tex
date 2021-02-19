@@ -100,7 +100,7 @@ class Client_Select extends StatelessWidget {
                                       topRight: Radius.circular(40)),
                                   color: Colors.white),
                               child: ListView(
-                                padding: EdgeInsets.symmetric(horizontal: 0),
+                                padding: EdgeInsets.symmetric(horizontal: 1),
                                 children: <Widget>[
                                   Container(
                                     color: Colors.grey[400],
