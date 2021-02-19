@@ -39,7 +39,7 @@ class Client_Select extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.all(14),
                   child: Column(
                     children: <Widget>[
                       Row(
