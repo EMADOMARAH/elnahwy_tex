@@ -102,35 +102,7 @@ class Client_Select extends StatelessWidget {
                               child: ListView(
                                 padding: EdgeInsets.symmetric(horizontal: 1),
                                 children: <Widget>[
-                                  Container(
-                                    color: Colors.grey[400],
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Image.asset(
-                                            "images/ic_keyboard_arrow_left_48px.png",height: 48,width: 48,),
-                                        Spacer(flex: 1),
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: <Widget>[
-                                            Padding(padding: EdgeInsets.only(right: 15),child: Text(
-                                              "عماد عمارة",
-                                              style: TextStyle(
-                                                fontFamily: "Cairo",
-                                                fontSize: 17,
-                                              ),
-                                            ),),
-                                            Padding(padding: EdgeInsets.only(right: 30),
-                                            child:Text("عدد الاصناف : 15",style: TextStyle(
-                                              fontFamily: "Cairo",fontSize: 14
-                                            ),),)
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  custom_data("عماد عمارة","15"),
                                   Divider(
                                     color: Colors.black38,
                                     thickness: 2,
@@ -174,4 +146,41 @@ class Client_Select extends StatelessWidget {
               )),
         ));
   }
+Widget custom_data(String Title,String No_title){
+    return GestureDetector(
+      onTap: (){
+
+      },
+      child: Container(
+        color: Colors.grey[400],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              "images/ic_keyboard_arrow_left_48px.png",height: 48,width: 48,),
+            Spacer(flex: 1),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Padding(padding: EdgeInsets.only(right: 15),child: Text(
+                  Title,
+                  style: TextStyle(
+                    fontFamily: "Cairo",
+                    fontSize: 17,
+                  ),
+                ),),
+                Padding(padding: EdgeInsets.only(right: 30),
+                  child:Text(No_title,style: TextStyle(
+                      fontFamily: "Cairo",fontSize: 14
+                  ),),)
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
 }
+}
+
