@@ -1,4 +1,5 @@
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
+import 'package:elnahwy_tex/ui/screens/edit_form/edit__form.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -118,8 +119,8 @@ class Client_Select extends StatelessWidget {
                                           context,
                                           PageTransition(
                                             type:
-                                                PageTransitionType.rightToLeft,
-                                            child: Home_Screen(),
+                                            PageTransitionType.rightToLeft,
+                                            child: form_client(),
                                           ),
                                         );
                                       },
