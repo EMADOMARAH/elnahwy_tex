@@ -60,11 +60,20 @@ class CustomContainer extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.fromLTRB(10,20,10,0),
             child: Image.asset(image,height: 80,width: 80,),
           ),
           Spacer(flex: 1,),
-          Text(title,style: TextStyle(fontSize: 19,color: Colors.black,fontFamily:"Cairo" ),),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text(
+              title,style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontFamily:"Cairo",
+              fontWeight: FontWeight.bold,
+            ),),
+          ),
         ],
       ),
     );
