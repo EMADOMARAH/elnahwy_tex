@@ -123,10 +123,7 @@ class Client_Select extends StatelessWidget {
                                             );
                                           },
                                           child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
+                                      cust_divider(),
                                     ],
                                   ),
                                 ),
@@ -142,6 +139,12 @@ class Client_Select extends StatelessWidget {
         ));
   }
 
+  Widget cust_divider(){
+    return  Divider(
+      color: Colors.black38.withOpacity(0.2),
+      thickness: 2,
+    );
+  }
   Widget custom_data(String Title, String No_title) {
     return Container(
       decoration: BoxDecoration(
