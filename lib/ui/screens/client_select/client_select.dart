@@ -2,10 +2,14 @@ import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/edit_form/edit__form.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 
 
 class Client_Select extends StatelessWidget {
+  TextEditingController cilentNameController = TextEditingController();
+  TextEditingController notypeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,8 +158,8 @@ class Client_Select extends StatelessWidget {
           content: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                cust_txtformfield_dialog("اسم العميل", TextInputType.text),
-                cust_txtformfield_dialog("عدد الانواع", TextInputType.number)
+                cust_txtformfield_dialog("اسم العميل", TextInputType.text,cilentNameController),
+                cust_txtformfield_dialog("عدد الانواع", TextInputType.number,notypeController )
               ],
             )
           ),
@@ -228,17 +232,26 @@ class Client_Select extends StatelessWidget {
                     fontSize: 14,
                     color: Colors.black38.withOpacity(0.5)),
               ),
-              onPressed: () {},
+              onPressed: () {
+                print(cilentNameController);
+                Fluttertoast.showToast(msg: "message");
+                Navigator.of(context, rootNavigator: true).pop();
+              },
             ),
           ],
         );
       },
     );
   }
-  Widget cust_txtformfield_dialog(String title, var typeinput){
+
+  displayToastMessage (String message , BuildContext context){
+    Fluttertoast.showToast(msg: message);
+  }
+  Widget cust_txtformfield_dialog(String title, var typeinput, TextEditingController controller){
     return Padding(
       padding: EdgeInsets.all(2),
       child:  TextFormField(
+        controller:controller ,
         keyboardType:typeinput,
         cursorColor: Colors.black,
         textDirection: TextDirection.rtl,
