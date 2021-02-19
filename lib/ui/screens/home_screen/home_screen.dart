@@ -17,7 +17,7 @@ class Home_Screen extends StatelessWidget {
                   onTap: (){Navigator.push(
                     context,
                     PageTransition(
-                      type: PageTransitionType.rightToLeft,
+                      type: PageTransitionType.fade,
                       child:Client_Select(),
                     ),
                   );},

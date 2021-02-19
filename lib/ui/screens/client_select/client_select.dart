@@ -1,4 +1,4 @@
-
+import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_addScreen.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -8,7 +8,9 @@ class Client_Select extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            print("احا");
+          },
           icon: Icon(
             Icons.add,
             color: Colors.black,
@@ -105,22 +107,27 @@ class Client_Select extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(horizontal: 1),
                                 children: <Widget>[
                                   GestureDetector(
+                                      onLongPress: () {
+                                        print('long press');
+                                        _showMyDialog(context);
+                                      },
                                       onTap: () {
                                         print('emad selected');
                                         Navigator.push(
                                           context,
                                           PageTransition(
-                                            type: PageTransitionType.rightToLeft,
-                                            child:Home_Screen(),
+                                            type:
+                                                PageTransitionType.rightToLeft,
+                                            child: Home_Screen(),
                                           ),
                                         );
                                       },
-                                      child: custom_data("Title", "No_title")
-                                  ),
+                                      child: custom_data("Title", "No_title")),
                                   Divider(
                                     color: Colors.black38,
                                     thickness: 2,
-                                  ),],
+                                  ),
+                                ],
                               )),
                         ),
                       ),
@@ -132,46 +139,116 @@ class Client_Select extends StatelessWidget {
   }
 
   Widget custom_data(String Title, String No_title) {
-    return  Container(
-        decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(10)
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              "images/ic_keyboard_arrow_left_48px.png",
-              height: 48,
-              width: 48,
-            ),
-            Spacer(flex: 1),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(right: 15),
-                  child: Text(
-                    Title,
-                    style: TextStyle(
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Image.asset(
+            "images/ic_keyboard_arrow_left_48px.png",
+            height: 48,
+            width: 48,
+          ),
+          Spacer(flex: 1),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(right: 15),
+                child: Text(
+                  Title,
+                  style: TextStyle(
                       fontFamily: "Cairo",
                       fontSize: 17,
-                    ),
-                  ),
+                      fontWeight: FontWeight.bold),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 30),
-                  child: Text(
-                    No_title,
-                    style: TextStyle(fontFamily: "Cairo", fontSize: 14),
-                  ),
-                )
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 30),
+                child: Text(
+                  No_title,
+                  style: TextStyle(fontFamily: "Cairo", fontSize: 14),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'تعديل او اضافه',
+            textAlign: TextAlign.right,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: "Cairo", fontSize: 14),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'تعديل او حذف هذا العميل ',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14),
+                ),
+                Text(
+                  'هل تريد حذف او تعديل هذا العميل ',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14),
+                ),
               ],
             ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'تعديل ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.green),
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                    type:
+                    PageTransitionType.fade,
+                    child: edit_add_screen()));
+              },
+            ),
+            TextButton(
+              child: Text(
+                'حذف',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ],
-        ),
+        );
+      },
     );
   }
 }
