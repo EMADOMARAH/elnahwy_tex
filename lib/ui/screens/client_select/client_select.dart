@@ -267,40 +267,13 @@ class Client_Select extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(
-            "images/ic_keyboard_arrow_left_48px.png",
-            height: 48,
-            width: 48,
-          ),
-          Spacer(flex: 1),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: Text(
-                  Title,
-                  style: TextStyle(
-                      fontFamily: "Cairo",
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: 30),
-                child: Text(
-                  No_title,
-                  style: TextStyle(fontFamily: "Cairo", fontSize: 14),
-                ),
-              )
-            ],
-          ),
-        ],
+      child: ListTile(
+        title: Text(Title,textAlign: TextAlign.right,),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(right:18.0),
+          child: Text(No_title,textAlign: TextAlign.right,),
+        ),
+        leading: Image.asset("images/ic_keyboard_arrow_left_48px.png"),
       ),
     );
   }
