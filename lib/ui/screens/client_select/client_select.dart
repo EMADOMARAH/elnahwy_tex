@@ -12,6 +12,7 @@ class Client_Select extends StatelessWidget {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             print("احا");
+            txt_dialog_form(context);
           },
           icon: Icon(
             Icons.add,
@@ -138,7 +139,124 @@ class Client_Select extends StatelessWidget {
           ),
         ));
   }
+  Future<void> txt_dialog_form(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'إضافه عميل جديد',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: "Cairo", fontSize: 18),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                cust_txtformfield_dialog("اسم العميل", TextInputType.text),
+                cust_txtformfield_dialog("عدد الانواع", TextInputType.number)
+              ],
+            )
+          ),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text(
+                'إلغاء',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.red),
+              ),
+              //Second Dialog
+              onPressed: () {
+                showDialog<void>(
+                    context: context,
+                    barrierDismissible: true, // user must tap button!
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          'هل تريد إلغاء اضافه العميل ؟',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Cairo",
+                              fontSize: 14),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 14,
+                                  color: Colors.green),
+                            ),
+                            onPressed: () {},
+                          ),
+                          TextButton(
+                            child: Text(
+                              'إلغاء ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 14,
+                                  color: Colors.red),
+                            ),
+                            onPressed: () {},
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+            RaisedButton(
+              color: Colors.green,
+              child: Text(
+                'إضافة ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.black38.withOpacity(0.5)),
+              ),
+              onPressed: () {},
+            ),
+          ],
+        );
+      },
+    );
+  }
 
+  Widget cust_txtformfield_dialog(String title, var typeinput){
+    return Padding(
+      padding: EdgeInsets.all(2),
+      child:  TextFormField(
+        keyboardType:typeinput,
+        cursorColor: Colors.black,
+        textDirection: TextDirection.rtl,
+        textAlign: TextAlign.right,
+        decoration: InputDecoration(
+          fillColor: Colors.white,
+          hintText: title,
+          hintStyle: TextStyle(
+              fontFamily: "Cairo",
+              color: Colors.black.withOpacity(0.4)
+          ),
+          /*border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide:BorderSide(
+              color: Colors.black,
+              width: 2,
+            ),
+          ),*/
+          contentPadding: EdgeInsets.all(5),
+        ),
+      ),
+    );
+  }
   Widget cust_divider(){
     return  Divider(
       color: Colors.black38.withOpacity(0.2),
@@ -186,7 +304,6 @@ class Client_Select extends StatelessWidget {
       ),
     );
   }
-
   Future<void> _showMyDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
