@@ -187,14 +187,18 @@ class Client_Select extends StatelessWidget {
                         actions: <Widget>[
                           TextButton(
                             child: Text(
-                              '',
+                              'نعم',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "Cairo",
                                   fontSize: 14,
-                                  color: Colors.green),
+                                  color: Colors.red),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              Navigator.pop(context);
+                              await Navigator.of(context)
+                                  .push(new MaterialPageRoute(builder: (context) => Client_Select()));
+                            },
                           ),
                           TextButton(
                             child: Text(
@@ -203,9 +207,11 @@ class Client_Select extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "Cairo",
                                   fontSize: 14,
-                                  color: Colors.red),
+                                  color: Colors.green),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
                           ),
                         ],
                       );
@@ -229,7 +235,6 @@ class Client_Select extends StatelessWidget {
       },
     );
   }
-
   Widget cust_txtformfield_dialog(String title, var typeinput){
     return Padding(
       padding: EdgeInsets.all(2),
