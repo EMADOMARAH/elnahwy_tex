@@ -1,4 +1,4 @@
-import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_addScreen.dart';
+import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -228,9 +228,8 @@ class Client_Select extends StatelessWidget {
                 Navigator.push(
                     context,
                     PageTransition(
-                    type:
-                    PageTransitionType.fade,
-                    child: edit_add_screen()));
+                        type: PageTransitionType.fade,
+                        child: edit_screen()));
               },
             ),
             TextButton(
