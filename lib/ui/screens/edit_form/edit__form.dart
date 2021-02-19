@@ -54,7 +54,7 @@ class form_client extends StatelessWidget {
               children: <Widget>[
                 cust_txtformfield("اسم العميل",TextInputType.text),
                 cust_txtformfield("عدد انواع القماش",TextInputType.number),
-                //cust_txtformfield("")
+                cust_txtformfield("",TextInputType.datetime),
               ],
             )
             )
