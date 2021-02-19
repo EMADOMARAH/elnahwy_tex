@@ -52,9 +52,9 @@ class form_client extends StatelessWidget {
             ),
             child:Column(
               children: <Widget>[
-                cust_txtformfield("اسم العميل"),
-                cust_txtformfield(""),
-                cust_txtformfield("اسم العميل")
+                cust_txtformfield("اسم العميل",TextInputType.text),
+                cust_txtformfield("عدد انواع القماش",TextInputType.number),
+                //cust_txtformfield("")
               ],
             )
             )
@@ -62,18 +62,21 @@ class form_client extends StatelessWidget {
 
     );
   }
-  Widget cust_txtformfield(String title){
+  Widget cust_txtformfield(String title, var typeinput){
     return Padding(
       padding: EdgeInsets.all(8),
       child:  TextFormField(
+        keyboardType:typeinput,
+        cursorColor: Colors.black,
         textDirection: TextDirection.rtl,
         textAlign: TextAlign.right,
         decoration: InputDecoration(
-          fillColor: Colors.white.withOpacity(0.54),
+          fillColor: Colors.white,
           hintText: title,
           hintStyle: TextStyle(
               fontFamily: "Cairo",
-              fontSize: 18
+              fontSize: 18,
+            color: Colors.black.withOpacity(0.4)
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -89,13 +92,13 @@ class form_client extends StatelessWidget {
               width: 2,
             ),
           ),
-          // border: OutlineInputBorder(
-          //   borderRadius: BorderRadius.circular(15),
-          //   borderSide:BorderSide(
-          //     color: Colors.red,
-          //     width: 2,
-          //   ),
-          // ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide:BorderSide(
+              color: Colors.red,
+              width: 2,
+            ),
+          ),
           contentPadding: EdgeInsets.all(10),
         ),
       ),
