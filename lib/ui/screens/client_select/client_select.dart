@@ -39,16 +39,6 @@ class Client_Select extends StatelessWidget {
           child: ListView(
             children: [
               Container(
-                  /*decoration: BoxDecoration(
-                    gradient: new LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xffC3FCF2),
-                        Color(0xff659B91),
-                      ],
-                    ),
-                  ),*/
                   child: Padding(
                     padding: EdgeInsets.all(14),
                     child: Column(
@@ -106,11 +96,13 @@ class Client_Select extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.only(top: 27, left: 5, right: 5),
                             child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(40),
-                                        topRight: Radius.circular(40)),
-                                    color: Colors.white),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(40),
+                                      topRight: Radius.circular(40)),
+                                  color: Colors.white),
+                              child: Container(
+                                height: 700,
                                 child: SingleChildScrollView(
                                   child: Column(
                                     children: [
@@ -135,198 +127,10 @@ class Client_Select extends StatelessWidget {
                                         color: Colors.black38,
                                         thickness: 2,
                                       ),
-                                      GestureDetector(
-                                          onLongPress: () {
-                                            print('long press');
-                                            _showMyDialog(context);
-                                          },
-                                          onTap: () {
-                                            print('emad selected');
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type:
-                                                PageTransitionType.rightToLeft,
-                                                child: form_client(),
-                                              ),
-                                            );
-                                          },
-                                          child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
-                                      GestureDetector(
-                                          onLongPress: () {
-                                            print('long press');
-                                            _showMyDialog(context);
-                                          },
-                                          onTap: () {
-                                            print('emad selected');
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type:
-                                                PageTransitionType.rightToLeft,
-                                                child: form_client(),
-                                              ),
-                                            );
-                                          },
-                                          child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
-                                      GestureDetector(
-                                          onLongPress: () {
-                                            print('long press');
-                                            _showMyDialog(context);
-                                          },
-                                          onTap: () {
-                                            print('emad selected');
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type:
-                                                PageTransitionType.rightToLeft,
-                                                child: form_client(),
-                                              ),
-                                            );
-                                          },
-                                          child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
-                                      GestureDetector(
-                                          onLongPress: () {
-                                            print('long press');
-                                            _showMyDialog(context);
-                                          },
-                                          onTap: () {
-                                            print('emad selected');
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type:
-                                                PageTransitionType.rightToLeft,
-                                                child: form_client(),
-                                              ),
-                                            );
-                                          },
-                                          child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
-                                      GestureDetector(
-                                          onLongPress: () {
-                                            print('long press');
-                                            _showMyDialog(context);
-                                          },
-                                          onTap: () {
-                                            print('emad selected');
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type:
-                                                PageTransitionType.rightToLeft,
-                                                child: form_client(),
-                                              ),
-                                            );
-                                          },
-                                          child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
-                                      GestureDetector(
-                                          onLongPress: () {
-                                            print('long press');
-                                            _showMyDialog(context);
-                                          },
-                                          onTap: () {
-                                            print('emad selected');
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type:
-                                                PageTransitionType.rightToLeft,
-                                                child: form_client(),
-                                              ),
-                                            );
-                                          },
-                                          child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
-                                      GestureDetector(
-                                          onLongPress: () {
-                                            print('long press');
-                                            _showMyDialog(context);
-                                          },
-                                          onTap: () {
-                                            print('emad selected');
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type:
-                                                PageTransitionType.rightToLeft,
-                                                child: form_client(),
-                                              ),
-                                            );
-                                          },
-                                          child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
-                                      GestureDetector(
-                                          onLongPress: () {
-                                            print('long press');
-                                            _showMyDialog(context);
-                                          },
-                                          onTap: () {
-                                            print('emad selected');
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type:
-                                                PageTransitionType.rightToLeft,
-                                                child: form_client(),
-                                              ),
-                                            );
-                                          },
-                                          child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
-                                      GestureDetector(
-                                          onLongPress: () {
-                                            print('long press');
-                                            _showMyDialog(context);
-                                          },
-                                          onTap: () {
-                                            print('emad selected');
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type:
-                                                PageTransitionType.rightToLeft,
-                                                child: form_client(),
-                                              ),
-                                            );
-                                          },
-                                          child: custom_data("Title", "No_title")),
-                                      Divider(
-                                        color: Colors.black38,
-                                        thickness: 2,
-                                      ),
                                     ],
                                   ),
                                 ),
+                              ),
                             ),
                           ),
                         ),
@@ -448,7 +252,7 @@ class Client_Select extends StatelessWidget {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text(
-                          'هل انت متاكد من حذف هذاالعميل ',
+                          'هل انت متاكد من حذف هذا العميل ',
                           textAlign: TextAlign.right,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
