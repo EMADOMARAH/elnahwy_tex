@@ -1,3 +1,4 @@
+import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:elnahwy_tex/ui/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Splash_Screen(),
+      home: edit_screen(),
     );
   }
 }

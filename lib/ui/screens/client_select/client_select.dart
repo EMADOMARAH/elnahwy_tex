@@ -1,7 +1,9 @@
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+
 
 class Client_Select extends StatelessWidget {
   @override
@@ -228,8 +230,7 @@ class Client_Select extends StatelessWidget {
                 Navigator.push(
                     context,
                     PageTransition(
-                        type: PageTransitionType.fade,
-                        child: edit_screen()));
+                        type: PageTransitionType.fade, child: edit_screen()));
               },
             ),
             TextButton(
@@ -241,8 +242,47 @@ class Client_Select extends StatelessWidget {
                     fontSize: 14,
                     color: Colors.red),
               ),
+              //Second Dialog
               onPressed: () {
-                Navigator.of(context).pop();
+                showDialog<void>(
+                    context: context,
+                    barrierDismissible: true, // user must tap button!
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          'هل انت متاكد من حذف هذاالعميل ',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Cairo",
+                              fontSize: 14),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'تأكيد ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 14,
+                                  color: Colors.green),
+                            ),
+                            onPressed: () {},
+                          ),
+                          TextButton(
+                            child: Text(
+                              'إلغاء ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 14,
+                                  color: Colors.red),
+                            ),
+                            onPressed: () {},
+                          ),
+                        ],
+                      );
+                    });
               },
             ),
           ],
