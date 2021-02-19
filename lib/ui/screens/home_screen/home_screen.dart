@@ -14,13 +14,7 @@ class Home_Screen extends StatelessWidget {
               children: [
                 Spacer(flex: 1,),
                 GestureDetector(
-                  onTap: (){Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.rightToLeftWithFade,
-                      child:Client_Select(),
-                    ),
-                  );},
+                  onTap: (){},
                   child: CustomContainer('المصنع', 'images/Factory.png', Colors.white),
                 ),
                 Spacer(flex: 1,),
@@ -30,7 +24,15 @@ class Home_Screen extends StatelessWidget {
                 ),
                 Spacer(flex: 1,),
                 GestureDetector(
-                  onTap: (){},
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        child:Client_Select(),
+                      ),
+                    );
+                  },
                   child: CustomContainer('العملاء', 'images/Client.png', Colors.white),
                 ),
                 Spacer(flex: 1,),
