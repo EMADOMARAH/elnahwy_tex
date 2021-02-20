@@ -1,3 +1,4 @@
+import 'file:///D:/Projects/elnahwy_tex/lib/ui/screens/client_select/client_page.dart';
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/edit_form/edit__form.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Splash_Screen(),
+      home: Home_Screen(),
     );
   }
 }

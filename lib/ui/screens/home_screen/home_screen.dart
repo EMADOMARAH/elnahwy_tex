@@ -1,3 +1,4 @@
+import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';
 import 'package:elnahwy_tex/ui/screens/client_select/client_select.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -29,7 +30,7 @@ class Home_Screen extends StatelessWidget {
                       context,
                       PageTransition(
                         type: PageTransitionType.rightToLeftWithFade,
-                        child:Client_Select(),
+                        child:ClientPage(),
                       ),
                     );
                   },
