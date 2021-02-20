@@ -50,12 +50,14 @@ class form_client extends StatelessWidget {
                 ],
               ),
             ),
-            child:Column(
-              children: <Widget>[
-                cust_txtformfield("اسم العميل",TextInputType.text),
-                cust_txtformfield("عدد انواع القماش",TextInputType.number),
-                cust_txtformfield("",TextInputType.datetime),
-              ],
+            child:Container(
+              child: Column(
+                children: <Widget>[
+                  cust_txtformfield("اسم العميل",TextInputType.text),
+                  cust_txtformfield("عدد انواع القماش",TextInputType.number),
+                  cust_txtformfield("",TextInputType.datetime),
+                ],
+              ),
             )
             )
           ),
@@ -71,7 +73,7 @@ class form_client extends StatelessWidget {
         textDirection: TextDirection.rtl,
         textAlign: TextAlign.right,
         decoration: InputDecoration(
-          fillColor: Colors.white,
+          fillColor: Colors.black,
           hintText: title,
           hintStyle: TextStyle(
               fontFamily: "Cairo",
