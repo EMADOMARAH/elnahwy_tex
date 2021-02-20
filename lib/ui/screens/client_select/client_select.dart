@@ -242,7 +242,6 @@ class Client_Select extends StatelessWidget {
       },
     );
   }
-
   /*displayToastMessage (String message , BuildContext context){
     Fluttertoast.showToast(msg: message);
   }*/
