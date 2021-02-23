@@ -1,5 +1,4 @@
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
-import 'package:elnahwy_tex/ui/screens/client_select/client_select.dart';
 import 'package:elnahwy_tex/ui/screens/edit_form/edit__form.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -247,7 +246,7 @@ Future<void> txt_dialog_form(BuildContext context) async {
                           onPressed: () async {
                             Navigator.pop(context);
                             await Navigator.of(context)
-                                .push(new MaterialPageRoute(builder: (context) => Client_Select()));
+                                .push(new MaterialPageRoute(builder: (context) => ClientPage()));
                           },
                         ),
                         TextButton(

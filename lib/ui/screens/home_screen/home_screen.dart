@@ -1,6 +1,5 @@
 import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';
 import 'package:elnahwy_tex/ui/screens/Cateogry_item/cateogry_item.dart';
-import 'package:elnahwy_tex/ui/screens/client_select/client_select.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
