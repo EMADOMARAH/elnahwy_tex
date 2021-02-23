@@ -1,4 +1,4 @@
-import 'package:elnahwy_tex/ui/screens/client_select/client_select.dart';
+import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -20,7 +20,7 @@ class form_client extends StatelessWidget {
                     context,
                     PageTransition(
                       type: PageTransitionType.rightToLeft,
-                      child: Client_Select(),
+                      child: ClientPage(),
                     ),
                   );
                 },
@@ -76,7 +76,7 @@ class form_client extends StatelessWidget {
                           PageTransition(
                             type:
                             PageTransitionType.leftToRight,
-                            child: Client_Select(),
+                            child: ClientPage(),
                           ),
                         );
                       })
