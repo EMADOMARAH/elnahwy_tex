@@ -20,7 +20,7 @@ class Home_Screen extends StatelessWidget {
                       context,
                       PageTransition(
                         type: PageTransitionType.rightToLeftWithFade,
-                        child:category_item(),
+                        child:factory_select(),
                       ),
                     );
                   },

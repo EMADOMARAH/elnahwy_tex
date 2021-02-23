@@ -1,8 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
-class category_item extends StatelessWidget {
+class factory_select extends StatefulWidget {
+  @override
+  _factory_selectState createState() => _factory_selectState();
+}
+
+class _factory_selectState extends State<factory_select> {
   TextEditingController cilentNameController = TextEditingController();
+
   TextEditingController notypeController = TextEditingController();
+  final initList = List<Widget>.generate(15, (i) => custom_data('wagdy',''));
+  TextEditingController editingController = TextEditingController();
+  var showItemList = List<Widget>();
+
+  @override
+  void initState() {
+    showItemList.addAll(initList);
+    super.initState();
+
+  }
+  filterSearch(String query) {
+    List<Widget> searchList = List<Widget>();
+    searchList.addAll(initList);
+    if (query.isNotEmpty) {
+      List<Widget> resultListData = List<Widget>();
+      searchList.forEach((item) {
+        if (item == null) {
+          resultListData.add(item);
+        }
+      });
+      setState(() {
+        showItemList.clear();
+        showItemList.addAll(resultListData);
+      });
+      return;
+    } else {
+      setState(() {
+        showItemList.clear();
+        showItemList.addAll(initList);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +65,130 @@ class category_item extends StatelessWidget {
         ),
         body: Container(
             decoration: BoxDecoration(
-          gradient: new LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xffC3FCF2),
-              Color(0xff659B91),
-            ],
-          ),
-        )));
+              gradient: new LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xffC3FCF2),
+                  Color(0xff659B91),
+                ],
+              ),
+
+            )
+            , child: ListView(
+          children: [
+            Container(
+              child: Padding(
+                padding: EdgeInsets.all(14),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Flexible(
+                          child: TextFormField(
+                              onChanged: (value) {
+                                filterSearch(value);
+                              },
+                              keyboardType: TextInputType.text,
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                  prefixIcon: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 10, top: 10, bottom: 10),
+                                    child: Image.asset(
+                                      'images/Search.png',
+                                      width: 10,
+                                      height: 10,
+                                    ),
+                                  ),
+                                  fillColor: Colors.white.withOpacity(0.54),
+                                  filled: true,
+                                  hintText: 'بحــث',
+                                  focusColor: Colors.white,
+                                  hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontFamily: "Cairo",
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  contentPadding: EdgeInsets.all(10))),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Image(
+                          image: AssetImage('images/Factory.png'),
+                          height: 66,
+                          width: 66,
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
+                        ),
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 27, left: 5, right: 5),
+                        child: SingleChildScrollView(
+                          child: ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            separatorBuilder: (context, index) {
+                              return cust_divider();
+                            },
+                            shrinkWrap: true,
+                            itemCount: showItemList.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                  onLongPress: () {
+                                    _showMyDialog(context);
+                                  },
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.rightToLeft, child: null,
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      custom_data("wagdy", ''),
+                                      cust_divider(),
+                                      custom_data("wagdy", ''),
+                                      cust_divider(),
+                                      custom_data("emad", ''),
+                                      cust_divider(),
+                                      custom_data("emad", ''),
+                                      cust_divider(),
+                                      custom_data("dabash", ''),
+                                      cust_divider(),
+                                      custom_data("Title", ''),
+                                    ],
+                                  )
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+            )
+    );
   }
 }
 
@@ -55,8 +209,10 @@ Future<void> txt_dialog_form(BuildContext context) async {
         content: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                cust_txtformfield_dialog("اسم العميل", TextInputType.text,cilentNameController),
-                cust_txtformfield_dialog("عدد الانواع", TextInputType.number,notypeController )
+                cust_txtformfield_dialog(
+                    "اسم العميل", TextInputType.text, cilentNameController),
+                cust_txtformfield_dialog(
+                    "عدد الانواع", TextInputType.number, notypeController)
               ],
             )
         ),
@@ -98,7 +254,8 @@ Future<void> txt_dialog_form(BuildContext context) async {
                           onPressed: () async {
                             Navigator.pop(context);
                             await Navigator.of(context)
-                                .push(new MaterialPageRoute(builder: (context) => category_item()));
+                                .push(new MaterialPageRoute(
+                                builder: (context) => factory_select()));
                           },
                         ),
                         TextButton(
@@ -139,6 +296,20 @@ Future<void> txt_dialog_form(BuildContext context) async {
     },
   );
 }
+Widget custom_data(String Title, String No_title) {
+  return Container(
+    decoration: BoxDecoration(
+        color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
+    child: ListTile(
+      title: Text(Title,textAlign: TextAlign.right,),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(right:18.0),
+        child: Text(No_title,textAlign: TextAlign.right,),
+      ),
+      leading: Image.asset("images/ic_keyboard_arrow_left_48px.png"),
+    ),
+  );
+}
 Widget cust_txtformfield_dialog(String title, var typeinput, TextEditingController controller){
   return Padding(
     padding: EdgeInsets.all(2),
@@ -167,4 +338,129 @@ Widget cust_txtformfield_dialog(String title, var typeinput, TextEditingControll
     ),
   );
 }
+Widget cust_divider(){
+  return  Divider(
+    color: Colors.black38.withOpacity(0.2),
+    thickness: 2,
+  );
+}
+Future<void> _showMyDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(
+          'تعديل او اضافه',
+          textAlign: TextAlign.right,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontFamily: "Cairo", fontSize: 14),
+        ),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(
+                'تعديل او حذف هذا العميل ',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14),
+              ),
+              Text(
+                'هل تريد حذف او تعديل هذا العميل ',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              'تعديل ',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Cairo",
+                  fontSize: 14,
+                  color: Colors.green),
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade, child:null));
+            },
+          ),
+          TextButton(
+            child: Text(
+              'حذف',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Cairo",
+                  fontSize: 14,
+                  color: Colors.red),
+            ),
+            //Second Dialog
+            onPressed: () {
+              showDialog<void>(
+                  context: context,
+                  barrierDismissible: true, // user must tap button!
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        'هل انت متاكد من حذف هذا العميل ',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Cairo",
+                            fontSize: 14),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text(
+                            'تأكيد ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Cairo",
+                                fontSize: 14,
+                                color: Colors.green),
+                          ),
+                          onPressed: () {
+                            //احذف عميل من الداتا بيز
+                            print("حذف عميل ");
+                            //اعمل تحديث للداتا بعد الحذف
+                          },
+                        ),
+                        TextButton(
+                          child: Text(
+                            'إلغاء ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Cairo",
+                                fontSize: 14,
+                                color: Colors.red),
+                          ),
+                          onPressed: () async{
+                            //هيرجع للصفحه اللى وراه
+                            //Navigator.of(context, rootNavigator: false).pop();
+                            Navigator.pop(context);
+                            await Navigator.of(context)
+                                .push(new MaterialPageRoute(builder: (context) => factory_select()));
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 

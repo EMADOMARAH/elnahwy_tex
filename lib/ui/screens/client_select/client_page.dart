@@ -1,5 +1,5 @@
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
-import 'package:elnahwy_tex/ui/screens/edit_form/edit__form.dart';
+import 'package:elnahwy_tex/ui/screens/client_data/client_data.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -156,18 +156,24 @@ class _ClientPageState extends State<ClientPage> {
                                     context,
                                     PageTransition(
                                       type: PageTransitionType.rightToLeft,
-                                      child: form_client(),
+                                      child: client_data(),
                                     ),
                                   );
                                 },
                                 child: Column(
                                   children: [
-                                    custom_data("wagdy",''),
-                                    custom_data("wagdy",''),
-                                    custom_data("emad",''),
-                                    custom_data("emad",''),
-                                    custom_data("dabash",''),
+                                    custom_data("وجدى",'123'),
+                                    cust_divider(),
+                                    custom_data("wagdy",'15'),                                    cust_divider(),
+                                    cust_divider(),
+                                    custom_data("emad",''),                                    cust_divider(),
+                                    cust_divider(),
+                                    custom_data("emad",''),                                    cust_divider(),
+                                    cust_divider(),
+                                    custom_data("dabash",''),                                    cust_divider(),
+                                    cust_divider(),
                                     custom_data("Title",''),
+                                    cust_divider(),
                                   ],
                                 )
                               );
@@ -191,7 +197,7 @@ Future<void> txt_dialog_form(BuildContext context) async {
   TextEditingController notypeController = TextEditingController();
   return showDialog<void>(
     context: context,
-    barrierDismissible: true, // user must tap button!
+    barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(
@@ -278,6 +284,7 @@ Future<void> txt_dialog_form(BuildContext context) async {
                   color: Colors.black38.withOpacity(0.5)),
             ),
             onPressed: () {
+              //اضافه عميل جديد
               print(cilentNameController);
               Navigator.of(context, rootNavigator: true).pop();
             },
@@ -326,10 +333,14 @@ Widget custom_data(String Title, String No_title) {
     decoration: BoxDecoration(
         color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
     child: ListTile(
-      title: Text(Title,textAlign: TextAlign.right,),
+      title: Text(Title,textAlign: TextAlign.right,style: TextStyle(
+        fontFamily: "Cairo",fontSize: 20,fontWeight: FontWeight.bold
+      ),),
       subtitle: Padding(
-        padding: const EdgeInsets.only(right:18.0),
-        child: Text(No_title,textAlign: TextAlign.right,),
+        padding: const EdgeInsets.only(right:15.0),
+        child: Text(No_title,textAlign: TextAlign.right,style: TextStyle(
+          fontFamily: "Cairo",fontWeight:FontWeight.w300,
+        ),),
       ),
       leading: Image.asset("images/ic_keyboard_arrow_left_48px.png"),
     ),
@@ -420,7 +431,11 @@ Future<void> _showMyDialog(BuildContext context) async {
                                 fontSize: 14,
                                 color: Colors.green),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            //احذف عميل من الداتا بيز
+                            print("حذف عميل ");
+                            //اعمل تحديث للداتا بعد الحذف
+                          },
                         ),
                         TextButton(
                           child: Text(
@@ -431,7 +446,13 @@ Future<void> _showMyDialog(BuildContext context) async {
                                 fontSize: 14,
                                 color: Colors.red),
                           ),
-                          onPressed: () {},
+                          onPressed: () async{
+                            //هيرجع للصفحه اللى وراه
+                            //Navigator.of(context, rootNavigator: false).pop();
+                            Navigator.pop(context);
+                            await Navigator.of(context)
+                                .push(new MaterialPageRoute(builder: (context) => ClientPage()));
+                          },
                         ),
                       ],
                     );

@@ -2,7 +2,7 @@ import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-class form_client extends StatelessWidget {
+class client_data extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,45 +52,58 @@ class form_client extends StatelessWidget {
               ),
               child: Container(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    cust_txtformfield("اسم العميل", TextInputType.text, true),
+                    cust_label("اسم العميل"),
+                    cust_txtformfield("اسم العميل", TextInputType.text),
+                    cust_label("عدد انواع القماش"),
                     cust_txtformfield(
-                        "عدد انواع القماش", TextInputType.number, false),
-                    cust_txtformfield("", TextInputType.text, false),
+                        "عدد انواع القماش", TextInputType.number),
+                    cust_txtformfield("", TextInputType.text),
                     Spacer(
                       flex: 1,
                     ),
-                    RaisedButton(
-                      color: Color(0xffC3FCF2),
-                      child: Text(
-                        'حفظ التعديلات',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Cairo",
-                            fontSize: 18,
-                            color: Colors.green),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type:
-                            PageTransitionType.leftToRight,
-                            child: ClientPage(),
-                          ),
-                        );
-                      })
+                    Center(
+                      child: RaisedButton(
+                        color: Colors.white,
+                        child: Text(
+                          'رجوع',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Cairo",
+                              fontSize: 18,
+                              color: Colors.green),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type:
+                              PageTransitionType.leftToRight,
+                              child: ClientPage(),
+                            ),
+                          );
+                        }),
+                    )
                   ],
                 ),
               ))),
     );
   }
-
-  Widget cust_txtformfield(String title, var typeinput, bool boolean) {
+  Widget cust_label (String ltext){
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.only(right :20.0),
+      child: Text(ltext,style: TextStyle(
+        fontFamily: "Cairo",fontSize: 15,color: Colors.black,
+      ),),
+    );
+
+  }
+  Widget cust_txtformfield(String title, var typeinput) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 8,right: 8,left: 8),
       child: TextFormField(
-        readOnly: boolean,
+        readOnly: true,
         keyboardType: typeinput,
         cursorColor: Colors.black,
         textDirection: TextDirection.rtl,
