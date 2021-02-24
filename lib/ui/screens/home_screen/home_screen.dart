@@ -8,44 +8,55 @@ class Home_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff659B91),
-        body: Center(
-          child: Container(
-            child: Column(
-              children: [
-                Spacer(flex: 1,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeftWithFade,
-                        child:factory_select(),
-                      ),
-                    );
-                  },
-                  child: CustomContainer('المصنع', 'images/Factory.png', Colors.white),
-                ),
-                Spacer(flex: 1,),
-                GestureDetector(
-                  onTap: (){},
-                  child: CustomContainer('لى تيكس', 'images/LeTex.png', Colors.white),
-                ),
-                Spacer(flex: 1,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeftWithFade,
-                        child:ClientPage(),
-                      ),
-                    );
-                  },
-                  child: CustomContainer('العملاء', 'images/Client.png', Colors.white),
-                ),
-                Spacer(flex: 1,),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: new LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xffC3FCF2),
+                Color(0xff659B91),
               ],
+            ),
+          ),
+          child: Center(
+            child: Container(
+              child: Column(
+                children: [
+                  Spacer(flex: 1,),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child:factory_select(),
+                        ),
+                      );
+                    },
+                    child: CustomContainer('المصنع', 'images/Factory.png', Colors.grey[200]),
+                  ),
+                  Spacer(flex: 1,),
+                  GestureDetector(
+                    onTap: (){},
+                    child: CustomContainer('لى تيكس', 'images/LeTex.png',Colors.grey[200]),
+                  ),
+                  Spacer(flex: 1,),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child:ClientPage(),
+                        ),
+                      );
+                    },
+                    child: CustomContainer('العملاء', 'images/Client.png',  Colors.indigo.withOpacity(0.4)),
+                  ),
+                  Spacer(flex: 1,),
+                ],
+              ),
             ),
           ),
         ),
