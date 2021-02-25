@@ -1,5 +1,6 @@
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/client_data/client_data.dart';
+import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -9,7 +10,7 @@ class ClientPage extends StatefulWidget {
 }
 
 class _ClientPageState extends State<ClientPage> {
-  final initList = List<Widget>.generate(15, (i) => custom_data('wagdy',''));
+  final initList = List<Widget>.generate(15, (i) => custom_data('wagdy', ''));
   TextEditingController editingController = TextEditingController();
   var showItemList = List<Widget>();
 
@@ -17,7 +18,6 @@ class _ClientPageState extends State<ClientPage> {
   void initState() {
     showItemList.addAll(initList);
     super.initState();
-
   }
 
   filterSearch(String query) {
@@ -83,6 +83,20 @@ class _ClientPageState extends State<ClientPage> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
+                        IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.leftToRight,
+                                  child: Home_Screen(),
+                                ),
+                              );
+                            }),
                         Flexible(
                           child: TextFormField(
                               onChanged: (value) {
@@ -148,35 +162,34 @@ class _ClientPageState extends State<ClientPage> {
                             itemCount: showItemList.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                onLongPress: () {
-                                  _showMyDialog(context);
-                                },
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      child: client_data(),
-                                    ),
-                                  );
-                                },
-                                child: Column(
-                                  children: [
-                                    custom_data("وجدى",'123'),
-                                    cust_divider(),
-                                    custom_data("wagdy",'15'),                                    cust_divider(),
-                                    cust_divider(),
-                                    custom_data("emad",''),                                    cust_divider(),
-                                    cust_divider(),
-                                    custom_data("emad",''),                                    cust_divider(),
-                                    cust_divider(),
-                                    custom_data("dabash",''),                                    cust_divider(),
-                                    cust_divider(),
-                                    custom_data("Title",''),
-                                    cust_divider(),
-                                  ],
-                                )
-                              );
+                                  onLongPress: () {
+                                    _showMyDialog(context);
+                                  },
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.rightToLeft,
+                                        child: client_data(),
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      custom_data("وجدى", '123'),
+                                      cust_divider(),
+                                      custom_data("wagdy", '15'),
+                                      cust_divider(),
+                                      custom_data("emad", ''),
+                                      cust_divider(),
+                                      custom_data("emad", ''),
+                                      cust_divider(),
+                                      custom_data("dabash", ''),
+                                      cust_divider(),
+                                      custom_data("Title", ''),
+                                      cust_divider(),
+                                    ],
+                                  ));
                             },
                           ),
                         ),
@@ -192,6 +205,7 @@ class _ClientPageState extends State<ClientPage> {
     );
   }
 }
+
 Future<void> txt_dialog_form(BuildContext context) async {
   TextEditingController cilentNameController = TextEditingController();
   TextEditingController notypeController = TextEditingController();
@@ -208,12 +222,13 @@ Future<void> txt_dialog_form(BuildContext context) async {
         ),
         content: SingleChildScrollView(
             child: Column(
-              children: <Widget>[
-                cust_txtformfield_dialog("اسم العميل", TextInputType.text,cilentNameController),
-                cust_txtformfield_dialog("عدد الانواع", TextInputType.number,notypeController )
-              ],
-            )
-        ),
+          children: <Widget>[
+            cust_txtformfield_dialog(
+                "اسم العميل", TextInputType.text, cilentNameController),
+            cust_txtformfield_dialog(
+                "عدد الانواع", TextInputType.number, notypeController)
+          ],
+        )),
         actions: <Widget>[
           RaisedButton(
             child: Text(
@@ -251,8 +266,9 @@ Future<void> txt_dialog_form(BuildContext context) async {
                           ),
                           onPressed: () async {
                             Navigator.pop(context);
-                            await Navigator.of(context)
-                                .push(new MaterialPageRoute(builder: (context) => ClientPage()));
+                            await Navigator.of(context).push(
+                                new MaterialPageRoute(
+                                    builder: (context) => ClientPage()));
                           },
                         ),
                         TextButton(
@@ -294,12 +310,14 @@ Future<void> txt_dialog_form(BuildContext context) async {
     },
   );
 }
-Widget cust_txtformfield_dialog(String title, var typeinput, TextEditingController controller){
+
+Widget cust_txtformfield_dialog(
+    String title, var typeinput, TextEditingController controller) {
   return Padding(
     padding: EdgeInsets.all(2),
-    child:  TextFormField(
-      controller:controller ,
-      keyboardType:typeinput,
+    child: TextFormField(
+      controller: controller,
+      keyboardType: typeinput,
       cursorColor: Colors.black,
       textDirection: TextDirection.rtl,
       textAlign: TextAlign.right,
@@ -307,9 +325,7 @@ Widget cust_txtformfield_dialog(String title, var typeinput, TextEditingControll
         fillColor: Colors.white,
         hintText: title,
         hintStyle: TextStyle(
-            fontFamily: "Cairo",
-            color: Colors.black.withOpacity(0.4)
-        ),
+            fontFamily: "Cairo", color: Colors.black.withOpacity(0.4)),
         /*border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide:BorderSide(
@@ -322,30 +338,41 @@ Widget cust_txtformfield_dialog(String title, var typeinput, TextEditingControll
     ),
   );
 }
-Widget cust_divider(){
-  return  Divider(
+
+Widget cust_divider() {
+  return Divider(
     color: Colors.black38.withOpacity(0.2),
     thickness: 2,
   );
 }
+
 Widget custom_data(String Title, String No_title) {
   return Container(
     decoration: BoxDecoration(
         color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
     child: ListTile(
-      title: Text(Title,textAlign: TextAlign.right,style: TextStyle(
-        fontFamily: "Cairo",fontSize: 20,fontWeight: FontWeight.bold
-      ),),
+      title: Text(
+        Title,
+        textAlign: TextAlign.right,
+        style: TextStyle(
+            fontFamily: "Cairo", fontSize: 20, fontWeight: FontWeight.bold),
+      ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(right:15.0),
-        child: Text(No_title,textAlign: TextAlign.right,style: TextStyle(
-          fontFamily: "Cairo",fontWeight:FontWeight.w300,
-        ),),
+        padding: const EdgeInsets.only(right: 15.0),
+        child: Text(
+          No_title,
+          textAlign: TextAlign.right,
+          style: TextStyle(
+            fontFamily: "Cairo",
+            fontWeight: FontWeight.w300,
+          ),
+        ),
       ),
       leading: Image.asset("images/ic_keyboard_arrow_left_48px.png"),
     ),
   );
 }
+
 Future<void> _showMyDialog(BuildContext context) async {
   return showDialog<void>(
     context: context,
@@ -446,12 +473,13 @@ Future<void> _showMyDialog(BuildContext context) async {
                                 fontSize: 14,
                                 color: Colors.red),
                           ),
-                          onPressed: () async{
+                          onPressed: () async {
                             //هيرجع للصفحه اللى وراه
                             //Navigator.of(context, rootNavigator: false).pop();
                             Navigator.pop(context);
-                            await Navigator.of(context)
-                                .push(new MaterialPageRoute(builder: (context) => ClientPage()));
+                            await Navigator.of(context).push(
+                                new MaterialPageRoute(
+                                    builder: (context) => ClientPage()));
                           },
                         ),
                       ],
@@ -464,4 +492,3 @@ Future<void> _showMyDialog(BuildContext context) async {
     },
   );
 }
-
