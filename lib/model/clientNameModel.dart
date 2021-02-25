@@ -5,7 +5,10 @@ class ClientNames{
   ClientNames.withId({this.cNId, this.cNName});
 
   ClientNames({this.cNName});
-
+  int get id => cNId;
+  String get clientn => cNName;
+  set sclientn  (cNName){}
+  //set sclient2 => cNName;
   Map<String,dynamic> toMap(){
     var map = <String , dynamic>{};
 
