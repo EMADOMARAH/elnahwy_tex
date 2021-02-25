@@ -1,3 +1,4 @@
+import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -84,6 +85,15 @@ class _factory_selectState extends State<factory_select> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
+                        IconButton(icon:Icon(Icons.arrow_back,color: Colors.black,), onPressed:() {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.leftToRight,
+                              child: Home_Screen(),
+                            ),
+                          );
+                        }),
                         Flexible(
                           child: TextFormField(
                               onChanged: (value) {
@@ -301,10 +311,22 @@ Widget custom_data(String Title, String No_title) {
     decoration: BoxDecoration(
         color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
     child: ListTile(
-      title: Text(Title,textAlign: TextAlign.right,),
+      title: Text(
+        Title,
+        textAlign: TextAlign.right,
+        style: TextStyle(
+            fontFamily: "Cairo", fontSize: 20, fontWeight: FontWeight.bold),
+      ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(right:18.0),
-        child: Text(No_title,textAlign: TextAlign.right,),
+        padding: const EdgeInsets.only(right: 15.0),
+        child: Text(
+          No_title,
+          textAlign: TextAlign.right,
+          style: TextStyle(
+            fontFamily: "Cairo",
+            fontWeight: FontWeight.w300,
+          ),
+        ),
       ),
       leading: Image.asset("images/ic_keyboard_arrow_left_48px.png"),
     ),
