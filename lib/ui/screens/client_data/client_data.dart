@@ -78,7 +78,6 @@ class _client_dataState extends State<client_data> {
                     Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
                     Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
 
-
                     Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: RaisedButton(
