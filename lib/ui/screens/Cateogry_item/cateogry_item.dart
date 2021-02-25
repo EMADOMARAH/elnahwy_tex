@@ -1,5 +1,5 @@
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
-import 'package:elnahwy_tex/widget/cutom_data_tile.dart';
+import 'package:elnahwy_tex/widget/cutom_data_tile_client.dart';
 import 'package:elnahwy_tex/widget/divider_cutom.dart';
 import 'package:elnahwy_tex/widget/showDialog.dart';
 import 'package:elnahwy_tex/widget/txt_dialog_form.dart';
