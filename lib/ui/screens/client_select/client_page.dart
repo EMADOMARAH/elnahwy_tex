@@ -1,64 +1,72 @@
-import 'package:elnahwy_tex/model/clientNameModel.dart';
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/client_data/client_data.dart';
 import 'package:elnahwy_tex/model/clientNameModel.dart';
 import 'package:elnahwy_tex/utils/database_helper.dart';
-import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:elnahwy_tex/widget/cutom_data_tile_client.dart';
-import 'package:elnahwy_tex/widget/divider_cutom.dart';
-import 'package:elnahwy_tex/widget/txt_dialog_form.dart';
 import 'package:flutter/material.dart';
-import 'package:elnahwy_tex/widget/showDialog.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sqflite/sqflite.dart';
 
-
 class ClientPage extends StatefulWidget {
+
   @override
   _ClientPageState createState() => _ClientPageState();
 }
-
-class _ClientPageState extends State<ClientPage> {
-  final initList = List<Widget>.generate(15, (i) => custom_data('wagdy', ''));
+class _ClientPageState extends State<ClientPage>
+    with SingleTickerProviderStateMixin {
   TextEditingController editingController = TextEditingController();
-  var showItemList = List<Widget>();
-
-  @override
-  void initState() {
-    showItemList.addAll(initList);
+  TabController controller;
+  List<String> listItems = [
+    "Johnny Depp",
+    "Al Pacino",
+    "Robert De Niro",
+    "Kevin Spacey",
+    "Denzel Washington",
+    "Russell Crowe",
+    "SBrad Pitt",
+    "Sylvester Stallone",
+    'Mohamed Wagdy',
+    'محمد وجدي',
+    'عماد عبد الحليم',
+    'خالد حكيم',
+    'احمد ضبش',
+  ];
+  var items = List<String>();
+  @override  void initState() {
+    // TODO: implement initState
+    items.addAll(listItems);
     super.initState();
+    controller = new TabController(length: 4, vsync: this);
+
   }
 
-  filterSearch(String query) {
-    List<Widget> searchList = List<Widget>();
-    searchList.addAll(initList);
-    if (query.isNotEmpty) {
-      List<Widget> resultListData = List<Widget>();
-      searchList.forEach((item) {
-        if (item == null) {
-          resultListData.add(item);
-        }
-      });
-      setState(() {
-        showItemList.clear();
-        showItemList.addAll(resultListData);
-      });
-      return;
-    } else {
-      setState(() {
-        showItemList.clear();
-        showItemList.addAll(initList);
-      });
-    }
+  @override  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+    super.dispose();
   }
+
+//make object from our DB
+  DatabaseHelper databaseHelper = DatabaseHelper();
+
+//make list data to hold out clients name data
+  List<ClientNames> clientsNamesList=[];
+  int count = 0;
+  int customPosition;
+
 
   @override
   Widget build(BuildContext context) {
+    //if out list == null initiate new one
+    if(clientsNamesList == null){
+      clientsNamesList = List<ClientNames>();
+      updateListView();
+    }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          print("احا");
-          txt_dialog_form(context);
+          navigateToClientDetail(new ClientNames() , "اضافه عميل");
         },
         icon: Icon(
           Icons.add,
@@ -92,24 +100,10 @@ class _ClientPageState extends State<ClientPage> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        IconButton(
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.leftToRight,
-                                  child: Home_Screen(),
-                                ),
-                              );
-                            }),
                         Flexible(
                           child: TextFormField(
                               onChanged: (value) {
-                                filterSearch(value);
+                                filterSearchResults(value);
                               },
                               keyboardType: TextInputType.text,
                               textAlign: TextAlign.center,
@@ -162,43 +156,27 @@ class _ClientPageState extends State<ClientPage> {
                       child: Padding(
                         padding: EdgeInsets.only(top: 27, left: 5, right: 5),
                         child: SingleChildScrollView(
-                          child: ListView.separated(
+                          child: ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
-                            separatorBuilder: (context, index) {
-                              return cust_divider();
-                            },
                             shrinkWrap: true,
-                            itemCount: showItemList.length,
-                            itemBuilder: (context, index) {
+                            itemCount: count,
+                            itemBuilder: (context, int position) {
+                              customPosition=position;
                               return GestureDetector(
-                                  onLongPress: () {
-                                    showMyDialog(context);
-                                  },
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        type: PageTransitionType.rightToLeft,
-                                        child: client_data(),
-                                      ),
-                                    );
-                                  },
-                                  child: Column(
-                                    children: [
-                                      custom_data("وجدى", '123'),
-                                      cust_divider(),
-                                      custom_data("wagdy", '15'),
-                                      cust_divider(),
-                                      custom_data("emad", ''),
-                                      cust_divider(),
-                                      custom_data("emad", ''),
-                                      cust_divider(),
-                                      custom_data("dabash", ''),
-                                      cust_divider(),
-                                      custom_data("Title", ''),
-                                      cust_divider(),
-                                    ],
-                                  ));
+                                onLongPress: () {
+                                  _showMyDialog(context);
+                                },
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType.rightToLeft,
+                                      child: client_data(),
+                                    ),
+                                  );
+                                },
+                                child: custom_data(this.clientsNamesList[position].cNName.toString(), 'No_title')
+                              );
                             },
                           ),
                         ),
@@ -213,5 +191,265 @@ class _ClientPageState extends State<ClientPage> {
       ),
     );
   }
+
+
+  //show snack bar and update the list after delete
+  void _showSnackBar(BuildContext context,String message){
+    final snackBar = SnackBar(content: Text(message));
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
+
+//delete item from the list
+  void _delete(BuildContext context,ClientNames clientNames) async{
+    int result = await databaseHelper.deleteRaw('clientName_table', 'c_n_id', clientNames.cNId);
+    if(result !=0){
+      _showSnackBar(context, 'تم مسح الأسم بنجاح');
+      // TODO : UPDATE THE LIST VIEW AFTER DELETE AN ELEMENT
+      updateListView();
+    }
+  }
+
+  void updateListView() {
+    final Future<Database> dbFuture = databaseHelper.initializeDatabase();
+    dbFuture.then((database)
+    {
+      Future<List<ClientNames>> clientNamesListFuture = databaseHelper.getClientNamesList();
+      clientNamesListFuture.then((namesList)
+      {
+        setState(() {
+          this.clientsNamesList =namesList;
+          this.count = namesList.length;
+
+        });
+      });
+    });
+
+
+  }
+
+  void navigateToClientDetail(ClientNames clientNames, String title) async{
+    bool result = await Navigator.push(context,MaterialPageRoute(builder: (context) {
+      return edit_screen(clientNames);
+    }));
+    setState(() {
+      if (result== true) {
+        updateListView();
+      }
+    });
+  }
+
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'تعديل او اضافه',
+            textAlign: TextAlign.right,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: "Cairo", fontSize: 14),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'تعديل او حذف هذا العميل ',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14),
+                ),
+                Text(
+                  'هل تريد حذف او تعديل هذا العميل ',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'تعديل ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.green),
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade, child: edit_screen(ClientNames())));
+              },
+            ),
+            TextButton(
+              child: Text(
+                'حذف',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.red),
+              ),
+              //Second Dialog
+              onPressed: () {
+                showDialog<void>(
+                    context: context,
+                    barrierDismissible: true, // user must tap button!
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          'هل انت متاكد من حذف هذا العميل ',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Cairo",
+                              fontSize: 14),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'تأكيد ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 14,
+                                  color: Colors.green),
+                            ),
+                            onPressed: () {
+                              //ربنا يستر على الهبده دى
+                              _delete(context, clientsNamesList[customPosition]);
+                              //احذف عميل من الداتا بيز
+                              print("حذف عميل ");
+                              //اعمل تحديث للداتا بعد الحذف
+                            },
+                          ),
+                          TextButton(
+                            child: Text(
+                              'إلغاء ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 14,
+                                  color: Colors.red),
+                            ),
+                            onPressed: () async{
+                              //هيرجع للصفحه اللى وراه
+                              //Navigator.of(context, rootNavigator: false).pop();
+                              Navigator.pop(context);
+                              await Navigator.of(context)
+                                  .push(new MaterialPageRoute(builder: (context) => ClientPage()));
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void filterSearchResults(String query) {
+    List<String> dummySearchList = List<String>();
+    dummySearchList.addAll(listItems);
+    if (query.isNotEmpty) {
+      List<String> dummyListData = List<String>();
+      dummySearchList.forEach((item) {
+        if (item.contains(query)) {
+          dummyListData.add(item);
+        }
+      });
+      setState(() {
+        items.clear();
+        items.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        items.clear();
+        items.addAll(listItems);
+      });
+    }
+  } //Now using
+
+  Widget _buildCell(BuildContext context, int index,String name,) { // same as previous video
+    return Padding(
+      padding: EdgeInsets.only(left: 12.0,top: 5.0, right: 12.0),
+      child: Material(
+        color: Colors.grey,
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(10.0),
+        child: ListTile(
+          title: Text(
+            name,
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              fontFamily: "Cairo", fontSize: 20, fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: Text(
+              'عدد الاصناف',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontFamily: "Cairo",
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+          ),
+          leading: Image.asset("images/ic_keyboard_arrow_left_48px.png"),
+        ),
+      ),
+    );
+  }
+
 }
+
+
+
+
+
+
+
+Widget cust_txtformfield_dialog_(String title, var typeinput, TextEditingController controller){
+  return Padding(
+    padding: EdgeInsets.all(2),
+    child:  TextFormField(
+      controller:controller ,
+      keyboardType:typeinput,
+      cursorColor: Colors.black,
+      textDirection: TextDirection.rtl,
+      textAlign: TextAlign.right,
+      decoration: InputDecoration(
+        fillColor: Colors.white,
+        hintText: title,
+        hintStyle: TextStyle(
+            fontFamily: "Cairo",
+            color: Colors.black.withOpacity(0.4)
+        ),
+        /*border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide:BorderSide(
+              color: Colors.black,
+              width: 2,
+            ),
+          ),*/
+        contentPadding: EdgeInsets.all(5),
+      ),
+    ),
+  );
+}
+
 
