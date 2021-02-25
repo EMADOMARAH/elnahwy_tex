@@ -178,4 +178,76 @@ class DatabaseHelper{
     return result;
   }
 
+  //GET CLIENT NAMES
+  //get the 'Map List' [List<Map>] and convert it to 'ClientNames List' [List<ClientNames>]
+  Future<List<ClientNames>> getClientNamesList() async {
+    // get map List from DB
+    var namesMapList = await getTableDataMapList(clientNamesTable);
+    //count the number of map entries in DB table
+    int count = namesMapList.length;
+
+    List<ClientNames> namesList = List<ClientNames>();
+    //for loop to create a 'ClientNames List' from Map List
+    for (int i = 0; i < count; i++)
+    {
+      namesList.add(ClientNames.fromMapObject(namesMapList[i]));
+    }
+
+    return namesList;
+  }
+
+  //GET CLIENT Types
+  //get the 'Map List' [List<Map>] and convert it to 'ClientTypes List' [List<ClientNames>]
+  Future<List<ClientType>> getClientTypesList() async {
+    // get map List from DB
+    var typesMapList = await getTableDataMapList(clientTypesTable);
+    //count the number of map entries in DB table
+    int count = typesMapList.length;
+
+    List<ClientType> typesList = List<ClientType>();
+    //for loop to create a 'ClientTypes List' from Map List
+    for (int i = 0; i < count; i++)
+    {
+      typesList.add(ClientType.fromMaoObject(typesMapList[i]));
+    }
+
+    return typesList;
+  }
+
+  //GET FACTORY Types
+  //get the 'Map List' [List<Map>] and convert it to 'FactoryTypes List' [List<ClientNames>]
+  Future<List<FactoryTypes>> getFactoryTypesList() async {
+    // get map List from DB
+    var factoryTypesMapList = await getTableDataMapList(factoryTypeTable);
+    //count the number of map entries in DB table
+    int count = factoryTypesMapList.length;
+
+    List<FactoryTypes> factoryTypesList = List<FactoryTypes>();
+    //for loop to create a 'ClientTypes List' from Map List
+    for (int i = 0; i < count; i++)
+    {
+      factoryTypesList.add(FactoryTypes.fromMapObject(factoryTypesMapList[i]));
+    }
+
+    return factoryTypesList;
+  }
+
+  //GET FACTORY CLIENTS
+  //get the 'Map List' [List<Map>] and convert it to 'FactoryTypes List' [List<ClientNames>]
+  Future<List<FactoryClients>> getFactoryClientsList() async {
+    // get map List from DB
+    var factoryClientsMapList = await getTableDataMapList(factoryClientTable);
+    //count the number of map entries in DB table
+    int count = factoryClientsMapList.length;
+
+    List<FactoryClients> factoryClientsList = List<FactoryClients>();
+    //for loop to create a 'ClientTypes List' from Map List
+    for (int i = 0; i < count; i++)
+    {
+      factoryClientsList.add(FactoryClients.fromMaoObject(factoryClientsMapList[i]));
+    }
+
+    return factoryClientsList;
+  }
+
 }

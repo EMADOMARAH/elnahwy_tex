@@ -2,13 +2,22 @@ class ClientNames{
   int cNId;
   String cNName;
 
-  ClientNames.withId({this.cNId, this.cNName});
+// setters and getters
+  int get clientId{
+    return cNId;
+  }
+  String get clientName{
+    return cNName;
+  }
 
+  set clientName(String name){
+    this.cNName = name;
+  }
+
+
+  ClientNames.withId({this.cNId, this.cNName});
   ClientNames({this.cNName});
-  int get id => cNId;
-  String get clientn => cNName;
-  set sclientn  (cNName){}
-  //set sclient2 => cNName;
+
   Map<String,dynamic> toMap(){
     var map = <String , dynamic>{};
 
