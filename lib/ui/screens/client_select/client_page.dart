@@ -2,6 +2,7 @@ import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/add_client/add_client.dart';
 import 'package:elnahwy_tex/ui/screens/client_data/client_data.dart';
 import 'package:elnahwy_tex/model/clientNameModel.dart';
+import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:elnahwy_tex/utils/database_helper.dart';
 import 'package:elnahwy_tex/widget/cutom_data_tile_client.dart';
 import 'package:flutter/material.dart';
@@ -9,32 +10,33 @@ import 'package:page_transition/page_transition.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ClientPage extends StatefulWidget {
-
   @override
   _ClientPageState createState() => _ClientPageState();
 }
+
 class _ClientPageState extends State<ClientPage>
     with SingleTickerProviderStateMixin {
-
   //make object from our DB
   DatabaseHelper databaseHelper = DatabaseHelper();
 
 //make list data to hold out clients name data
-  List<ClientNames> clientsNamesList=[];
+  List<ClientNames> clientsNamesList = [];
   int count = 0;
   int customPosition;
-  
+
   TextEditingController editingController = TextEditingController();
   TabController controller;
 
-  @override  void initState() {
+  @override
+  void initState() {
     // TODO: implement initState
     super.initState();
     controller = new TabController(length: 4, vsync: this);
     updateListView();
   }
 
-  @override  void dispose() {
+  @override
+  void dispose() {
     // TODO: implement dispose
     controller.dispose();
     super.dispose();
@@ -43,7 +45,7 @@ class _ClientPageState extends State<ClientPage>
   @override
   Widget build(BuildContext context) {
     //if out list == null initiate new one
-    if(clientsNamesList == null){
+    if (clientsNamesList == null) {
       clientsNamesList = List<ClientNames>();
       updateListView();
     }
@@ -85,6 +87,20 @@ class _ClientPageState extends State<ClientPage>
                   children: <Widget>[
                     Row(
                       children: <Widget>[
+                        IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: Home_Screen(),
+                                ),
+                              );
+                            }),
                         Flexible(
                           child: TextFormField(
                               onChanged: (value) {
@@ -147,22 +163,26 @@ class _ClientPageState extends State<ClientPage>
                             shrinkWrap: true,
                             itemCount: count,
                             itemBuilder: (context, int position) {
-                              customPosition=position;
+                              customPosition = position;
                               return GestureDetector(
-                                onLongPress: () {
-                                  _showMyDialog(context);
-                                },
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      child: client_data(),
-                                    ),
-                                  );
-                                },
-                                child: custom_data(this.clientsNamesList[position].cNName.toString(), 'No_title')
-                              );
+                                  onLongPress: () {
+                                    _showMyDialog(context);
+                                  },
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.rightToLeft,
+                                        child: client_data(),
+                                      ),
+                                    );
+                                  },
+                                  child: custom_data(
+                                      this
+                                          .clientsNamesList[position]
+                                          .cNName
+                                          .toString(),
+                                      'No_title'));
                             },
                           ),
                         ),
@@ -178,17 +198,17 @@ class _ClientPageState extends State<ClientPage>
     );
   }
 
-
   //show snack bar and update the list after delete
-  void _showSnackBar(BuildContext context,String message){
+  void _showSnackBar(BuildContext context, String message) {
     final snackBar = SnackBar(content: Text(message));
     Scaffold.of(context).showSnackBar(snackBar);
   }
 
 //delete item from the list
-  void _delete(BuildContext context,ClientNames clientNames) async{
-    int result = await databaseHelper.deleteRaw('clientName_table', 'c_n_id', clientNames.cNId);
-    if(result !=0){
+  void _delete(BuildContext context, ClientNames clientNames) async {
+    int result = await databaseHelper.deleteRaw(
+        'clientName_table', 'c_n_id', clientNames.cNId);
+    if (result != 0) {
       _showSnackBar(context, 'تم مسح الأسم بنجاح');
       // TODO : UPDATE THE LIST VIEW AFTER DELETE AN ELEMENT
       updateListView();
@@ -197,34 +217,32 @@ class _ClientPageState extends State<ClientPage>
 
   void updateListView() {
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
-    dbFuture.then((database)
-    {
-      Future<List<ClientNames>> clientNamesListFuture = databaseHelper.getClientNamesList();
-      clientNamesListFuture.then((namesList)
-      {
+    dbFuture.then((database) {
+      Future<List<ClientNames>> clientNamesListFuture =
+          databaseHelper.getClientNamesList();
+      clientNamesListFuture.then((namesList) {
         setState(() {
-          this.clientsNamesList =namesList;
+          this.clientsNamesList = namesList;
           this.count = namesList.length;
-
         });
       });
     });
-    
+
     print("Count : ${count.toString()}");
-
-
   }
 
-  void navigateToAddClient() async{
-    bool result = await Navigator.push(context,MaterialPageRoute(builder: (context) {
+  void navigateToAddClient() async {
+    bool result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return Add_Client();
     }));
     setState(() {
-      if (result== true) {
+      if (result == true) {
         updateListView();
       }
     });
   }
+
   Future<void> _showMyDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -260,6 +278,7 @@ class _ClientPageState extends State<ClientPage>
             ),
           ),
           actions: <Widget>[
+            //زرار التعديل ف الدايلوج
             TextButton(
               child: Text(
                 'تعديل ',
@@ -312,7 +331,8 @@ class _ClientPageState extends State<ClientPage>
                             ),
                             onPressed: () {
                               //ربنا يستر على الهبده دى
-                              _delete(context, clientsNamesList[customPosition]);
+                              _delete(
+                                  context, clientsNamesList[customPosition]);
                               //احذف عميل من الداتا بيز
                               print("حذف عميل ");
                               //اعمل تحديث للداتا بعد الحذف
@@ -327,12 +347,13 @@ class _ClientPageState extends State<ClientPage>
                                   fontSize: 14,
                                   color: Colors.red),
                             ),
-                            onPressed: () async{
+                            onPressed: () async {
                               //هيرجع للصفحه اللى وراه
                               //Navigator.of(context, rootNavigator: false).pop();
                               Navigator.pop(context);
-                              await Navigator.of(context)
-                                  .push(new MaterialPageRoute(builder: (context) => ClientPage()));
+                              await Navigator.of(context).push(
+                                  new MaterialPageRoute(
+                                      builder: (context) => ClientPage()));
                             },
                           ),
                         ],
@@ -369,9 +390,14 @@ class _ClientPageState extends State<ClientPage>
   //   }
   // } //Now using
 
-  Widget _buildCell(BuildContext context, int index,String name,) { // same as previous video
+  Widget _buildCell(
+    BuildContext context,
+    int index,
+    String name,
+  ) {
+    // same as previous video
     return Padding(
-      padding: EdgeInsets.only(left: 12.0,top: 5.0, right: 12.0),
+      padding: EdgeInsets.only(left: 12.0, top: 5.0, right: 12.0),
       child: Material(
         color: Colors.grey,
         elevation: 5.0,
@@ -381,7 +407,9 @@ class _ClientPageState extends State<ClientPage>
             name,
             textAlign: TextAlign.right,
             style: TextStyle(
-              fontFamily: "Cairo", fontSize: 20, fontWeight: FontWeight.bold,
+              fontFamily: "Cairo",
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
           subtitle: Padding(
@@ -400,17 +428,15 @@ class _ClientPageState extends State<ClientPage>
       ),
     );
   }
-
 }
 
-
-
-Widget cust_txtformfield_dialog_(String title, var typeinput, TextEditingController controller){
+Widget cust_txtformfield_dialog_(
+    String title, var typeinput, TextEditingController controller) {
   return Padding(
     padding: EdgeInsets.all(2),
-    child:  TextFormField(
-      controller:controller ,
-      keyboardType:typeinput,
+    child: TextFormField(
+      controller: controller,
+      keyboardType: typeinput,
       cursorColor: Colors.black,
       textDirection: TextDirection.rtl,
       textAlign: TextAlign.right,
@@ -418,9 +444,7 @@ Widget cust_txtformfield_dialog_(String title, var typeinput, TextEditingControl
         fillColor: Colors.white,
         hintText: title,
         hintStyle: TextStyle(
-            fontFamily: "Cairo",
-            color: Colors.black.withOpacity(0.4)
-        ),
+            fontFamily: "Cairo", color: Colors.black.withOpacity(0.4)),
         /*border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide:BorderSide(
@@ -433,5 +457,3 @@ Widget cust_txtformfield_dialog_(String title, var typeinput, TextEditingControl
     ),
   );
 }
-
-

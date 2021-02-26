@@ -51,60 +51,63 @@ class _Add_ClientState extends State<Add_Client> {
               )
             ],
           )),
-      body: SafeArea(
-          child: Container(
-              alignment: Alignment.topCenter,
-              height: double.infinity,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xffC3FCF2),
-                    Color(0xff659B91),
-                  ],
+      body: WillPopScope(
+        onWillPop: () {  },
+        child: SafeArea(
+            child: Container(
+                alignment: Alignment.topCenter,
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: new LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xffC3FCF2),
+                      Color(0xff659B91),
+                    ],
+                  ),
                 ),
-              ),
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, false),
-                    Spacer(
-                      flex: 1,
-                    ),
-                    customcontainerforsave("إضافة عميل"),
-                   /* Padding(
-                      padding: const EdgeInsets.only(right: 15,left: 15,bottom: 30),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: RaisedButton(
-                            color: Color(0xffC3FCF2),
-                            child: Text(
-                              'اضافه العميل',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Cairo",
-                                  fontSize: 18,
-                                  color: Colors.green),
-                            ),
-                            onPressed: () {
-                              save();
-                              // Navigator.push(
-                              //   context,
-                              //   PageTransition(
-                              //     type:
-                              //     PageTransitionType.leftToRight,
-                              //     child: ClientPage(),
-                              //   ),
-                              // );
-                            }),
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, false),
+                      Spacer(
+                        flex: 1,
                       ),
-                    )*/
-                  ],
-                ),
-              ))),
+                      customcontainerforsave("إضافة عميل"),
+                     /* Padding(
+                        padding: const EdgeInsets.only(right: 15,left: 15,bottom: 30),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: RaisedButton(
+                              color: Color(0xffC3FCF2),
+                              child: Text(
+                                'اضافه العميل',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Cairo",
+                                    fontSize: 18,
+                                    color: Colors.green),
+                              ),
+                              onPressed: () {
+                                save();
+                                // Navigator.push(
+                                //   context,
+                                //   PageTransition(
+                                //     type:
+                                //     PageTransitionType.leftToRight,
+                                //     child: ClientPage(),
+                                //   ),
+                                // );
+                              }),
+                        ),
+                      )*/
+                    ],
+                  ),
+                ))),
+      ),
     );
 
   }
