@@ -23,6 +23,7 @@ class _ClientPageState extends State<ClientPage>
   List<ClientNames> clientsNamesList=[];
   int count = 0;
   int customPosition;
+  
   TextEditingController editingController = TextEditingController();
   TabController controller;
 
@@ -45,6 +46,8 @@ class _ClientPageState extends State<ClientPage>
       clientsNamesList = List<ClientNames>();
       updateListView();
     }
+    updateListView();
+
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -207,6 +210,8 @@ class _ClientPageState extends State<ClientPage>
         });
       });
     });
+    
+    print("Count : ${count.toString()}");
 
 
   }
@@ -217,7 +222,6 @@ class _ClientPageState extends State<ClientPage>
     }));
     setState(() {
       if (result== true) {
-        print(":kakk");
       }
     });
   }
