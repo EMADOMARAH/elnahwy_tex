@@ -114,6 +114,8 @@ class _Add_ClientState extends State<Add_Client> {
       padding: EdgeInsets.only(right: 8,left: 8,top: 40),
       child: TextFormField(
         readOnly: boolean,
+        autofocus: true,
+        showCursor: true,
         keyboardType: typeinput,
         cursorColor: Colors.black,
         textAlign: TextAlign.right,
