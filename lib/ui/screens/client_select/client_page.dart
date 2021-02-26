@@ -225,8 +225,6 @@ class _ClientPageState extends State<ClientPage>
       }
     });
   }
-
-
   Future<void> _showMyDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,

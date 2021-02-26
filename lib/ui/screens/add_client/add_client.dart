@@ -194,17 +194,25 @@ class _Add_ClientState extends State<Add_Client> {
 
     moveToLastScreen();
 
-    int result; // to check the operation success
-    result = await helper.insertClientName(clientNames);
+    if (clientNames.cNName.length > 0 ) {
+      int result; // to check the operation success
+      result = await helper.insertClientName(clientNames);
 
 
-    if (result !=0) {
-      // Success
-      _ShowAlertDialog('Status' , 'تم الحفظ بنجاح');
-    }else{
-      //Failure
-      _ShowAlertDialog('Status' , 'حدث خطأ اثناء الحفظ');
+      if (result !=0) {
+        // Success
+        _ShowAlertDialog('Status' , 'تم الحفظ بنجاح');
+      }else{
+        //Failure
+        _ShowAlertDialog('Status' , 'حدث خطأ اثناء الحفظ');
+      }
+
+    } else{
+      _ShowAlertDialog("خطأ", "اسم العميل فاضى!");
     }
+
+
+
 
 
   }
