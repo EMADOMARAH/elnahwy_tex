@@ -31,6 +31,7 @@ class _ClientPageState extends State<ClientPage>
     // TODO: implement initState
     super.initState();
     controller = new TabController(length: 4, vsync: this);
+    updateListView();
   }
 
   @override  void dispose() {
@@ -46,8 +47,6 @@ class _ClientPageState extends State<ClientPage>
       clientsNamesList = List<ClientNames>();
       updateListView();
     }
-    updateListView();
-
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -222,6 +221,7 @@ class _ClientPageState extends State<ClientPage>
     }));
     setState(() {
       if (result== true) {
+        updateListView();
       }
     });
   }
