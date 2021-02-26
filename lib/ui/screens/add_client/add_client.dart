@@ -45,7 +45,7 @@ class _Add_ClientState extends State<Add_Client> {
                 flex: 1,
               ),
               Text(
-                "تعديل بيانات العميل",
+                "إضافه عميل جديد",
                 style:
                 TextStyle(fontFamily: "Cairo", fontWeight: FontWeight.bold),
               )
@@ -70,31 +70,38 @@ class _Add_ClientState extends State<Add_Client> {
                 child: Column(
                   children: <Widget>[
                     cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, false),
-
                     Spacer(
                       flex: 1,
                     ),
-                    RaisedButton(
-                        color: Color(0xffC3FCF2),
-                        child: Text(
-                          'حفظ التعديلات',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Cairo",
-                              fontSize: 18,
-                              color: Colors.green),
-                        ),
-                        onPressed: () {
-                          save();
-                          // Navigator.push(
-                          //   context,
-                          //   PageTransition(
-                          //     type:
-                          //     PageTransitionType.leftToRight,
-                          //     child: ClientPage(),
-                          //   ),
-                          // );
-                        })
+                    customcontainerforsave("إضافة عميل"),
+                   /* Padding(
+                      padding: const EdgeInsets.only(right: 15,left: 15,bottom: 30),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: RaisedButton(
+                            color: Color(0xffC3FCF2),
+                            child: Text(
+                              'اضافه العميل',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 18,
+                                  color: Colors.green),
+                            ),
+                            onPressed: () {
+                              save();
+                              // Navigator.push(
+                              //   context,
+                              //   PageTransition(
+                              //     type:
+                              //     PageTransitionType.leftToRight,
+                              //     child: ClientPage(),
+                              //   ),
+                              // );
+                            }),
+                      ),
+                    )*/
                   ],
                 ),
               ))),
@@ -104,14 +111,14 @@ class _Add_ClientState extends State<Add_Client> {
 
   Widget cust_txtformfield(TextEditingController textEditingController,String title, var typeinput, bool boolean) {
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.only(right: 8,left: 8,top: 40),
       child: TextFormField(
         readOnly: boolean,
         keyboardType: typeinput,
         cursorColor: Colors.black,
         textAlign: TextAlign.right,
         decoration: InputDecoration(
-          fillColor: Colors.white.withOpacity(0.2),
+          fillColor: Colors.white.withOpacity(0.4),
           filled: true,
           hintText: title,
           hintStyle: TextStyle(
@@ -148,8 +155,45 @@ class _Add_ClientState extends State<Add_Client> {
       ),
     );
   }
-
-
+//Cutsom RaisdButton
+  Widget customcontainerforsave(String title){
+    return Padding(
+      padding: const EdgeInsets.only(right: 15,left: 15,bottom: 30),
+      child: SizedBox(
+        width: double.infinity,
+        height: 50,
+        child: RaisedButton(
+          elevation: 10,
+          splashColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(
+              color: Colors.white.withOpacity(0.5),
+            )
+          ),
+            color: Color(0xffC3FCF2),
+            child: Text(
+              title,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Cairo",
+                  fontSize: 18,
+                  color: Colors.green),
+            ),
+            onPressed: () {
+              save();
+              // Navigator.push(
+              //   context,
+              //   PageTransition(
+              //     type:
+              //     PageTransitionType.leftToRight,
+              //     child: ClientPage(),
+              //   ),
+              // );
+            }),
+      ),
+    );
+  }
   //save data to data base
   void save() async{
 

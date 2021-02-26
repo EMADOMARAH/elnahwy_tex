@@ -147,6 +147,7 @@ class _ClientPageState extends State<ClientPage>
                     ),
                     Container(
                       width: double.infinity,
+                      height: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40),
