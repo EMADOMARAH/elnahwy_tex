@@ -4,7 +4,6 @@ import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';
 import 'package:elnahwy_tex/widget/container_clientdata_cloth.dart';
 import 'package:elnahwy_tex/widget/cust_label.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield.dart';
-import 'package:elnahwy_tex/widget/custom_Text_in_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -53,57 +52,56 @@ class _client_dataState extends State<client_data> {
             ],
           )),
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.topCenter,
-              decoration: BoxDecoration(
-                gradient: new LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xffC3FCF2),
-                    Color(0xff659B91),
-                  ],
-                ),
-              ),
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    cust_label("اسم العميل"),
-                    cust_txtformfield("اسم العميل", TextInputType.text),
-                    Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
-                    Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
-                    Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: new LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xffC3FCF2),
+                Color(0xff659B91),
+              ],
+            ),
 
-                    Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: RaisedButton(
-                        color: Colors.white,
-                        child: Text(
-                          'رجوع',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Cairo",
-                              fontSize: 18,
-                              color: Colors.green),
+          )
+          , child:Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              cust_label("اسم العميل"),
+              cust_txtformfield("اسم العميل", TextInputType.text),
+              Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
+              Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
+              Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
+              Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
+              Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
+
+              Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: RaisedButton(
+                    color: Colors.white,
+                    child: Text(
+                      'رجوع',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Cairo",
+                          fontSize: 18,
+                          color: Colors.green),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type:
+                          PageTransitionType.leftToRight,
+                          child: ClientPage(),
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type:
-                              PageTransitionType.leftToRight,
-                              child: ClientPage(),
-                            ),
-                          );
-                        }),
-                    )
-                  ],
-                ),
-              )),
+                      );
+                    }),
+              )
+            ],
+          ),
+        ),
         ),
       ),
     );

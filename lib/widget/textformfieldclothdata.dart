@@ -26,7 +26,7 @@ Widget textformcloth(String title){
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(
-            color: Color(0xffC3FCF2),
+            color: Color(0xff659B91).withOpacity(0.4),
             width: 2,
           ),
         ),

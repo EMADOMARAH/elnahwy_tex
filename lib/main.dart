@@ -1,7 +1,6 @@
 import 'package:elnahwy_tex/ui/screens/Cateogry_item/cateogry_item.dart';
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';
-import 'package:elnahwy_tex/ui/screens/client_select/search_list.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:elnahwy_tex/ui/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';

@@ -1,16 +1,17 @@
 import 'package:elnahwy_tex/widget/textformfieldclothdata.dart';
 import 'package:flutter/material.dart';
 
-Widget Container_client_cloth (TextEditingController  clothName,
-TextEditingController clothtype,
-TextEditingController clothtupenumber,
-TextEditingController clothNote){
+Widget factorycust_container (TextEditingController  clothName,
+    TextEditingController clothtype,
+    TextEditingController clothtupenumber,
+    TextEditingController clothNote){
 
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
       width: double.infinity,
       decoration: BoxDecoration(
+        border: Border.all(color: Color(0xffC3FCF2).withGreen(120)),
         color: Color(0xffC3FCF2).withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),
       ),

@@ -1,3 +1,4 @@
+import 'package:elnahwy_tex/ui/screens/Cloth_type/clothtypeabout.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
 import 'package:elnahwy_tex/widget/cutom_data_tile_client.dart';
 import 'package:elnahwy_tex/widget/divider_cutom.dart';
@@ -170,13 +171,13 @@ class _factory_selectState extends State<factory_select> {
                                     Navigator.push(
                                       context,
                                       PageTransition(
-                                        type: PageTransitionType.rightToLeft, child: null,
+                                        type: PageTransitionType.rightToLeft, child: clothabout(),
                                       ),
                                     );
                                   },
                                   child: Column(
                                     children: [
-                                      custom_data("wagdy", ''),
+                                      custom_data("نوع القماش", ''),
                                       cust_divider(),
                                       custom_data("wagdy", ''),
                                       cust_divider(),

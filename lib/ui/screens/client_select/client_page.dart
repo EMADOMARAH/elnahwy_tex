@@ -419,10 +419,6 @@ class _ClientPageState extends State<ClientPage>
 
 
 
-
-
-
-
 Widget cust_txtformfield_dialog_(String title, var typeinput, TextEditingController controller){
   return Padding(
     padding: EdgeInsets.all(2),
