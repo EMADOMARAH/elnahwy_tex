@@ -15,30 +15,21 @@ class ClientPage extends StatefulWidget {
 }
 class _ClientPageState extends State<ClientPage>
     with SingleTickerProviderStateMixin {
+
+  //make object from our DB
+  DatabaseHelper databaseHelper = DatabaseHelper();
+
+//make list data to hold out clients name data
+  List<ClientNames> clientsNamesList=[];
+  int count = 0;
+  int customPosition;
   TextEditingController editingController = TextEditingController();
   TabController controller;
-  List<String> listItems = [
-    "Johnny Depp",
-    "Al Pacino",
-    "Robert De Niro",
-    "Kevin Spacey",
-    "Denzel Washington",
-    "Russell Crowe",
-    "SBrad Pitt",
-    "Sylvester Stallone",
-    'Mohamed Wagdy',
-    'محمد وجدي',
-    'عماد عبد الحليم',
-    'خالد حكيم',
-    'احمد ضبش',
-  ];
-  var items = List<String>();
+
   @override  void initState() {
     // TODO: implement initState
-    items.addAll(listItems);
     super.initState();
     controller = new TabController(length: 4, vsync: this);
-
   }
 
   @override  void dispose() {
@@ -46,15 +37,6 @@ class _ClientPageState extends State<ClientPage>
     controller.dispose();
     super.dispose();
   }
-
-//make object from our DB
-  DatabaseHelper databaseHelper = DatabaseHelper();
-
-//make list data to hold out clients name data
-  List<ClientNames> clientsNamesList=[];
-  int count = 0;
-  int customPosition;
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +49,7 @@ class _ClientPageState extends State<ClientPage>
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          navigateToAddClient(new ClientNames());
+          navigateToAddClient();
         },
         icon: Icon(
           Icons.add,
@@ -104,7 +86,7 @@ class _ClientPageState extends State<ClientPage>
                         Flexible(
                           child: TextFormField(
                               onChanged: (value) {
-                                filterSearchResults(value);
+                                //filterSearchResults(value);
                               },
                               keyboardType: TextInputType.text,
                               textAlign: TextAlign.center,
@@ -229,7 +211,7 @@ class _ClientPageState extends State<ClientPage>
 
   }
 
-  void navigateToAddClient(ClientNames clientNames) async{
+  void navigateToAddClient() async{
     bool result = await Navigator.push(context,MaterialPageRoute(builder: (context) {
       return Add_Client();
     }));
@@ -286,10 +268,10 @@ class _ClientPageState extends State<ClientPage>
                     color: Colors.green),
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade, child: edit_screen(ClientNames())));
+                // Navigator.push(
+                //     context,
+                //     PageTransition(
+                //         type: PageTransitionType.fade, child: edit_screen(ClientNames())));
               },
             ),
             TextButton(
@@ -362,28 +344,28 @@ class _ClientPageState extends State<ClientPage>
     );
   }
 
-  void filterSearchResults(String query) {
-    List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(listItems);
-    if (query.isNotEmpty) {
-      List<String> dummyListData = List<String>();
-      dummySearchList.forEach((item) {
-        if (item.contains(query)) {
-          dummyListData.add(item);
-        }
-      });
-      setState(() {
-        items.clear();
-        items.addAll(dummyListData);
-      });
-      return;
-    } else {
-      setState(() {
-        items.clear();
-        items.addAll(listItems);
-      });
-    }
-  } //Now using
+  // void filterSearchResults(String query) {
+  //   List<String> dummySearchList = List<String>();
+  //   //dummySearchList.addAll(listItems);
+  //   if (query.isNotEmpty) {
+  //     List<String> dummyListData = List<String>();
+  //     dummySearchList.forEach((item) {
+  //       if (item.contains(query)) {
+  //         dummyListData.add(item);
+  //       }
+  //     });
+  //     setState(() {
+  //       namesList.clear();
+  //       namesList.addAll(dummyListData);
+  //     });
+  //     return;
+  //   } else {
+  //     setState(() {
+  //       namesList.clear();
+  //       //namesList.addAll(listItems);
+  //     });
+  //   }
+  // } //Now using
 
   Widget _buildCell(BuildContext context, int index,String name,) { // same as previous video
     return Padding(

@@ -49,10 +49,10 @@ Future<void> showMyDialog(BuildContext context) async {
                   color: Colors.green),
             ),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.fade, child: edit_screen(new ClientNames() )));
+              // Navigator.push(
+              //     context,
+              //     PageTransition(
+              //         type: PageTransitionType.fade, child: edit_screen(new ClientNames() )));
             },
           ),
           TextButton(

@@ -13,7 +13,7 @@ class Add_Client extends StatefulWidget {
 
 class _Add_ClientState extends State<Add_Client> {
   DatabaseHelper helper = DatabaseHelper();
-  ClientNames clientNames;
+  ClientNames clientNames = new ClientNames("");
 
   TextEditingController clientNameController = TextEditingController();
   @override
@@ -150,6 +150,7 @@ class _Add_ClientState extends State<Add_Client> {
         ),
         controller: textEditingController,
         onChanged: (value){
+          clientNames.cNName = textEditingController.text;
 
         },
       ),
@@ -182,14 +183,6 @@ class _Add_ClientState extends State<Add_Client> {
             ),
             onPressed: () {
               save();
-              // Navigator.push(
-              //   context,
-              //   PageTransition(
-              //     type:
-              //     PageTransitionType.leftToRight,
-              //     child: ClientPage(),
-              //   ),
-              // );
             }),
       ),
     );

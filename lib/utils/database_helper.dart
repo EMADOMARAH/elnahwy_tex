@@ -73,7 +73,7 @@ class DatabaseHelper{
         CREATE TABLE $factoryTypeTable
         ($colFTId INTEGER PRIMARY KEY AUTOINCREMENT,
         $colFTSource TEXT,
-        $colFTName TEXT,
+        $colFTName TEXT
         )
         '''
     );
@@ -84,7 +84,7 @@ class DatabaseHelper{
         $colFCName TEXT,
         $colFCMeters TEXT,
         $colFCTape TEXT,
-        $colFCTape TEXT,
+        $colFCNote TEXT
         )
         '''
     );
@@ -92,7 +92,7 @@ class DatabaseHelper{
         '''
         CREATE TABLE $clientNamesTable
         ($colCNId INTEGER PRIMARY KEY AUTOINCREMENT,
-        $colCNName TEXT,
+        $colCNName TEXT
         )
         '''
     );
@@ -103,7 +103,7 @@ class DatabaseHelper{
          $colCTName TEXT,
         $colCTMeters TEXT,
         $colCTTape TEXT,
-        $colCTTape TEXT,
+        $colCTNote TEXT
         )
         '''
     );
@@ -133,7 +133,7 @@ class DatabaseHelper{
     var result = await db.insert(clientNamesTable, name.toMap());
     return result;
   }
-  Future<int> insertClientTable(ClientType type) async{
+  Future<int> insertClientType(ClientType type) async{
     Database db = await this.database;
     var result = await db.insert(clientTypesTable, type.toMap());
     return result;
