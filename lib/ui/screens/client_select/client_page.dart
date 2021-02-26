@@ -1,4 +1,5 @@
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
+import 'package:elnahwy_tex/ui/screens/add_client/add_client.dart';
 import 'package:elnahwy_tex/ui/screens/client_data/client_data.dart';
 import 'package:elnahwy_tex/model/clientNameModel.dart';
 import 'package:elnahwy_tex/utils/database_helper.dart';
@@ -66,7 +67,7 @@ class _ClientPageState extends State<ClientPage>
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          navigateToClientDetail(new ClientNames() , "اضافه عميل");
+          navigateToAddClient(new ClientNames());
         },
         icon: Icon(
           Icons.add,
@@ -227,13 +228,13 @@ class _ClientPageState extends State<ClientPage>
 
   }
 
-  void navigateToClientDetail(ClientNames clientNames, String title) async{
+  void navigateToAddClient(ClientNames clientNames) async{
     bool result = await Navigator.push(context,MaterialPageRoute(builder: (context) {
-      return edit_screen(clientNames);
+      return Add_Client();
     }));
     setState(() {
       if (result== true) {
-        updateListView();
+        print(":kakk");
       }
     });
   }

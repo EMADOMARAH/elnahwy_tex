@@ -3,16 +3,17 @@ class ClientNames{
   String cNName;
 
 // setters and getters
-  int get clientId{
-    return cNId;
-  }
-  String get clientName{
-    return cNName;
-  }
+//   int get clientId{
+//     return cNId;
+//   }
+//   String get clientName{
+//     return cNName;
+//   }
 
   set clientName(String name){
     this.cNName = name;
   }
+
 
 
   ClientNames.withId({this.cNId, this.cNName});

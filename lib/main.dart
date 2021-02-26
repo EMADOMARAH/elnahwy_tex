@@ -1,3 +1,4 @@
+import 'package:elnahwy_tex/model/clientNameModel.dart';
 import 'package:elnahwy_tex/ui/screens/Cateogry_item/cateogry_item.dart';
 import 'package:elnahwy_tex/ui/screens/Edit_screen/edit_Screen.dart';
 import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';

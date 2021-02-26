@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:elnahwy_tex/model/clientNameModel.dart';
 import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';
 import 'package:elnahwy_tex/utils/database_helper.dart';
@@ -5,28 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 
-class edit_screen extends StatefulWidget {
-  
-  final ClientNames clientNames;
-  edit_screen(this.clientNames);
-
-
-
+class Add_Client extends StatefulWidget {
   @override
-  _edit_screenState createState() => _edit_screenState(this.clientNames);
+  _Add_ClientState createState() => _Add_ClientState();
 }
 
-class _edit_screenState extends State<edit_screen> {
-
+class _Add_ClientState extends State<Add_Client> {
   DatabaseHelper helper = DatabaseHelper();
   ClientNames clientNames;
-  _edit_screenState(ClientNames clientNames);
 
   TextEditingController clientNameController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    clientNameController.text = clientNames.cNName;
+    //clientNameController.text = clientNames.cNName;
+
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -54,7 +47,7 @@ class _edit_screenState extends State<edit_screen> {
               Text(
                 "تعديل بيانات العميل",
                 style:
-                    TextStyle(fontFamily: "Cairo", fontWeight: FontWeight.bold),
+                TextStyle(fontFamily: "Cairo", fontWeight: FontWeight.bold),
               )
             ],
           )),
@@ -76,7 +69,7 @@ class _edit_screenState extends State<edit_screen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, true),
+                    cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, false),
 
                     Spacer(
                       flex: 1,
@@ -106,6 +99,7 @@ class _edit_screenState extends State<edit_screen> {
                 ),
               ))),
     );
+
   }
 
   Widget cust_txtformfield(TextEditingController textEditingController,String title, var typeinput, bool boolean) {
@@ -149,29 +143,21 @@ class _edit_screenState extends State<edit_screen> {
         ),
         controller: textEditingController,
         onChanged: (value){
-          updateClientName();
+
         },
       ),
     );
   }
 
-  //update the client name object
-  void updateClientName(){
-    clientNames.cNName=clientNameController.text;
-}
 
   //save data to data base
   void save() async{
-    
+
     moveToLastScreen();
-    
+
     int result; // to check the operation success
-    if (clientNames.cNId != null)
-    { // Case 1 : update Operation
-      result = await helper.updateClientName(clientNames);
-     }  else{ //Case 2 : Insert Operation
-      result = await helper.insertClientName(clientNames);
-    }
+    result = await helper.insertClientName(clientNames);
+
 
     if (result !=0) {
       // Success
@@ -182,33 +168,16 @@ class _edit_screenState extends State<edit_screen> {
     }
 
   }
-
-  // void _delete() async{
-  //   moveToLastScreen();
-  //   //case the user trying to delete the new one , he came from fab
-  //   if (clientNames.cNId ==null ) {
-  //     _ShowAlertDialog('Statuse', "مفيش حلجه هتتمسح هنا");
-  //     return;
-  //   }
-  //   int result = await helper.deleteRaw('clientName_table', 'c_n_id', clientNames.cNId);
-  //   if(result !=0){
-  //     _ShowAlertDialog("Statuse", 'تم مسح الأسم بنجاح');
-  //   } else{
-  //     _ShowAlertDialog("Status", "ERROR");
-  //   }
-  // }
-
   void _ShowAlertDialog(String title, String msg) {
     AlertDialog alertDialog = AlertDialog(
       title:  Text(title),
       content: Text(msg),
     );
     showDialog(context: context,
-    builder: (_) => alertDialog);
+        builder: (_) => alertDialog);
   }
 
   void moveToLastScreen() {
     Navigator.pop(context, true);
   }
-
 }
