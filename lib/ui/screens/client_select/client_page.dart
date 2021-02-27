@@ -24,6 +24,8 @@ class _ClientPageState extends State<ClientPage>
   int count = 0;
   int customPosition;
 
+  var id , name;
+
   TextEditingController editingController = TextEditingController();
   TabController controller;
 
@@ -53,7 +55,10 @@ class _ClientPageState extends State<ClientPage>
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          navigateToAddClient();
+          //navigateToAddClient();
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return Add_Client();
+          })).then((value) => updateListView());
         },
         icon: Icon(
           Icons.add,
@@ -163,7 +168,7 @@ class _ClientPageState extends State<ClientPage>
                             shrinkWrap: true,
                             itemCount: count,
                             itemBuilder: (context, int position) {
-                              customPosition = position;
+
                               return GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -175,15 +180,15 @@ class _ClientPageState extends State<ClientPage>
                                     );
                                   },
                                   child: custom_data(
-                                    this
-                                        .clientsNamesList[position]
-                                        .cNName
-                                        .toString(),
+                                    this.clientsNamesList[position].cNName.toString(),
                                     'No_title',
                                     IconButton(
                                       icon: Icon(Icons.more_vert),
                                       onPressed: () {
-                                        _showMyDialog(context);
+                                        id = this.clientsNamesList[position].cNId;
+                                        name = this.clientsNamesList[position].cNName.toString();
+                                        this.customPosition = position;
+                                        _showMyDialog(context,customPosition,id,name);
                                       },
                                     ),
                                   ));
@@ -202,18 +207,12 @@ class _ClientPageState extends State<ClientPage>
     );
   }
 
-  //show snack bar and update the list after delete
-  void _showSnackBar(BuildContext context, String message) {
-    final snackBar = SnackBar(content: Text(message));
-    Scaffold.of(context).showSnackBar(snackBar);
-  }
 
 //delete item from the list
   void _delete(BuildContext context, ClientNames clientNames) async {
     int result = await databaseHelper.deleteRaw(
         'clientName_table', 'c_n_id', clientNames.cNId);
     if (result != 0) {
-      _showSnackBar(context, 'تم مسح الأسم بنجاح');
       // TODO : UPDATE THE LIST VIEW AFTER DELETE AN ELEMENT
       updateListView();
     }
@@ -247,7 +246,8 @@ class _ClientPageState extends State<ClientPage>
     });
   }
 
-  Future<void> _showMyDialog(BuildContext context) async {
+  Future<void> _showMyDialog(BuildContext context , int customPosition, int id , String name) async {
+    print("Position : $customPosition   id : $id   name : $name");
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -256,7 +256,7 @@ class _ClientPageState extends State<ClientPage>
           onWillPop: () async => true,
           child: AlertDialog(
             title: Text(
-              'تعديل او اضافه',
+              'تعديل او حذف ',
               textAlign: TextAlign.right,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -266,14 +266,6 @@ class _ClientPageState extends State<ClientPage>
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text(
-                    'تعديل او حذف هذا العميل ',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Cairo",
-                        fontSize: 14),
-                  ),
                   Text(
                     'هل تريد حذف او تعديل هذا العميل ',
                     textAlign: TextAlign.right,
@@ -297,12 +289,12 @@ class _ClientPageState extends State<ClientPage>
                       color: Colors.green),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.fade,
-                          child: null /*edit_screen(ClientNames())*/));
-                },
+                 Navigator.push(
+                     context,
+                     PageTransition(
+                     type: PageTransitionType.fade,
+                     child:  edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());
+                 },
               ),
               TextButton(
                 child: Text(
@@ -339,15 +331,12 @@ class _ClientPageState extends State<ClientPage>
                                     color: Colors.green),
                               ),
                               onPressed: () {
-                                //ربنا يستر على الهبده دى
-                                _delete(
-                                    context, clientsNamesList[customPosition]);
+
+                                _delete(context,clientsNamesList[customPosition] );
                                 //احذف عميل من الداتا بيز
                                 Navigator.pop(context);
-                                /*Navigator.push(context,PageTransition(child: ClientPage(),
-                                    type: PageTransitionType.fade));*/
-                                print("حذف عميل ");
                                 Navigator.pop(context);
+                                updateListView();
                                 //اعمل تحديث للداتا بعد الحذف
                               },
                             ),

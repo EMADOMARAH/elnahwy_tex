@@ -8,6 +8,8 @@ class FactoryTypes{
   FactoryTypes({this.fTName, this.fTSource});
   FactoryTypes.withId({this.fTId, this.fTName, this.fTSource});
 
+
+
   Map<String,dynamic> toMap(){
     var map = <String , dynamic>{};
 

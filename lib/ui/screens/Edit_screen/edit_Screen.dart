@@ -12,21 +12,28 @@ class edit_screen extends StatefulWidget {
 
 
 
+
   @override
   _edit_screenState createState() => _edit_screenState(this.clientNames);
 }
 
 class _edit_screenState extends State<edit_screen> {
 
+
   DatabaseHelper helper = DatabaseHelper();
-  ClientNames clientNames;
-  _edit_screenState(ClientNames clientNames);
+  ClientNames clientNames = new ClientNames.withId(null, "");
+  _edit_screenState(this.clientNames);
 
   TextEditingController clientNameController = TextEditingController();
 
+
+
   @override
   Widget build(BuildContext context) {
-    clientNameController.text = clientNames.cNName;
+    clientNameController.text = clientNames.name;
+
+    this.clientNames.cNName =clientNames.name;
+    //print ("My Name : ${clientNames.cNName}");
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -76,7 +83,7 @@ class _edit_screenState extends State<edit_screen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, true),
+                    cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, false),
 
                     Spacer(
                       flex: 1,
@@ -93,14 +100,9 @@ class _edit_screenState extends State<edit_screen> {
                         ),
                         onPressed: () {
                           save();
-                          // Navigator.push(
-                          //   context,
-                          //   PageTransition(
-                          //     type:
-                          //     PageTransitionType.leftToRight,
-                          //     child: ClientPage(),
-                          //   ),
-                          // );
+                          moveToLastScreen();
+
+
                         })
                   ],
                 ),
@@ -164,6 +166,7 @@ class _edit_screenState extends State<edit_screen> {
   void save() async{
     
     moveToLastScreen();
+
     
     int result; // to check the operation success
     if (clientNames.cNId != null)
@@ -173,13 +176,16 @@ class _edit_screenState extends State<edit_screen> {
       result = await helper.insertClientName(clientNames);
     }
 
-    if (result !=0) {
+    if (result !=0 ) {
       // Success
-      _ShowAlertDialog('Status' , 'تم الحفظ بنجاح');
+      _ShowAlertDialog('الحاله' , 'تم الحفظ بنجاح');
     }else{
       //Failure
-      _ShowAlertDialog('Status' , 'حدث خطأ اثناء الحفظ');
+      _ShowAlertDialog('الحاله' , 'حدث خطأ اثناء الحفظ');
     }
+
+
+
 
   }
 
