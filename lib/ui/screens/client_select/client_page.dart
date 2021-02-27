@@ -16,42 +16,60 @@ class ClientPage extends StatefulWidget {
 
 class _ClientPageState extends State<ClientPage>
     with SingleTickerProviderStateMixin {
-  //make object from our DB
-  DatabaseHelper databaseHelper = DatabaseHelper();
-
+//make object from our DB
+DatabaseHelper databaseHelper = DatabaseHelper();
+TextEditingController editingController = TextEditingController();
+TabController controller;
 //make list data to hold out clients name data
-  List<ClientNames> clientsNamesList = [];
-  int count = 0;
-  int customPosition;
+List<ClientNames> clientsNamesList = [];
+int count = 0;
+int customPosition;
 
-  var id , name;
-
-  TextEditingController editingController = TextEditingController();
-  TabController controller;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    controller = new TabController(length: 4, vsync: this);
-    updateListView();
+var id , name;
+var allClient = [];
+var items = List();
+@override
+void initState() {
+  // TODO: implement initState
+  super.initState();
+  controller = new TabController(length: 4, vsync: this);
+  updateListView();
+  databaseHelper.getClientNamesList().then((client){
+    setState(() {
+      allClient = client;
+      items = allClient;
+    });
+  });}
+void filterSearchResults(String query) async {
+  clientsNamesList=[];
+  var dummySearchList = allClient;
+  if(query.isNotEmpty){
+    setState(() {
+      for(int index =0 ; index < dummySearchList.length; index++){
+        ClientNames clientNames = dummySearchList[index];
+        if(clientNames.name.toString().contains(query)){
+          print('user'+index.toString());
+          print(clientNames);
+          clientsNamesList.add(clientNames);
+        }
+      }
+    });
+  }else{
+    setState(() {
+      updateListView();
+    });
   }
+}
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    controller.dispose();
-    super.dispose();
-  }
+@override
+void dispose() {
+  // TODO: implement dispose
+  controller.dispose();
+  super.dispose();
+}
 
   @override
   Widget build(BuildContext context) {
-    //if out list == null initiate new one
-    if (clientsNamesList == null) {
-      clientsNamesList = List<ClientNames>();
-      updateListView();
-    }
-
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -109,7 +127,7 @@ class _ClientPageState extends State<ClientPage>
                         Flexible(
                           child: TextFormField(
                               onChanged: (value) {
-                                //filterSearchResults(value);
+                                filterSearchResults(value);
                               },
                               keyboardType: TextInputType.text,
                               textAlign: TextAlign.center,
@@ -166,7 +184,7 @@ class _ClientPageState extends State<ClientPage>
                           child: ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: count,
+                            itemCount: clientsNamesList.length,
                             itemBuilder: (context, int position) {
 
                               return GestureDetector(
