@@ -75,30 +75,6 @@ class _client_dataState extends State<client_data> {
               Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
               Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
               Container_client_cloth(clothName,clothtupenumber,clothtype,clothNote),
-
-              Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: RaisedButton(
-                    color: Colors.white,
-                    child: Text(
-                      'رجوع',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Cairo",
-                          fontSize: 18,
-                          color: Colors.green),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          type:
-                          PageTransitionType.leftToRight,
-                          child: ClientPage(),
-                        ),
-                      );
-                    }),
-              )
             ],
           ),
         ),
