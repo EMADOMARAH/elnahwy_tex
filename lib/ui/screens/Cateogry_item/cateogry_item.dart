@@ -57,7 +57,7 @@ class _factory_selectState extends State<factory_select> {
     return Scaffold(
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            txt_dialog_form(context);
+            txt_dialog_form(context,"إضافه نوع قماش","إسم القماش");
           },
           icon: Icon(
             Icons.add,
@@ -260,11 +260,7 @@ class _factory_selectState extends State<factory_select> {
                       color: Colors.green),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.fade,
-                          child: null ));/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
+                  txt_dialog_form(context,"تعديل اسم العميل ","اسم العميل من الداتا بيز");/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
                 },
               ),
               TextButton(
@@ -339,15 +335,14 @@ class _factory_selectState extends State<factory_select> {
       },
     );
   }
-
-  Future<void> txt_dialog_form(BuildContext context) async {
+  Future<void> txt_dialog_form(BuildContext context,String title,String textTitle) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'إضافه نوع قماش جديد',
+            title,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontFamily: "Cairo", fontSize: 18),
@@ -356,7 +351,7 @@ class _factory_selectState extends State<factory_select> {
               child: Column(
                 children: <Widget>[
                   cust_txtformfield_dialog(
-                      "نوع القماش", TextInputType.text, factoryTypeController),
+                      textTitle, TextInputType.text, factoryTypeController),
                 ],
               )),
           actions: <Widget>[
