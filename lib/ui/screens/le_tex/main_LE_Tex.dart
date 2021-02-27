@@ -1,6 +1,7 @@
 import 'package:elnahwy_tex/model/factoryTypeModel.dart';
 import 'package:elnahwy_tex/ui/screens/Cloth_type/clothtypeabout.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
+import 'package:elnahwy_tex/ui/screens/le_tex/cloth_Type_letex.dart';
 import 'package:elnahwy_tex/utils/database_helper.dart';
 import 'package:elnahwy_tex/widget/container_clientdata_cloth.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
@@ -179,7 +180,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
                                         context,
                                         PageTransition(
                                           type: PageTransitionType.rightToLeft,
-                                          child: clothabout(),
+                                          child: letex_clothtype(),
                                         ),
                                       );
                                     },
@@ -238,7 +239,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
               child: ListBody(
                 children: <Widget>[
                   Text(
-                    'هل تريد حذف او تعديل هذا العميل ',
+                    'هل تريد حذف او تعديل هذا الصنف ',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -260,7 +261,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
                       color: Colors.green),
                 ),
                 onPressed: () {
-                  txt_dialog_form(context,"تعديل اسم العميل ",null);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
+                  txt_dialog_form(context,"تعديل اسم الصنف ",null);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
                 },
               ),
               TextButton(
@@ -280,7 +281,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: Text(
-                            'هل انت متاكد من حذف هذا العميل ',
+                            'هل انت متاكد من حذف هذا الصنف ',
                             textAlign: TextAlign.right,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -338,7 +339,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
   Future<void> txt_dialog_form(BuildContext context,String title,String textTitle) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
