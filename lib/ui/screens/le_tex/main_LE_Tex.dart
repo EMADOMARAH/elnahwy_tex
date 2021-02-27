@@ -1,6 +1,7 @@
 import 'package:elnahwy_tex/model/factoryTypeModel.dart';
 import 'package:elnahwy_tex/ui/screens/Cloth_type/clothtypeabout.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
+import 'package:elnahwy_tex/ui/screens/le_tex/cloth_Type_letex.dart';
 import 'package:elnahwy_tex/utils/database_helper.dart';
 import 'package:elnahwy_tex/widget/container_clientdata_cloth.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
@@ -12,13 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sqflite/sqflite.dart';
 
-class factory_select extends StatefulWidget {
+class LE_tex_home extends StatefulWidget {
   @override
-  _factory_selectState createState() => _factory_selectState();
+  LE_tex_homeState createState() => LE_tex_homeState();
 }
 
-class _factory_selectState extends State<factory_select>
-    with SingleTickerProviderStateMixin {
+class LE_tex_homeState extends State<LE_tex_home> {
 
   //make object from our DB
   DatabaseHelper databaseHelper = DatabaseHelper();
@@ -135,7 +135,7 @@ class _factory_selectState extends State<factory_select>
                                       ),
                                       border: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(100),
+                                        BorderRadius.circular(100),
                                       ),
                                       contentPadding: EdgeInsets.all(10))),
                             ),
@@ -143,7 +143,7 @@ class _factory_selectState extends State<factory_select>
                               width: 20,
                             ),
                             Image(
-                              image: AssetImage('images/Factory.png'),
+                              image: AssetImage('images/LeTex.png'),
                               height: 66,
                               width: 66,
                             )
@@ -164,7 +164,7 @@ class _factory_selectState extends State<factory_select>
                           ),
                           child: Padding(
                             padding:
-                                EdgeInsets.only(top: 27, left: 5, right: 5),
+                            EdgeInsets.only(top: 27, left: 5, right: 5),
                             child: SingleChildScrollView(
                               child: ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
@@ -180,7 +180,7 @@ class _factory_selectState extends State<factory_select>
                                         context,
                                         PageTransition(
                                           type: PageTransitionType.rightToLeft,
-                                          child: clothabout(),
+                                          child: letex_clothtype(),
                                         ),
                                       );
                                     },
@@ -239,7 +239,7 @@ class _factory_selectState extends State<factory_select>
               child: ListBody(
                 children: <Widget>[
                   Text(
-                    'هل تريد حذف او تعديل هذا العميل ',
+                    'هل تريد حذف او تعديل هذا الصنف ',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -261,7 +261,7 @@ class _factory_selectState extends State<factory_select>
                       color: Colors.green),
                 ),
                 onPressed: () {
-                  txt_dialog_form(context,"تعديل اسم العميل ",null);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
+                  txt_dialog_form(context,"تعديل اسم الصنف ",null);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
                 },
               ),
               TextButton(
@@ -281,7 +281,7 @@ class _factory_selectState extends State<factory_select>
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: Text(
-                            'هل انت متاكد من حذف هذا العميل ',
+                            'هل انت متاكد من حذف هذا الصنف ',
                             textAlign: TextAlign.right,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -339,7 +339,7 @@ class _factory_selectState extends State<factory_select>
   Future<void> txt_dialog_form(BuildContext context,String title,String textTitle) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
@@ -394,7 +394,7 @@ class _factory_selectState extends State<factory_select>
                               Navigator.pop(context);
                               await Navigator.of(context).push(
                                   new MaterialPageRoute(
-                                      builder: (context) => factory_select()));
+                                      builder: (context) => LE_tex_home()));
                             },
                           ),
                           TextButton(
@@ -446,15 +446,10 @@ class _factory_selectState extends State<factory_select>
     moveToLastScreen();
     //print("In SAVE");
     if (factoryTypes.fTName.isNotEmpty) {
-      int result; //
-      if (factoryTypes.fTId!= null) {
-        result = await databaseHelper.updateFactoryType(factoryTypes);
-      }else{
-        // to check the operation success
-        result = await databaseHelper.insertFactoryType(factoryTypes);
-      }
+      int result; // to check the operation success
+      result = await databaseHelper.insertFactoryType(factoryTypes);
       //print('LETS GOOOOOO ${factoryTypes.fTName}');
-       if (result !=0) {
+      if (result !=0) {
         // Success
         _ShowAlertDialog('نجاح' , 'تم الحفظ بنجاح',Colors.green);
       }else{
