@@ -5,7 +5,6 @@ import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
 import 'cust_txtformfield_dialog.dart';
 Future<void> txt_dialog_form(BuildContext context) async {
   TextEditingController cilentNameController = TextEditingController();
-  TextEditingController notypeController = TextEditingController();
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!

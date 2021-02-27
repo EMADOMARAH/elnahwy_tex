@@ -4,7 +4,7 @@ Widget cust_txtformfield(String title, var typeinput) {
   return Padding(
     padding: EdgeInsets.only(bottom: 8,right: 8,left: 8),
     child: TextFormField(
-      readOnly: true,
+      readOnly: false,
       keyboardType: typeinput,
       cursorColor: Colors.black,
       textDirection: TextDirection.rtl,

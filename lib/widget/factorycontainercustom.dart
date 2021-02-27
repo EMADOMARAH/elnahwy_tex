@@ -10,7 +10,7 @@ Widget factorycust_container(
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         border: Border.all(color: Color(0xffC3FCF2).withGreen(120)),
         color: Color(0xffC3FCF2).withOpacity(0.5),
@@ -20,7 +20,6 @@ Widget factorycust_container(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-//اسم القماش
             Row(
               children: [
                 IconButton(
@@ -28,6 +27,7 @@ Widget factorycust_container(
                     onPressed: () {
                       edit_delete_dialog_in_data(context);
                     }),
+                //اسم القماش
                 Flexible(child: textformcloth(clothName.toString())),
               ],
             ),
@@ -77,8 +77,7 @@ Future<void> edit_delete_dialog_in_data(BuildContext context) {
                     fontSize: 14,
                     color: Colors.green),
               ),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
             TextButton(
               child: Text(
@@ -90,9 +89,9 @@ Future<void> edit_delete_dialog_in_data(BuildContext context) {
                     color: Colors.red),
               ),
               onPressed: () {
+                //Delete function
               },
             ),
-
           ],
         );
       });
