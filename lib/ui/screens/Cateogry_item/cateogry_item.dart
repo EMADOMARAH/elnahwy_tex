@@ -450,8 +450,13 @@ class _factory_selectState extends State<factory_select> {
     moveToLastScreen();
     //print("In SAVE");
     if (factoryTypes.fTName.isNotEmpty) {
-      int result; // to check the operation success
-      result = await databaseHelper.insertFactoryType(factoryTypes);
+      int result; //
+      if (factoryTypes.fTId!= null) {
+        result = await databaseHelper.updateFactoryType(factoryTypes);
+      }else{
+        // to check the operation success
+        result = await databaseHelper.insertFactoryType(factoryTypes);
+      }
       //print('LETS GOOOOOO ${factoryTypes.fTName}');
        if (result !=0) {
         // Success
