@@ -1,12 +1,16 @@
+import 'package:elnahwy_tex/model/factoryTypeModel.dart';
 import 'package:elnahwy_tex/ui/screens/Cloth_type/clothtypeabout.dart';
 import 'package:elnahwy_tex/ui/screens/home_screen/home_screen.dart';
+import 'package:elnahwy_tex/utils/database_helper.dart';
 import 'package:elnahwy_tex/widget/container_clientdata_cloth.dart';
+import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
 import 'package:elnahwy_tex/widget/cutom_data_tile_client.dart';
 import 'package:elnahwy_tex/widget/divider_cutom.dart';
 import 'package:elnahwy_tex/widget/showDialogclient.dart';
 import 'package:elnahwy_tex/widget/txt_dialog_form.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sqflite/sqflite.dart';
 
 class factory_select extends StatefulWidget {
   @override
@@ -14,23 +18,45 @@ class factory_select extends StatefulWidget {
 }
 
 class _factory_selectState extends State<factory_select> {
-  TextEditingController cilentNameController = TextEditingController();
 
-  TextEditingController notypeController = TextEditingController();
-  TextEditingController editingController = TextEditingController();
+  //make object from our DB
+  DatabaseHelper databaseHelper = DatabaseHelper();
+  FactoryTypes factoryTypes = new FactoryTypes();
+  List<FactoryTypes> factoryTypesList = [];
+  int count = 0;
+  int customPosition;
+
+  var id , name;
+
+  TextEditingController factoryTypeController = TextEditingController();
   var showItemList = List<Widget>();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    updateTypesListView();
+  }
+
+
+
 
   Future<bool> popfunc() async {
     return true;
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
+    //if out list == null initiate new one
+    if (factoryTypesList == null) {
+      factoryTypesList = List<FactoryTypes>();
+      updateTypesListView();
+    }
+
     return Scaffold(
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            print("aaaa");
             txt_dialog_form(context);
           },
           icon: Icon(
@@ -139,14 +165,11 @@ class _factory_selectState extends State<factory_select> {
                             padding:
                                 EdgeInsets.only(top: 27, left: 5, right: 5),
                             child: SingleChildScrollView(
-                              child: ListView.separated(
+                              child: ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
-                                separatorBuilder: (context, index) {
-                                  return cust_divider();
-                                },
                                 shrinkWrap: true,
-                                itemCount: showItemList.length,
-                                itemBuilder: (context, index) {
+                                itemCount: count,
+                                itemBuilder: (context, position) {
                                   return GestureDetector(
                                     onLongPress: () {
                                       showMyDialog(context);
@@ -161,21 +184,20 @@ class _factory_selectState extends State<factory_select> {
                                       );
                                     },
                                     child: custom_data(
-                                      "Title",
+                                      this.factoryTypesList[position].fTName.toString(),
                                       "No_title",
                                       IconButton(
                                         icon: Icon(Icons.more_vert),
                                         onPressed: () {
-                                          /*id = this
-                                              .clientsNamesList[position]
-                                              .cNId;
+                                          id = this
+                                              .factoryTypesList[position]
+                                              .fTId;
                                           name = this
-                                              .clientsNamesList[position]
-                                              .cNName
+                                              .factoryTypesList[position]
+                                              .fTName
                                               .toString();
-                                          this.customPosition = position;*/
-                                          _showMyDialog(context, null,
-                                              null, null);
+                                          this.customPosition = position;
+                                          _showMyDialog(context, position, factoryTypesList[position].fTId, factoryTypesList[position].fTName);
                                         },
                                       ),
                                     ),
@@ -194,6 +216,7 @@ class _factory_selectState extends State<factory_select> {
           ),
         ));
   }
+
   Future<void> _showMyDialog(BuildContext context , int customPosition, int id , String name) async {
     print("Position : $customPosition   id : $id   name : $name");
     return showDialog<void>(
@@ -280,12 +303,11 @@ class _factory_selectState extends State<factory_select> {
                               ),
                               onPressed: () {
 
-                             /*   _delete(context,clientsNamesList[customPosition] );
+                                _deleteType(context,factoryTypesList[customPosition] );
                                 //احذف عميل من الداتا بيز
                                 Navigator.pop(context);
                                 Navigator.pop(context);
-                                updateListView();
-                                //اعمل تحديث للداتا بعد الحذف*/
+                                updateTypesListView();
                               },
                             ),
                             TextButton(
@@ -317,5 +339,178 @@ class _factory_selectState extends State<factory_select> {
       },
     );
   }
+
+  Future<void> txt_dialog_form(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'إضافه نوع قماش جديد',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: "Cairo", fontSize: 18),
+          ),
+          content: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  cust_txtformfield_dialog(
+                      "نوع القماش", TextInputType.text, factoryTypeController),
+                ],
+              )),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text(
+                'إلغاء',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.red),
+              ),
+              //Second Dialog
+              onPressed: () {
+                showDialog<void>(
+                    context: context,
+                    barrierDismissible: true, // user must tap button!
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          'هل تريد إلغاء اضافه القماش ؟',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Cairo",
+                              fontSize: 14),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'نعم',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 14,
+                                  color: Colors.red),
+                            ),
+                            onPressed: () async {
+                              Navigator.pop(context);
+                              await Navigator.of(context).push(
+                                  new MaterialPageRoute(
+                                      builder: (context) => factory_select()));
+                            },
+                          ),
+                          TextButton(
+                            child: Text(
+                              'إلغاء ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 14,
+                                  color: Colors.green),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
+            RaisedButton(
+              color: Colors.green,
+              child: Text(
+                'إضافة ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.white),
+              ),
+              onPressed: () {
+                this.factoryTypes.fTName =factoryTypeController.text;
+                this.factoryTypes.fTSource = 'F';
+                //اضافه عميل جديد
+                save();
+              },
+            ),
+          ],
+        );
+      },
+    ).then((value) => updateTypesListView());
+
+
+
+  }
+
+  //save data to data base
+  void save() async{
+    moveToLastScreen();
+    //print("In SAVE");
+    if (factoryTypes.fTName.isNotEmpty) {
+      int result; // to check the operation success
+      result = await databaseHelper.insertFactoryType(factoryTypes);
+      //print('LETS GOOOOOO ${factoryTypes.fTName}');
+       if (result !=0) {
+        // Success
+        _ShowAlertDialog('نجاح' , 'تم الحفظ بنجاح',Colors.green);
+      }else{
+        //Failure
+        _ShowAlertDialog('فشل' , 'حدث خطأ اثناء الحفظ',Colors.amber);
+      }
+
+    } else{
+      _ShowAlertDialog("خطأ", "نوع القماش فاضى!",Colors.red);
+    }
+  }
+
+  void _ShowAlertDialog(String title, String msg, var tcolor) {
+    AlertDialog alertDialog = AlertDialog(
+      title:  Text(title,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            fontFamily: "Cairo",color: tcolor,fontSize: 20,fontWeight: FontWeight.bold
+        ),),
+      content: Text(msg,textAlign: TextAlign.center,
+        style: TextStyle(
+            fontFamily: "Cairo",color: Colors.black,fontSize: 20
+        ),),
+    );
+    showDialog(context: context,
+        builder: (_) => alertDialog);
+  }
+
+  void moveToLastScreen() {
+    Navigator.pop(context, true);
+  }
+
+  // delete item from types List<dynamic> listName
+  void _deleteType(BuildContext context, FactoryTypes factoryTypes) async{
+    int result = await databaseHelper.deleteRaw('factoryType_table', 'f_t_id', factoryTypes.fTId);
+    if (result !=0) {
+      updateTypesListView();
+    }
+
+  }
+
+
+  void updateTypesListView() {
+    final Future<Database> dbFuture = databaseHelper.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<FactoryTypes>> factoryTypesListFuture =
+      databaseHelper.getFactoryTypesList();
+      factoryTypesListFuture.then((typesList) {
+        setState(() {
+          this.factoryTypesList= typesList;
+          this.count = typesList.length;
+        });
+      });
+    });
+
+    print("types list count : ${count.toString()}");
+  }
+
 
 }

@@ -18,68 +18,23 @@ class _ClientPageState extends State<ClientPage>
     with SingleTickerProviderStateMixin {
   //make object from our DB
   DatabaseHelper databaseHelper = DatabaseHelper();
-  TextEditingController editingController = TextEditingController();
-  TabController controller;
+
 //make list data to hold out clients name data
   List<ClientNames> clientsNamesList = [];
   int count = 0;
   int customPosition;
 
   var id , name;
-  var allClient = [];
-  var items = List();
+
+  TextEditingController editingController = TextEditingController();
+  TabController controller;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     controller = new TabController(length: 4, vsync: this);
     updateListView();
-    databaseHelper.getClientNamesList().then((client){
-      setState(() {
-        allClient = client;
-        items = allClient;
-      });
-    });}
-  void filterSearchResults(String query) async {
-    clientsNamesList=[];
-    var dummySearchList = allClient;
-    if(query.isNotEmpty){
-      setState(() {
-        for(int index =0 ; index < dummySearchList.length; index++){
-          ClientNames clientNames = dummySearchList[index];
-          if(clientNames.name.toString().contains(query)){
-            print('user'+index.toString());
-            print(clientNames);
-            clientsNamesList.add(clientNames);
-          }
-        }
-      });
-    }else{
-      setState(() {
-        updateListView();
-      });
-    }
-    // if (query.isNotEmpty){
-    //   var dummyListData = List();
-    //   dummySearchList.forEach((item) {
-    //     print('item');
-    //     print(item);
-    //     ClientNames client = item;
-    //
-    //     if(client.name.toLowerCase().contains(query.toLowerCase())){
-    //       dummyListData.add(client);
-    //     }});
-    //   setState(() {
-    //     items = [];
-    //     items.addAll(dummyListData);
-    //   });
-    //   return;
-    // }else{
-    //   setState(() {
-    //     items = [];
-    //     items = allClient;
-    //   });
-    // }
   }
 
   @override
@@ -91,6 +46,12 @@ class _ClientPageState extends State<ClientPage>
 
   @override
   Widget build(BuildContext context) {
+    //if out list == null initiate new one
+    if (clientsNamesList == null) {
+      clientsNamesList = List<ClientNames>();
+      updateListView();
+    }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -147,12 +108,8 @@ class _ClientPageState extends State<ClientPage>
                             }),
                         Flexible(
                           child: TextFormField(
-                            controller: editingController,
                               onChanged: (value) {
-                                setState(() {
-                                  filterSearchResults(value);
-                                });
-
+                                //filterSearchResults(value);
                               },
                               keyboardType: TextInputType.text,
                               textAlign: TextAlign.center,
@@ -209,8 +166,9 @@ class _ClientPageState extends State<ClientPage>
                           child: ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: clientsNamesList.length,
+                            itemCount: count,
                             itemBuilder: (context, int position) {
+
                               return GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -412,7 +370,28 @@ class _ClientPageState extends State<ClientPage>
     );
   }
 
-   //Now using
+  // void filterSearchResults(String query) {
+  //   List<String> dummySearchList = List<String>();
+  //   //dummySearchList.addAll(listItems);
+  //   if (query.isNotEmpty) {
+  //     List<String> dummyListData = List<String>();
+  //     dummySearchList.forEach((item) {
+  //       if (item.contains(query)) {
+  //         dummyListData.add(item);
+  //       }
+  //     });
+  //     setState(() {
+  //       namesList.clear();
+  //       namesList.addAll(dummyListData);
+  //     });
+  //     return;
+  //   } else {
+  //     setState(() {
+  //       namesList.clear();
+  //       //namesList.addAll(listItems);
+  //     });
+  //   }
+  // } //Now using
 
   Widget _buildCell(
     BuildContext context,

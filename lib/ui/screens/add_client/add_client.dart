@@ -18,7 +18,6 @@ class _Add_ClientState extends State<Add_Client> {
   TextEditingController clientNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    //clientNameController.text = clientNames.cNName;
 
     return Scaffold(
       appBar: AppBar(
@@ -62,34 +61,6 @@ class _Add_ClientState extends State<Add_Client> {
                       flex: 1,
                     ),
                     customcontainerforsave("إضافة عميل"),
-                   /* Padding(
-                      padding: const EdgeInsets.only(right: 15,left: 15,bottom: 30),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: RaisedButton(
-                            color: Color(0xffC3FCF2),
-                            child: Text(
-                              'اضافه العميل',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Cairo",
-                                  fontSize: 18,
-                                  color: Colors.green),
-                            ),
-                            onPressed: () {
-                              save();
-                              // Navigator.push(
-                              //   context,
-                              //   PageTransition(
-                              //     type:
-                              //     PageTransitionType.leftToRight,
-                              //     child: ClientPage(),
-                              //   ),
-                              // );
-                            }),
-                      ),
-                    )*/
                   ],
                 ),
               ))),

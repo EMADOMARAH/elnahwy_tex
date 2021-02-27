@@ -14,13 +14,6 @@ Widget cust_txtformfield_dialog(
         hintText: title,
         hintStyle: TextStyle(
             fontFamily: "Cairo", color: Colors.black.withOpacity(0.4)),
-        /*border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide:BorderSide(
-              color: Colors.black,
-              width: 2,
-            ),
-          ),*/
         contentPadding: EdgeInsets.all(5),
       ),
     ),
