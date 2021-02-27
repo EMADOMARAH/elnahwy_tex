@@ -36,24 +36,12 @@ class _edit_screenState extends State<edit_screen> {
     //print ("My Name : ${clientNames.cNName}");
     return Scaffold(
       appBar: AppBar(
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           backgroundColor: Color(0xff659B91),
           title: Row(
             children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type:
-                      PageTransitionType.rightToLeft,
-                      child: ClientPage(),
-                    ),
-                  );
-                },
+              SizedBox(
+                width: 10,
               ),
               Spacer(
                 flex: 1,
