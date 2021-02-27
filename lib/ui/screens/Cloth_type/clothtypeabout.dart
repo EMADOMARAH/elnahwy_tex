@@ -23,6 +23,22 @@ class _clothaboutState extends State<clothabout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            //Dialog to enter Data
+          },
+          icon: Icon(
+            Icons.add,
+            color: Colors.green,
+            size: 30,
+          ),
+          label: Text(
+            "إضافة",
+            style:
+            TextStyle(fontFamily: "Cairo", fontSize: 20, color: Colors.green),
+          ),
+          backgroundColor: Colors.black87,
+        ),
         appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Color(0xff659B91),
@@ -71,11 +87,11 @@ class _clothaboutState extends State<clothabout> {
               children: <Widget>[
                 cust_label("اسم القماش"),
                 cust_txtformfield("اسم القماش", TextInputType.text),
-                factorycust_container(clientname,clothtupenumber,clothtype,clothNote),
-                factorycust_container(clientname,clothtupenumber,clothtype,clothNote),
-                factorycust_container(clientname,clothtupenumber,clothtype,clothNote),
-                factorycust_container(clientname,clothtupenumber,clothtype,clothNote),
-                factorycust_container(clientname,clothtupenumber,clothtype,clothNote),
+                factorycust_container(clientname,clothtupenumber,clothtype,clothNote,context),
+                factorycust_container(clientname,clothtupenumber,clothtype,clothNote,context),
+                factorycust_container(clientname,clothtupenumber,clothtype,clothNote,context),
+                factorycust_container(clientname,clothtupenumber,clothtype,clothNote,context),
+                factorycust_container(clientname,clothtupenumber,clothtype,clothNote,context),
 
                 Align(
                   alignment: FractionalOffset.bottomCenter,
