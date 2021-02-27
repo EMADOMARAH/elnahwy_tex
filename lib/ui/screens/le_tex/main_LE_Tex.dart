@@ -12,13 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sqflite/sqflite.dart';
 
-class factory_select extends StatefulWidget {
+class LE_tex_home extends StatefulWidget {
   @override
-  _factory_selectState createState() => _factory_selectState();
+  LE_tex_homeState createState() => LE_tex_homeState();
 }
 
-class _factory_selectState extends State<factory_select>
-    with SingleTickerProviderStateMixin {
+class LE_tex_homeState extends State<LE_tex_home> {
 
   //make object from our DB
   DatabaseHelper databaseHelper = DatabaseHelper();
@@ -135,7 +134,7 @@ class _factory_selectState extends State<factory_select>
                                       ),
                                       border: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(100),
+                                        BorderRadius.circular(100),
                                       ),
                                       contentPadding: EdgeInsets.all(10))),
                             ),
@@ -143,7 +142,7 @@ class _factory_selectState extends State<factory_select>
                               width: 20,
                             ),
                             Image(
-                              image: AssetImage('images/Factory.png'),
+                              image: AssetImage('images/LeTex.png'),
                               height: 66,
                               width: 66,
                             )
@@ -164,7 +163,7 @@ class _factory_selectState extends State<factory_select>
                           ),
                           child: Padding(
                             padding:
-                                EdgeInsets.only(top: 27, left: 5, right: 5),
+                            EdgeInsets.only(top: 27, left: 5, right: 5),
                             child: SingleChildScrollView(
                               child: ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
@@ -394,7 +393,7 @@ class _factory_selectState extends State<factory_select>
                               Navigator.pop(context);
                               await Navigator.of(context).push(
                                   new MaterialPageRoute(
-                                      builder: (context) => factory_select()));
+                                      builder: (context) => LE_tex_home()));
                             },
                           ),
                           TextButton(
@@ -449,7 +448,7 @@ class _factory_selectState extends State<factory_select>
       int result; // to check the operation success
       result = await databaseHelper.insertFactoryType(factoryTypes);
       //print('LETS GOOOOOO ${factoryTypes.fTName}');
-       if (result !=0) {
+      if (result !=0) {
         // Success
         _ShowAlertDialog('نجاح' , 'تم الحفظ بنجاح',Colors.green);
       }else{

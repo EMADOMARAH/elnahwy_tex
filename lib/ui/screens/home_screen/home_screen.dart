@@ -1,5 +1,6 @@
 import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';
 import 'package:elnahwy_tex/ui/screens/Cateogry_item/cateogry_item.dart';
+import 'package:elnahwy_tex/ui/screens/le_tex/main_LE_Tex.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -38,7 +39,15 @@ class Home_Screen extends StatelessWidget {
                   ),
                   Spacer(flex: 1,),
                   GestureDetector(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child:LE_tex_home(),
+                        ),
+                      );
+                    },
                     child: CustomContainer('لى تيكس', 'images/LeTex.png',Colors.grey[100]),
                   ),
                   Spacer(flex: 1,),
