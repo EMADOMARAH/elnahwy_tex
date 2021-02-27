@@ -17,7 +17,8 @@ class factory_select extends StatefulWidget {
   _factory_selectState createState() => _factory_selectState();
 }
 
-class _factory_selectState extends State<factory_select> {
+class _factory_selectState extends State<factory_select>
+    with SingleTickerProviderStateMixin {
 
   //make object from our DB
   DatabaseHelper databaseHelper = DatabaseHelper();
