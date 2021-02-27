@@ -165,9 +165,6 @@ class _ClientPageState extends State<ClientPage>
                             itemBuilder: (context, int position) {
                               customPosition = position;
                               return GestureDetector(
-                                  onLongPress: () {
-                                    _showMyDialog(context);
-                                  },
                                   onTap: () {
                                     Navigator.push(
                                       context,
@@ -178,11 +175,18 @@ class _ClientPageState extends State<ClientPage>
                                     );
                                   },
                                   child: custom_data(
-                                      this
-                                          .clientsNamesList[position]
-                                          .cNName
-                                          .toString(),
-                                      'No_title'));
+                                    this
+                                        .clientsNamesList[position]
+                                        .cNName
+                                        .toString(),
+                                    'No_title',
+                                    IconButton(
+                                      icon: Icon(Icons.more_vert),
+                                      onPressed: () {
+                                        _showMyDialog(context);
+                                      },
+                                    ),
+                                  ));
                             },
                           ),
                         ),
@@ -248,120 +252,130 @@ class _ClientPageState extends State<ClientPage>
       context: context,
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'تعديل او اضافه',
-            textAlign: TextAlign.right,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontFamily: "Cairo", fontSize: 14),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(
-                  'تعديل او حذف هذا العميل ',
-                  textAlign: TextAlign.right,
+        return WillPopScope(
+          onWillPop: () async => true,
+          child: AlertDialog(
+            title: Text(
+              'تعديل او اضافه',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Cairo",
+                  fontSize: 14),
+            ),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(
+                    'تعديل او حذف هذا العميل ',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Cairo",
+                        fontSize: 14),
+                  ),
+                  Text(
+                    'هل تريد حذف او تعديل هذا العميل ',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Cairo",
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              //زرار التعديل ف الدايلوج
+              TextButton(
+                child: Text(
+                  'تعديل ',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: "Cairo",
-                      fontSize: 14),
+                      fontSize: 14,
+                      color: Colors.green),
                 ),
-                Text(
-                  'هل تريد حذف او تعديل هذا العميل ',
-                  textAlign: TextAlign.right,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.fade,
+                          child: null /*edit_screen(ClientNames())*/));
+                },
+              ),
+              TextButton(
+                child: Text(
+                  'حذف',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: "Cairo",
-                      fontSize: 14),
+                      fontSize: 14,
+                      color: Colors.red),
                 ),
-              ],
-            ),
+                //Second Dialog
+                onPressed: () {
+                  showDialog<void>(
+                      context: context,
+                      barrierDismissible: true, // user must tap button!
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            'هل انت متاكد من حذف هذا العميل ',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Cairo",
+                                fontSize: 14),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                'تأكيد ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Cairo",
+                                    fontSize: 14,
+                                    color: Colors.green),
+                              ),
+                              onPressed: () {
+                                //ربنا يستر على الهبده دى
+                                _delete(
+                                    context, clientsNamesList[customPosition]);
+                                //احذف عميل من الداتا بيز
+                                Navigator.pop(context);
+                                /*Navigator.push(context,PageTransition(child: ClientPage(),
+                                    type: PageTransitionType.fade));*/
+                                print("حذف عميل ");
+                                Navigator.pop(context);
+                                //اعمل تحديث للداتا بعد الحذف
+                              },
+                            ),
+                            TextButton(
+                              child: Text(
+                                'إلغاء ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Cairo",
+                                    fontSize: 14,
+                                    color: Colors.red),
+                              ),
+                              onPressed: () async {
+                                //هيرجع للصفحه اللى وراه
+                                //Navigator.of(context, rootNavigator: false).pop();
+                                Navigator.pop(context);
+                                /*await Navigator.of(context).push(
+                                    new MaterialPageRoute(
+                                        builder: (context) => ClientPage()));*/
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                },
+              ),
+            ],
           ),
-          actions: <Widget>[
-            //زرار التعديل ف الدايلوج
-            TextButton(
-              child: Text(
-                'تعديل ',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Cairo",
-                    fontSize: 14,
-                    color: Colors.green),
-              ),
-              onPressed: () {
-                // Navigator.push(
-                //     context,
-                //     PageTransition(
-                //         type: PageTransitionType.fade, child: edit_screen(ClientNames())));
-              },
-            ),
-            TextButton(
-              child: Text(
-                'حذف',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Cairo",
-                    fontSize: 14,
-                    color: Colors.red),
-              ),
-              //Second Dialog
-              onPressed: () {
-                showDialog<void>(
-                    context: context,
-                    barrierDismissible: true, // user must tap button!
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                          'هل انت متاكد من حذف هذا العميل ',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Cairo",
-                              fontSize: 14),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(
-                              'تأكيد ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Cairo",
-                                  fontSize: 14,
-                                  color: Colors.green),
-                            ),
-                            onPressed: () {
-                              //ربنا يستر على الهبده دى
-                              _delete(
-                                  context, clientsNamesList[customPosition]);
-                              //احذف عميل من الداتا بيز
-                              print("حذف عميل ");
-                              //اعمل تحديث للداتا بعد الحذف
-                            },
-                          ),
-                          TextButton(
-                            child: Text(
-                              'إلغاء ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Cairo",
-                                  fontSize: 14,
-                                  color: Colors.red),
-                            ),
-                            onPressed: () async {
-                              //هيرجع للصفحه اللى وراه
-                              //Navigator.of(context, rootNavigator: false).pop();
-                              Navigator.pop(context);
-                              await Navigator.of(context).push(
-                                  new MaterialPageRoute(
-                                      builder: (context) => ClientPage()));
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              },
-            ),
-          ],
         );
       },
     );
@@ -396,37 +410,6 @@ class _ClientPageState extends State<ClientPage>
     String name,
   ) {
     // same as previous video
-    return Padding(
-      padding: EdgeInsets.only(left: 12.0, top: 5.0, right: 12.0),
-      child: Material(
-        color: Colors.grey,
-        elevation: 5.0,
-        borderRadius: BorderRadius.circular(10.0),
-        child: ListTile(
-          title: Text(
-            name,
-            textAlign: TextAlign.right,
-            style: TextStyle(
-              fontFamily: "Cairo",
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: Text(
-              'عدد الاصناف',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontFamily: "Cairo",
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-          ),
-          leading: Image.asset("images/ic_keyboard_arrow_left_48px.png"),
-        ),
-      ),
-    );
   }
 }
 

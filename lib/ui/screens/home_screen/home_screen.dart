@@ -34,12 +34,12 @@ class Home_Screen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: CustomContainer('المصنع', 'images/Factory.png', Colors.grey[200]),
+                    child: CustomContainer('المصنع', 'images/Factory.png', Colors.grey[100]),
                   ),
                   Spacer(flex: 1,),
                   GestureDetector(
                     onTap: (){},
-                    child: CustomContainer('لى تيكس', 'images/LeTex.png',Colors.grey[200]),
+                    child: CustomContainer('لى تيكس', 'images/LeTex.png',Colors.grey[100]),
                   ),
                   Spacer(flex: 1,),
                   GestureDetector(
@@ -52,7 +52,7 @@ class Home_Screen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: CustomContainer('العملاء', 'images/Client.png',  Colors.indigo.withOpacity(0.4)),
+                    child: CustomContainer('العملاء', 'images/Client.png',  Colors.orangeAccent.withOpacity(0.9)),
                   ),
                   Spacer(flex: 1,),
                 ],
@@ -76,8 +76,16 @@ class CustomContainer extends StatelessWidget {
       height: 150,
       width: 150,
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 7.0,
+            spreadRadius: 1.0,
+            offset: Offset(1.0, 0.0), // shadow direction: bottom right
+          )
+        ],
         color: color,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(7),
       ),
       child: Column(
         children: [

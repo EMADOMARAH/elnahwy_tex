@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget custom_data(String Title, String No_title) {
+Widget custom_data(String Title, String No_title,Widget widget) {
   return Container(
     decoration: BoxDecoration(
         color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
@@ -22,7 +22,8 @@ Widget custom_data(String Title, String No_title) {
           ),
         ),
       ),
-      leading: Image.asset("images/ic_keyboard_arrow_left_48px.png"),
+      leading: widget
     ),
   );
 }
+

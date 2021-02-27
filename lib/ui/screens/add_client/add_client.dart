@@ -51,63 +51,60 @@ class _Add_ClientState extends State<Add_Client> {
               )
             ],
           )),
-      body: WillPopScope(
-        onWillPop: () {  },
-        child: SafeArea(
-            child: Container(
-                alignment: Alignment.topCenter,
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: new LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xffC3FCF2),
-                      Color(0xff659B91),
-                    ],
-                  ),
+      body: SafeArea(
+          child: Container(
+              alignment: Alignment.topCenter,
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: new LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xffC3FCF2),
+                    Color(0xff659B91),
+                  ],
                 ),
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, false),
-                      Spacer(
-                        flex: 1,
+              ),
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, false),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    customcontainerforsave("إضافة عميل"),
+                   /* Padding(
+                      padding: const EdgeInsets.only(right: 15,left: 15,bottom: 30),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: RaisedButton(
+                            color: Color(0xffC3FCF2),
+                            child: Text(
+                              'اضافه العميل',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Cairo",
+                                  fontSize: 18,
+                                  color: Colors.green),
+                            ),
+                            onPressed: () {
+                              save();
+                              // Navigator.push(
+                              //   context,
+                              //   PageTransition(
+                              //     type:
+                              //     PageTransitionType.leftToRight,
+                              //     child: ClientPage(),
+                              //   ),
+                              // );
+                            }),
                       ),
-                      customcontainerforsave("إضافة عميل"),
-                     /* Padding(
-                        padding: const EdgeInsets.only(right: 15,left: 15,bottom: 30),
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: RaisedButton(
-                              color: Color(0xffC3FCF2),
-                              child: Text(
-                                'اضافه العميل',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Cairo",
-                                    fontSize: 18,
-                                    color: Colors.green),
-                              ),
-                              onPressed: () {
-                                save();
-                                // Navigator.push(
-                                //   context,
-                                //   PageTransition(
-                                //     type:
-                                //     PageTransitionType.leftToRight,
-                                //     child: ClientPage(),
-                                //   ),
-                                // );
-                              }),
-                        ),
-                      )*/
-                    ],
-                  ),
-                ))),
-      ),
+                    )*/
+                  ],
+                ),
+              ))),
     );
 
   }
@@ -170,7 +167,7 @@ class _Add_ClientState extends State<Add_Client> {
         height: 50,
         child: RaisedButton(
           elevation: 10,
-          splashColor: Colors.black,
+          splashColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
             side: BorderSide(
@@ -204,14 +201,14 @@ class _Add_ClientState extends State<Add_Client> {
 
       if (result !=0) {
         // Success
-        _ShowAlertDialog('Status' , 'تم الحفظ بنجاح');
+        _ShowAlertDialog('نجاح' , 'تم الحفظ بنجاح',Colors.green);
       }else{
         //Failure
-        _ShowAlertDialog('Status' , 'حدث خطأ اثناء الحفظ');
+        _ShowAlertDialog('فشل' , 'حدث خطأ اثناء الحفظ',Colors.amber);
       }
 
     } else{
-      _ShowAlertDialog("خطأ", "اسم العميل فاضى!");
+      _ShowAlertDialog("خطأ", "اسم العميل فاضى!",Colors.red);
     }
 
 
@@ -219,10 +216,17 @@ class _Add_ClientState extends State<Add_Client> {
 
 
   }
-  void _ShowAlertDialog(String title, String msg) {
+  void _ShowAlertDialog(String title, String msg, var tcolor) {
     AlertDialog alertDialog = AlertDialog(
-      title:  Text(title),
-      content: Text(msg),
+      title:  Text(title,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontFamily: "Cairo",color: tcolor,fontSize: 20,fontWeight: FontWeight.bold
+      ),),
+      content: Text(msg,textAlign: TextAlign.center,
+        style: TextStyle(
+            fontFamily: "Cairo",color: Colors.black,fontSize: 20
+        ),),
     );
     showDialog(context: context,
         builder: (_) => alertDialog);

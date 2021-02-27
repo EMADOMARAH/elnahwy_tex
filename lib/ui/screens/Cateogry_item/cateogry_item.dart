@@ -16,40 +16,12 @@ class _factory_selectState extends State<factory_select> {
   TextEditingController cilentNameController = TextEditingController();
 
   TextEditingController notypeController = TextEditingController();
-  final initList = List<Widget>.generate(15, (i) => custom_data('wagdy',''));
   TextEditingController editingController = TextEditingController();
   var showItemList = List<Widget>();
   Future <bool> popfunc () async{
     return true;
   }
   @override
-  void initState() {
-    showItemList.addAll(initList);
-    super.initState();
-
-  }
-  filterSearch(String query) {
-    List<Widget> searchList = List<Widget>();
-    searchList.addAll(initList);
-    if (query.isNotEmpty) {
-      List<Widget> resultListData = List<Widget>();
-      searchList.forEach((item) {
-        if (item == null) {
-          resultListData.add(item);
-        }
-      });
-      setState(() {
-        showItemList.clear();
-        showItemList.addAll(resultListData);
-      });
-      return;
-    } else {
-      setState(() {
-        showItemList.clear();
-        showItemList.addAll(initList);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +79,6 @@ class _factory_selectState extends State<factory_select> {
                           Flexible(
                             child: TextFormField(
                                 onChanged: (value) {
-                                  filterSearch(value);
                                 },
                                 keyboardType: TextInputType.text,
                                 textAlign: TextAlign.center,
@@ -180,21 +151,7 @@ class _factory_selectState extends State<factory_select> {
                                         ),
                                       );
                                     },
-                                    child: Column(
-                                      children: [
-                                        custom_data("نوع القماش", ''),
-                                        cust_divider(),
-                                        custom_data("wagdy", ''),
-                                        cust_divider(),
-                                        custom_data("emad", ''),
-                                        cust_divider(),
-                                        custom_data("emad", ''),
-                                        cust_divider(),
-                                        custom_data("dabash", ''),
-                                        cust_divider(),
-                                        custom_data("Title", ''),
-                                      ],
-                                    )
+                                    child: null
                                 );
                               },
                             ),
