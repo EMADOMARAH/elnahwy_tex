@@ -387,30 +387,6 @@ void dispose() {
       },
     );
   }
-
-  // void filterSearchResults(String query) {
-  //   List<String> dummySearchList = List<String>();
-  //   //dummySearchList.addAll(listItems);
-  //   if (query.isNotEmpty) {
-  //     List<String> dummyListData = List<String>();
-  //     dummySearchList.forEach((item) {
-  //       if (item.contains(query)) {
-  //         dummyListData.add(item);
-  //       }
-  //     });
-  //     setState(() {
-  //       namesList.clear();
-  //       namesList.addAll(dummyListData);
-  //     });
-  //     return;
-  //   } else {
-  //     setState(() {
-  //       namesList.clear();
-  //       //namesList.addAll(listItems);
-  //     });
-  //   }
-  // } //Now using
-
   Widget _buildCell(
     BuildContext context,
     int index,

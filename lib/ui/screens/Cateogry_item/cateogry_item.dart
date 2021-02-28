@@ -22,25 +22,53 @@ class _factory_selectState extends State<factory_select>
 
   //make object from our DB
   DatabaseHelper databaseHelper = DatabaseHelper();
+  TextEditingController factoryTypeController = TextEditingController();
+  TabController controller;
+  //make list data to hold out  factory type data
   FactoryTypes factoryTypes = new FactoryTypes();
   List<FactoryTypes> factoryTypesList = [];
   int count = 0;
   int customPosition;
 
   var id , name;
-
-  TextEditingController factoryTypeController = TextEditingController();
   var showItemList = List<Widget>();
+  TextEditingController editingController = TextEditingController();
 
 
+  var allTypes = [];
+  var items = List();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    controller = new TabController(length: 4, vsync: this);
     updateTypesListView();
+    databaseHelper.getFactoryTypesList().then((type){
+      setState(() {
+        allTypes = type;
+        items = allTypes;
+      });
+    });}
+  void filterSearchResults(String query) async {
+    factoryTypesList = [];
+    var dummySearchList = allTypes;
+    if(query.isNotEmpty){
+      setState(() {
+        for(int index =0 ; index < dummySearchList.length; index++){
+          FactoryTypes factoryTypes = dummySearchList[index];
+          if(factoryTypes.name.toString().contains(query)){
+            print('user'+index.toString());
+            print(factoryTypes);
+            factoryTypesList.add(factoryTypes);
+          }
+        }
+      });
+    }else{
+      setState(() {
+        updateTypesListView();
+      });
+    }
   }
-
-
 
 
   Future<bool> popfunc() async {
@@ -49,12 +77,6 @@ class _factory_selectState extends State<factory_select>
 
   @override
   Widget build(BuildContext context) {
-    //if out list == null initiate new one
-    if (factoryTypesList == null) {
-      factoryTypesList = List<FactoryTypes>();
-      updateTypesListView();
-    }
-
     return Scaffold(
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
@@ -111,7 +133,9 @@ class _factory_selectState extends State<factory_select>
                                 }),
                             Flexible(
                               child: TextFormField(
-                                  onChanged: (value) {},
+                                  onChanged: (value) {
+                                    filterSearchResults(value);
+                                  },
                                   keyboardType: TextInputType.text,
                                   textAlign: TextAlign.center,
                                   decoration: InputDecoration(
@@ -169,8 +193,8 @@ class _factory_selectState extends State<factory_select>
                               child: ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: count,
-                                itemBuilder: (context, position) {
+                                itemCount: factoryTypesList.length,
+                                itemBuilder: (context, int position) {
                                   return GestureDetector(
                                     onLongPress: () {
                                       showMyDialog(context);
@@ -497,7 +521,7 @@ class _factory_selectState extends State<factory_select>
   }
 
 
-  void updateTypesListView() {
+  void updateTypesListView() async {
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
     dbFuture.then((database) {
       Future<List<FactoryTypes>> factoryTypesListFuture =
