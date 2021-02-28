@@ -8,6 +8,13 @@ class FactoryTypes{
   FactoryTypes({this.fTName, this.fTSource});
   FactoryTypes.withId({this.fTId, this.fTName, this.fTSource});
 
+  String get name => fTName;
+  set name(String newName) {
+    if (newName.length > 0)
+    {
+      this.fTName = newName;
+    }
+  }
 
 
   Map<String,dynamic> toMap(){
