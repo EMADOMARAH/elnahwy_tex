@@ -1,5 +1,8 @@
+import 'package:elnahwy_tex/ui/screens/client_data/client_data.dart';
+import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
 import 'package:elnahwy_tex/widget/textformfieldclothdata.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 Widget Container_client_cloth (BuildContext context,TextEditingController  clothName,
 TextEditingController clothtype,
@@ -64,6 +67,7 @@ Future<void> edit_delete_dialog_in_data(BuildContext context) {
                 color: Colors.red),
           ),
           actions: <Widget>[
+            //delete
             TextButton(
               child: Text(
                 'حذف ',
@@ -77,6 +81,7 @@ Future<void> edit_delete_dialog_in_data(BuildContext context) {
                 //Delete function
               },
             ),
+            //edit
             TextButton(
               child: Text(
                 'تعديل ',
@@ -86,12 +91,76 @@ Future<void> edit_delete_dialog_in_data(BuildContext context) {
                     fontSize: 14,
                     color: Colors.green),
               ),
-              onPressed: () {},
+              onPressed: () {
+                addcliendata(context);
+              },
             ),
 
           ],
         );
       });
+
 }
+Future<void> addcliendata(BuildContext context) {
+  TextEditingController  clothname = TextEditingController();
+  TextEditingController clothtype = TextEditingController();
+  TextEditingController clothtupenumber = TextEditingController();
+  TextEditingController clothNote = TextEditingController();
+  return showDialog(
+      context: context,
+      builder: (BuildContext dialogcontext) {
+        return AlertDialog(
+          title: Text(
+            "إضافه بيانات ",
+            textAlign: TextAlign.right,
+            style: TextStyle(
+                fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          content: SingleChildScrollView(
+            child: Column(children: <Widget>[
+              cust_txtformfield_dialog("اسم القماش",TextInputType.text,clothname),
+              cust_txtformfield_dialog("عدد الامتار",TextInputType.number,clothtupenumber),
+              cust_txtformfield_dialog("نوع الشريط",TextInputType.text,clothtype),
+              cust_txtformfield_dialog("ملاحظات",TextInputType.multiline,clothNote)
+
+            ],),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'إالغاء ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.of(dialogcontext).pop();
+                },
+            ),
+            TextButton(
+              child: Text(
+                'حفظ (اضافه) ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.green),
+              ),
+              onPressed: () {
+                //insert function
+                print("Client Name : ${clothname.toString()}");
+                print("Meters : ${clothtupenumber.toString()}");
+                print("Type : ${clothtype.toString()}");
+                print("Note : ${clothNote.toString()}");
+                Navigator.of(dialogcontext).maybePop();
+              },
+            ),
+          ],
+        );
+      });
+}
+
 
 

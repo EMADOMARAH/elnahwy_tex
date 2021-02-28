@@ -78,7 +78,7 @@ class _client_dataState extends State<client_data> {
                 children: <Widget>[
                   cust_label("اسم العميل"),
                   cust_txtformfield("اسم العميل", TextInputType.text),
-                  //Container_client_cloth(context,clothName, clothtupenumber, clothtype, clothNote),
+                  Container_client_cloth(context,clothName, clothtupenumber, clothtype, clothNote),
                 ],
               ),
             ),
