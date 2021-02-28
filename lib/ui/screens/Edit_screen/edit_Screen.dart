@@ -6,33 +6,27 @@ import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 
 class edit_screen extends StatefulWidget {
-  
   final ClientNames clientNames;
+
   edit_screen(this.clientNames);
-
-
-
 
   @override
   _edit_screenState createState() => _edit_screenState(this.clientNames);
 }
 
 class _edit_screenState extends State<edit_screen> {
-
-
   DatabaseHelper helper = DatabaseHelper();
   ClientNames clientNames = new ClientNames.withId(null, "");
+
   _edit_screenState(this.clientNames);
 
   TextEditingController clientNameController = TextEditingController();
-
-
 
   @override
   Widget build(BuildContext context) {
     clientNameController.text = clientNames.name;
 
-    this.clientNames.cNName =clientNames.name;
+    this.clientNames.cNName = clientNames.name;
     //print ("My Name : ${clientNames.cNName}");
     return Scaffold(
       appBar: AppBar(
@@ -71,8 +65,8 @@ class _edit_screenState extends State<edit_screen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    cust_txtformfield(clientNameController,"اسم العميل", TextInputType.text, false),
-
+                    cust_txtformfield(clientNameController, "اسم العميل",
+                        TextInputType.text, false),
                     Spacer(
                       flex: 1,
                     ),
@@ -89,8 +83,6 @@ class _edit_screenState extends State<edit_screen> {
                         onPressed: () {
                           save();
                           moveToLastScreen();
-
-
                         })
                   ],
                 ),
@@ -98,7 +90,8 @@ class _edit_screenState extends State<edit_screen> {
     );
   }
 
-  Widget cust_txtformfield(TextEditingController textEditingController,String title, var typeinput, bool boolean) {
+  Widget cust_txtformfield(TextEditingController textEditingController,
+      String title, var typeinput, bool boolean) {
     return Padding(
       padding: EdgeInsets.all(8),
       child: TextFormField(
@@ -138,7 +131,7 @@ class _edit_screenState extends State<edit_screen> {
           contentPadding: EdgeInsets.all(10),
         ),
         controller: textEditingController,
-        onChanged: (value){
+        onChanged: (value) {
           updateClientName();
         },
       ),
@@ -146,35 +139,30 @@ class _edit_screenState extends State<edit_screen> {
   }
 
   //update the client name object
-  void updateClientName(){
-    clientNames.cNName=clientNameController.text;
-}
+  void updateClientName() {
+    clientNames.cNName = clientNameController.text;
+  }
 
   //save data to data base
-  void save() async{
-    
+  void save() async {
     moveToLastScreen();
 
-    
     int result; // to check the operation success
-    if (clientNames.cNId != null)
-    { // Case 1 : update Operation
+    if (clientNames.cNId != null) {
+      // Case 1 : update Operation
       result = await helper.updateClientName(clientNames);
-     }  else{ //Case 2 : Insert Operation
+    } else {
+      //Case 2 : Insert Operation
       result = await helper.insertClientName(clientNames);
     }
 
-    if (result !=0 ) {
+    if (result != 0) {
       // Success
-      _ShowAlertDialog('الحاله' , 'تم الحفظ بنجاح');
-    }else{
+      _ShowAlertDialog('الحاله', 'تم الحفظ بنجاح');
+    } else {
       //Failure
-      _ShowAlertDialog('الحاله' , 'حدث خطأ اثناء الحفظ');
+      _ShowAlertDialog('الحاله', 'حدث خطأ اثناء الحفظ');
     }
-
-
-
-
   }
 
   // void _delete() async{
@@ -194,15 +182,20 @@ class _edit_screenState extends State<edit_screen> {
 
   void _ShowAlertDialog(String title, String msg) {
     AlertDialog alertDialog = AlertDialog(
-      title:  Text(title),
-      content: Text(msg),
+      title: Text(
+        title,
+        textAlign: TextAlign.right,
+        style:
+            TextStyle(fontSize: 18, fontFamily: "Cairo", color: Colors.green),
+      ),
+      content: Text(msg,textAlign: TextAlign.center,
+        style:
+        TextStyle(fontSize: 18, fontFamily: "Cairo", color: Colors.black,fontWeight: FontWeight.bold),),
     );
-    showDialog(context: context,
-    builder: (_) => alertDialog);
+    showDialog(context: context, builder: (_) => alertDialog);
   }
 
   void moveToLastScreen() {
     Navigator.pop(context, true);
   }
-
 }

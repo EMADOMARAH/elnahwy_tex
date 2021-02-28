@@ -1,7 +1,7 @@
 import 'package:elnahwy_tex/widget/textformfieldclothdata.dart';
 import 'package:flutter/material.dart';
 
-Widget Container_client_cloth (TextEditingController  clothName,
+Widget Container_client_cloth (BuildContext context,TextEditingController  clothName,
 TextEditingController clothtype,
 TextEditingController clothtupenumber,
 TextEditingController clothNote){
@@ -19,7 +19,16 @@ TextEditingController clothNote){
         child: Column(
           children: <Widget>[
 //اسم القماش
-            textformcloth(clothName.toString()),
+            Row(
+              children: [
+                IconButton(
+                    icon: Icon(Icons.more_vert),
+                    onPressed: () {
+                      edit_delete_dialog_in_data(context);
+                    }),
+                Flexible(child: textformcloth(clothName.toString())),
+              ],
+            ),
             Row(children: <Widget>[
 //عدد الامتار
               Flexible(child: textformcloth(clothtupenumber.toString())),
@@ -34,4 +43,55 @@ TextEditingController clothNote){
     ),
   );
 }
+Future<void> edit_delete_dialog_in_data(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "حذف او تعديل البيانات ",
+            textAlign: TextAlign.right,
+            style: TextStyle(
+                fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          content: Text(
+            "هل تريد تعديل ام حذف هذه البيانات",
+            textAlign: TextAlign.right,
+            style: TextStyle(
+                fontFamily: "Cairo",
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: Colors.red),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'حذف ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.red),
+              ),
+              onPressed: () {
+                //Delete function
+              },
+            ),
+            TextButton(
+              child: Text(
+                'تعديل ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.green),
+              ),
+              onPressed: () {},
+            ),
+
+          ],
+        );
+      });
+}
+
 
