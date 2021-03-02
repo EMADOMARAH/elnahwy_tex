@@ -39,7 +39,6 @@ class _client_dataState extends State<client_data> {
         ),
         backgroundColor: Color(0xff6BD5E1),
       ),
-
       appBar: AppBar(
           automaticallyImplyLeading: true,
           backgroundColor: Color(0xff659B91),
@@ -79,6 +78,9 @@ class _client_dataState extends State<client_data> {
                   cust_label("اسم العميل"),
                   cust_txtformfield("اسم العميل", TextInputType.text),
                   Container_client_cloth(context,clothName, clothtupenumber, clothtype, clothNote),
+                  Container_client_cloth(context,clothName, clothtupenumber, clothtype, clothNote),
+                  Container_client_cloth(context,clothName, clothtupenumber, clothtype, clothNote),
+
                 ],
               ),
             ),

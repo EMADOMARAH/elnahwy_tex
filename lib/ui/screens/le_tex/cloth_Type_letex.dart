@@ -1,21 +1,22 @@
 import 'package:elnahwy_tex/ui/screens/Cateogry_item/cateogry_item.dart';
 import 'package:elnahwy_tex/ui/screens/le_tex/main_LE_Tex.dart';
+import 'package:elnahwy_tex/widget/LE_tex_ccontainer_data_add_edit.dart';
 import 'package:elnahwy_tex/widget/cust_label.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
-import 'package:elnahwy_tex/widget/factorycontainercustom.dart';
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+
 class letex_clothtype extends StatefulWidget {
   @override
   _letex_clothtypeState createState() => _letex_clothtypeState();
 }
-TextEditingController  clientname;
+
+TextEditingController clientname;
 TextEditingController clothtype;
 TextEditingController clothtupenumber;
 TextEditingController clothNote;
-
 
 class _letex_clothtypeState extends State<letex_clothtype> {
   @override
@@ -32,8 +33,8 @@ class _letex_clothtypeState extends State<letex_clothtype> {
           ),
           label: Text(
             "إضافة",
-            style:
-            TextStyle(fontFamily: "Cairo", fontSize: 20, color: Colors.black),
+            style: TextStyle(
+                fontFamily: "Cairo", fontSize: 20, color: Colors.black),
           ),
           backgroundColor: Color(0xff6BD5E1),
         ),
@@ -61,14 +62,14 @@ class _letex_clothtypeState extends State<letex_clothtype> {
                 ),
                 Text(
                   "بيانات القماش لى تيكس",
-                  style:
-                  TextStyle(fontFamily: "Cairo", fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontFamily: "Cairo", fontWeight: FontWeight.bold),
                 )
               ],
             )),
-
-        body: SingleChildScrollView(
+        body: SafeArea(
           child: Container(
+            height: double.infinity,
             decoration: BoxDecoration(
               gradient: new LinearGradient(
                 begin: Alignment.topLeft,
@@ -78,60 +79,30 @@ class _letex_clothtypeState extends State<letex_clothtype> {
                   Color(0xff659B91),
                 ],
               ),
-            )
-            , child:Container(
-            //height: MediaQuery.of(context).size.height,
-            //height: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                cust_label("اسم الصنف"),
-                cust_txtformfield("اسم الصنف", TextInputType.text),
-                factorycust_container(clientname,clothtupenumber,clothtype,clothNote,context),
-                factorycust_container(clientname,clothtupenumber,clothtype,clothNote,context),
-                factorycust_container(clientname,clothtupenumber,clothtype,clothNote,context),
-                factorycust_container(clientname,clothtupenumber,clothtype,clothNote,context),
-                Align(
-                  alignment: FractionalOffset.bottomCenter,
-                  child: RaisedButton(
-                      color: Colors.white,
-                      child: Text(
-                        'رجوع',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Cairo",
-                            fontSize: 18,
-                            color: Colors.green),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(
-                          context,
-                          PageTransition(
-                            type:
-                            PageTransitionType.leftToRight,
-                            child: factory_select(),
-                          ),
-                        );
-                      }),
-                )
-              ],
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    cust_label("اسم الصنف"),
+                    cust_txtformfield("اسم الصنف", TextInputType.text),
+                    le_tex_container(clientname, clothtupenumber, clothtype,
+                        clothNote, context),
+                  ],
+                ),
+              ),
             ),
           ),
-          ),
-        )
-    );
+        ));
   }
 }
 
-
-
-
-
 Future<void> addclothdata(BuildContext context) {
-  TextEditingController  clientname=TextEditingController();
-  TextEditingController clothtype=TextEditingController();
-  TextEditingController clothtupenumber=TextEditingController();
-  TextEditingController clothNote=TextEditingController();
+  TextEditingController clientname = TextEditingController();
+  TextEditingController clothtype = TextEditingController();
+  TextEditingController clothtupenumber = TextEditingController();
+  TextEditingController clothNote = TextEditingController();
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -143,13 +114,18 @@ Future<void> addclothdata(BuildContext context) {
                 fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
           ),
           content: SingleChildScrollView(
-            child: Column(children: <Widget>[
-              cust_txtformfield_dialog("اسم العميل",TextInputType.text,clientname),
-              cust_txtformfield_dialog("عدد الامتار",TextInputType.number,clothtupenumber),
-              cust_txtformfield_dialog("نوع الشريط",TextInputType.text,clothtype),
-              cust_txtformfield_dialog("ملاحظات",TextInputType.multiline,clothNote)
-
-            ],),
+            child: Column(
+              children: <Widget>[
+                cust_txtformfield_dialog(
+                    "اسم العميل", TextInputType.text, clientname),
+                cust_txtformfield_dialog(
+                    "عدد الامتار", TextInputType.number, clothtupenumber),
+                cust_txtformfield_dialog(
+                    "نوع الشريط", TextInputType.text, clothtype),
+                cust_txtformfield_dialog(
+                    "ملاحظات", TextInputType.multiline, clothNote)
+              ],
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -165,9 +141,8 @@ Future<void> addclothdata(BuildContext context) {
                 Navigator.pop(
                     context,
                     PageTransition(
-                        type:
-                        PageTransitionType.leftToRight,
-                        child: factory_select()));
+                        type: PageTransitionType.leftToRight,
+                        child: letex_clothtype()));
               },
             ),
             TextButton(
@@ -188,8 +163,7 @@ Future<void> addclothdata(BuildContext context) {
                 Navigator.pop(
                     context,
                     PageTransition(
-                        type:
-                        PageTransitionType.leftToRight,
+                        type: PageTransitionType.leftToRight,
                         child: LE_tex_home()));
               },
             ),
@@ -197,4 +171,3 @@ Future<void> addclothdata(BuildContext context) {
         );
       });
 }
-

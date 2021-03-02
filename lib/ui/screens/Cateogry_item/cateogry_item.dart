@@ -327,7 +327,7 @@ class _factory_selectState extends State<factory_select>
                                 _deleteType(context,factoryTypesList[customPosition] );
                                 //احذف عميل من الداتا بيز
                                 Navigator.pop(context);
-                                Navigator.pop(context);
+                                moveToLastScreen();
                                 updateTypesListView();
                               },
                             ),
@@ -344,6 +344,7 @@ class _factory_selectState extends State<factory_select>
                                 //هيرجع للصفحه اللى وراه
                                 //Navigator.of(context, rootNavigator: false).pop();
                                 Navigator.pop(context);
+                                moveToLastScreen();
                                 /*await Navigator.of(context).push(
                                     new MaterialPageRoute(
                                         builder: (context) => ClientPage()));*/
@@ -391,52 +392,8 @@ class _factory_selectState extends State<factory_select>
               ),
               //Second Dialog
               onPressed: () {
-                showDialog<void>(
-                    context: context,
-                    barrierDismissible: true, // user must tap button!
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                          'هل تريد إلغاء اضافه القماش ؟',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Cairo",
-                              fontSize: 14),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(
-                              'نعم',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Cairo",
-                                  fontSize: 14,
-                                  color: Colors.red),
-                            ),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              await Navigator.of(context).push(
-                                  new MaterialPageRoute(
-                                      builder: (context) => factory_select()));
-                            },
-                          ),
-                          TextButton(
-                            child: Text(
-                              'إلغاء ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Cairo",
-                                  fontSize: 14,
-                                  color: Colors.green),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    });
+                Navigator.pop(context);
+                moveToLastScreen();
               },
             ),
             RaisedButton(
@@ -453,6 +410,8 @@ class _factory_selectState extends State<factory_select>
                 this.factoryTypes.fTName =factoryTypeController.text;
                 this.factoryTypes.fTSource = 'F';
                 //اضافه عميل جديد
+                Navigator.pop(context);
+                moveToLastScreen();
                 save();
               },
             ),
