@@ -1,19 +1,19 @@
-import 'package:elnahwy_tex/ui/screens/client_data/client_data.dart';
+import 'package:elnahwy_tex/ui/move_to_last_screen.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
 import 'package:elnahwy_tex/widget/textformfieldclothdata.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-
-Widget Container_client_cloth (BuildContext context,TextEditingController  clothName,
-TextEditingController clothtype,
-TextEditingController clothtupenumber,
-TextEditingController clothNote){
-
+Widget le_tex_container(
+    TextEditingController clientname,
+    TextEditingController clothtype,
+    TextEditingController clothtupenumber,
+    TextEditingController clothNote,
+    BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
+        border: Border.all(color: Color(0xffC3FCF2).withGreen(120)),
         color: Color(0xffC3FCF2).withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -21,7 +21,6 @@ TextEditingController clothNote){
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-//اسم القماش
             Row(
               children: [
                 IconButton(
@@ -29,15 +28,17 @@ TextEditingController clothNote){
                     onPressed: () {
                       edit_delete_dialog_in_data(context);
                     }),
-                Flexible(child: textformcloth(clothName.toString())),
+                //اسم القماش
+                Flexible(child: textformcloth(clientname.toString())),
               ],
             ),
-            Row(children: <Widget>[
+            Row(
+              children: <Widget>[
 //عدد الامتار
-              Flexible(child: textformcloth(clothtupenumber.toString())),
+                Flexible(child: textformcloth(clothtupenumber.toString())),
 //نوع الشريط
-              Flexible(child: textformcloth(clothtype.toString()))
-            ],
+                Flexible(child: textformcloth(clothtype.toString()))
+              ],
             ),
             textformcloth(clothNote.toString())
           ],
@@ -46,6 +47,7 @@ TextEditingController clothNote){
     ),
   );
 }
+
 Future<void> edit_delete_dialog_in_data(BuildContext context) {
   return showDialog(
       context: context,
@@ -67,7 +69,19 @@ Future<void> edit_delete_dialog_in_data(BuildContext context) {
                 color: Colors.red),
           ),
           actions: <Widget>[
-            //delete
+            TextButton(
+              child: Text(
+                'تعديل ',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Cairo",
+                    fontSize: 14,
+                    color: Colors.green),
+              ),
+              onPressed: () {
+                editclothdata(context);
+              },
+            ),
             TextButton(
               child: Text(
                 'حذف ',
@@ -81,34 +95,18 @@ Future<void> edit_delete_dialog_in_data(BuildContext context) {
                 //Delete function
               },
             ),
-            //edit
-            TextButton(
-              child: Text(
-                'تعديل ',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Cairo",
-                    fontSize: 14,
-                    color: Colors.green),
-              ),
-              onPressed: () {
-                addcliendata(context);
-              },
-            ),
-
           ],
         );
       });
-
 }
-Future<void> addcliendata(BuildContext context) {
-  TextEditingController  clothname = TextEditingController();
+Future<void> editclothdata(BuildContext context) {
+  TextEditingController clientname = TextEditingController();
   TextEditingController clothtype = TextEditingController();
   TextEditingController clothtupenumber = TextEditingController();
   TextEditingController clothNote = TextEditingController();
   return showDialog(
       context: context,
-      builder: (BuildContext dialogcontext) {
+      builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
             "إضافه بيانات ",
@@ -117,13 +115,18 @@ Future<void> addcliendata(BuildContext context) {
                 fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
           ),
           content: SingleChildScrollView(
-            child: Column(children: <Widget>[
-              cust_txtformfield_dialog("اسم القماش",TextInputType.text,clothname),
-              cust_txtformfield_dialog("عدد الامتار",TextInputType.number,clothtupenumber),
-              cust_txtformfield_dialog("نوع الشريط",TextInputType.text,clothtype),
-              cust_txtformfield_dialog("ملاحظات",TextInputType.multiline,clothNote)
-
-            ],),
+            child: Column(
+              children: <Widget>[
+                cust_txtformfield_dialog(
+                    "اسم العميل", TextInputType.text, clientname),
+                cust_txtformfield_dialog(
+                    "عدد الامتار", TextInputType.number, clothtupenumber),
+                cust_txtformfield_dialog(
+                    "نوع الشريط", TextInputType.text, clothtype),
+                cust_txtformfield_dialog(
+                    "ملاحظات", TextInputType.multiline, clothNote)
+              ],
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -136,8 +139,9 @@ Future<void> addcliendata(BuildContext context) {
                     color: Colors.red),
               ),
               onPressed: () {
-                Navigator.of(dialogcontext).pop();
-                },
+                Navigator.pop(context);
+                moveToLastScreen(context);
+              },
             ),
             TextButton(
               child: Text(
@@ -150,17 +154,16 @@ Future<void> addcliendata(BuildContext context) {
               ),
               onPressed: () {
                 //insert function
-                print("Client Name : ${clothname.toString()}");
+                print("Client Name : ${clientname.toString()}");
                 print("Meters : ${clothtupenumber.toString()}");
                 print("Type : ${clothtype.toString()}");
                 print("Note : ${clothNote.toString()}");
-                Navigator.of(dialogcontext).maybePop();
+                Navigator.pop(context);
+                moveToLastScreen(context);
               },
             ),
           ],
         );
       });
 }
-
-
 
