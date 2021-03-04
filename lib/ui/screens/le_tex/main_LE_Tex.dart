@@ -496,7 +496,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
     dbFuture.then((database) {
       Future<List<FactoryTypes>> factoryTypesListFuture =
-      databaseHelper.getFactoryTypesList();
+      databaseHelper.getFactoryTypesList("L");
       factoryTypesListFuture.then((typesList) {
         setState(() {
           this.factoryTypesList= typesList;

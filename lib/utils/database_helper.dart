@@ -111,7 +111,7 @@ class DatabaseHelper{
 
   //Fetch Operation : Get all nahwy objects from database
   //get all Factory Types Table depend on table name you give
-  Future<List<Map<String,dynamic>>> getTableDataMapList(String tableName) async{
+  Future<List<Map<String,dynamic>>> getTableDataMapList(String tableName , String source) async{
     Database db = await this.database;
     var result = await db.query(tableName);
     return result;
@@ -182,7 +182,7 @@ class DatabaseHelper{
   //get the 'Map List' [List<Map>] and convert it to 'ClientNames List' [List<ClientNames>]
   Future<List<ClientNames>> getClientNamesList() async {
     // get map List from DB
-    var namesMapList = await getTableDataMapList(clientNamesTable);
+    var namesMapList = await getTableDataMapList(clientNamesTable,"");
     //count the number of map entries in DB table
     int count = namesMapList.length;
 
@@ -200,7 +200,7 @@ class DatabaseHelper{
   //get the 'Map List' [List<Map>] and convert it to 'ClientTypes List' [List<ClientNames>]
   Future<List<ClientType>> getClientTypesList() async {
     // get map List from DB
-    var typesMapList = await getTableDataMapList(clientTypesTable);
+    var typesMapList = await getTableDataMapList(clientTypesTable,"");
     //count the number of map entries in DB table
     int count = typesMapList.length;
 
@@ -216,9 +216,9 @@ class DatabaseHelper{
 
   //GET FACTORY Types
   //get the 'Map List' [List<Map>] and convert it to 'FactoryTypes List' [List<ClientNames>]
-  Future<List<FactoryTypes>> getFactoryTypesList() async {
+  Future<List<FactoryTypes>> getFactoryTypesList(String source) async {
     // get map List from DB
-    var factoryTypesMapList = await getTableDataMapList(factoryTypeTable);
+    var factoryTypesMapList = await getTableDataMapList(factoryTypeTable , source);
     //count the number of map entries in DB table
     int count = factoryTypesMapList.length;
 
@@ -236,7 +236,7 @@ class DatabaseHelper{
   //get the 'Map List' [List<Map>] and convert it to 'FactoryTypes List' [List<ClientNames>]
   Future<List<FactoryClients>> getFactoryClientsList() async {
     // get map List from DB
-    var factoryClientsMapList = await getTableDataMapList(factoryClientTable);
+    var factoryClientsMapList = await getTableDataMapList(factoryClientTable,"");
     //count the number of map entries in DB table
     int count = factoryClientsMapList.length;
 
