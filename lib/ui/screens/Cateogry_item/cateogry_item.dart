@@ -43,7 +43,7 @@ class _factory_selectState extends State<factory_select>
     super.initState();
     controller = new TabController(length: 4, vsync: this);
     updateTypesListView();
-    databaseHelper.getFactoryTypesList().then((type){
+    databaseHelper.getFactoryTypesList("").then((type){
       setState(() {
         allTypes = type;
         items = allTypes;
@@ -429,8 +429,13 @@ class _factory_selectState extends State<factory_select>
     moveToLastScreen();
     //print("In SAVE");
     if (factoryTypes.fTName.isNotEmpty) {
-      int result; // to check the operation success
-      result = await databaseHelper.insertFactoryType(factoryTypes);
+      int result; //
+      if (factoryTypes.fTId!= null) {
+        result = await databaseHelper.updateFactoryType(factoryTypes);
+      }else{
+        // to check the operation success
+        result = await databaseHelper.insertFactoryType(factoryTypes);
+      }
       //print('LETS GOOOOOO ${factoryTypes.fTName}');
        if (result !=0) {
         // Success
@@ -479,7 +484,7 @@ class _factory_selectState extends State<factory_select>
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
     dbFuture.then((database) {
       Future<List<FactoryTypes>> factoryTypesListFuture =
-      databaseHelper.getFactoryTypesList();
+      databaseHelper.getFactoryTypesList("");
       factoryTypesListFuture.then((typesList) {
         setState(() {
           this.factoryTypesList= typesList;
@@ -487,8 +492,6 @@ class _factory_selectState extends State<factory_select>
         });
       });
     });
-
-    print("types list count : ${count.toString()}");
   }
 
 
