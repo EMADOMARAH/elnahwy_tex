@@ -411,7 +411,7 @@ class _factory_selectState extends State<factory_select>
                 this.factoryTypes.fTSource = 'F';
                 //اضافه عميل جديد
                 Navigator.pop(context);
-                //moveToLastScreen();
+                moveToLastScreen();
                 save();
               },
             ),
@@ -426,7 +426,7 @@ class _factory_selectState extends State<factory_select>
 
   //save data to data base
   void save() async{
-    moveToLastScreen();
+    //moveToLastScreen();
     //print("In SAVE");
     if (factoryTypes.fTName.isNotEmpty) {
       int result; //
