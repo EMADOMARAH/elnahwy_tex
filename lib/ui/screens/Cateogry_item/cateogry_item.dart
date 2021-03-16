@@ -263,7 +263,7 @@ class _factory_selectState extends State<factory_select>
               child: ListBody(
                 children: <Widget>[
                   Text(
-                    'هل تريد حذف او تعديل هذا العميل ',
+                    'هل تريد حذف او تعديل هذا الصنف ',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -285,7 +285,7 @@ class _factory_selectState extends State<factory_select>
                       color: Colors.green),
                 ),
                 onPressed: () {
-                  txt_dialog_form(context,"تعديل اسم العميل ",null);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
+                  txt_dialog_form(context,"تعديل اسم الصنف ",null);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
                 },
               ),
               TextButton(
@@ -305,7 +305,7 @@ class _factory_selectState extends State<factory_select>
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: Text(
-                            'هل انت متاكد من حذف هذا العميل ',
+                            'هل انت متاكد من حذف هذا الصنف ',
                             textAlign: TextAlign.right,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,

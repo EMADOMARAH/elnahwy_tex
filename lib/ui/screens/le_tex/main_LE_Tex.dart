@@ -299,7 +299,6 @@ class LE_tex_homeState extends State<LE_tex_home> {
                                     color: Colors.green),
                               ),
                               onPressed: () {
-
                                 _deleteType(context,factoryTypesList[customPosition] );
                                 //احذف عميل من الداتا بيز
                                 Navigator.pop(context);
@@ -366,54 +365,10 @@ class LE_tex_homeState extends State<LE_tex_home> {
                     color: Colors.red),
               ),
               //Second Dialog
-              onPressed: () {
-                showDialog<void>(
-                    context: context,
-                    barrierDismissible: true, // user must tap button!
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                          'هل تريد إلغاء اضافه القماش ؟',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Cairo",
-                              fontSize: 14),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(
-                              'نعم',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Cairo",
-                                  fontSize: 14,
-                                  color: Colors.red),
-                            ),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              await Navigator.of(context).push(
-                                  new MaterialPageRoute(
-                                      builder: (context) => LE_tex_home()));
-                            },
-                          ),
-                          TextButton(
-                            child: Text(
-                              'إلغاء ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Cairo",
-                                  fontSize: 14,
-                                  color: Colors.green),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              },
+              onPressed: (){
+                Navigator.pop(context);
+              }
+
             ),
             RaisedButton(
               color: Colors.green,
@@ -428,10 +383,12 @@ class LE_tex_homeState extends State<LE_tex_home> {
               onPressed: () {
                 this.factoryTypes.fTName =factoryTypeController.text;
                 this.factoryTypes.fTSource = 'F';
-                //اضافه عميل جديد
+                Navigator.pop(context);
+                moveToLastScreen();
                 save();
               },
             ),
+
           ],
         );
       },
@@ -443,7 +400,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
 
   //save data to data base
   void save() async{
-    moveToLastScreen();
+    //moveToLastScreen();
     //print("In SAVE");
     if (factoryTypes.fTName.isNotEmpty) {
       int result; // to check the operation success
