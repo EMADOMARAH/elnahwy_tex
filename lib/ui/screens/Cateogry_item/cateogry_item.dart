@@ -393,7 +393,7 @@ class _factory_selectState extends State<factory_select>
               //Second Dialog
               onPressed: () {
                 Navigator.pop(context);
-                moveToLastScreen();
+                //moveToLastScreen();
               },
             ),
             RaisedButton(
@@ -411,7 +411,7 @@ class _factory_selectState extends State<factory_select>
                 this.factoryTypes.fTSource = 'F';
                 //اضافه عميل جديد
                 Navigator.pop(context);
-                moveToLastScreen();
+                //moveToLastScreen();
                 save();
               },
             ),
