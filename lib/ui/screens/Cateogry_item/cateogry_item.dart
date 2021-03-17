@@ -117,7 +117,14 @@ class _factory_selectState extends State<factory_select>
                         //search , back arrow & icon ROW
                         Row(
                           children: <Widget>[
-
+                            IconButton(
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  moveToLastScreen();
+                                }),
                             Flexible(
                               child: TextFormField(
                                   onChanged: (value) {

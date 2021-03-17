@@ -39,31 +39,20 @@ class _letex_clothtypeState extends State<letex_clothtype> {
           backgroundColor: Color(0xff6BD5E1),
         ),
         appBar: AppBar(
-            automaticallyImplyLeading: false,
+            automaticallyImplyLeading: true,
             backgroundColor: Color(0xff659B91),
             title: Row(
               children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: LE_tex_home(),
-                      ),
-                    );
-                  },
+                SizedBox(
+                  width: 10,
                 ),
                 Spacer(
                   flex: 1,
                 ),
                 Text(
                   "بيانات القماش لى تيكس",
-                  style: TextStyle(
-                      fontFamily: "Cairo", fontWeight: FontWeight.bold),
+                  style:
+                  TextStyle(fontFamily: "Cairo", fontWeight: FontWeight.bold),
                 )
               ],
             )),

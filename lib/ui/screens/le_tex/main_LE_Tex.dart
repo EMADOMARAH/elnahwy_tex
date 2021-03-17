@@ -101,13 +101,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
                                   color: Colors.black,
                                 ),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.leftToRight,
-                                      child: Home_Screen(),
-                                    ),
-                                  );
+                                  moveToLastScreen();
                                 }),
                             Flexible(
                               child: TextFormField(

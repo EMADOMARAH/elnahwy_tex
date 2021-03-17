@@ -38,23 +38,12 @@ class _clothaboutState extends State<clothabout> {
           backgroundColor: Color(0xff6BD5E1),
         ),
         appBar: AppBar(
-            automaticallyImplyLeading: false,
+            automaticallyImplyLeading: true,
             backgroundColor: Color(0xff659B91),
             title: Row(
               children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: factory_select(),
-                      ),
-                    );
-                  },
+                SizedBox(
+                  width: 10,
                 ),
                 Spacer(
                   flex: 1,
@@ -66,7 +55,6 @@ class _clothaboutState extends State<clothabout> {
                 )
               ],
             )),
-
         body: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(

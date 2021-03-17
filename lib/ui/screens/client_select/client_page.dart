@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../../move_to_last_screen.dart';
+
 class ClientPage extends StatefulWidget {
   @override
   _ClientPageState createState() => _ClientPageState();
@@ -110,6 +112,14 @@ void dispose() {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
+                        IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              moveToLastScreen(context);
+                            }),
                         Flexible(
                           child: TextFormField(
                               onChanged: (value) {
