@@ -117,20 +117,7 @@ class _factory_selectState extends State<factory_select>
                         //search , back arrow & icon ROW
                         Row(
                           children: <Widget>[
-                            IconButton(
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.leftToRight,
-                                      child: Home_Screen(),
-                                    ),
-                                  );
-                                }),
+
                             Flexible(
                               child: TextFormField(
                                   onChanged: (value) {
@@ -411,7 +398,7 @@ class _factory_selectState extends State<factory_select>
                 this.factoryTypes.fTSource = 'F';
                 //اضافه عميل جديد
                 Navigator.pop(context);
-                moveToLastScreen();
+                //moveToLastScreen();
                 save();
               },
             ),

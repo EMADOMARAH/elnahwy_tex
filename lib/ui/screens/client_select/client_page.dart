@@ -110,20 +110,6 @@ void dispose() {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        IconButton(
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.rightToLeft,
-                                  child: Home_Screen(),
-                                ),
-                              );
-                            }),
                         Flexible(
                           child: TextFormField(
                               onChanged: (value) {
