@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:elnahwy_tex/model/clientTypeModel.dart';
 import 'package:elnahwy_tex/ui/screens/client_select/client_page.dart';
+import 'package:elnahwy_tex/utils/database_helper.dart';
 import 'package:elnahwy_tex/widget/container_clientdata_cloth.dart';
 import 'package:elnahwy_tex/widget/cust_label.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield.dart';
@@ -8,17 +10,43 @@ import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sqflite/sqflite.dart';
 
 class client_data extends StatefulWidget {
+
+  final int id ;
+  final String clientName;
+  client_data({Key key, @required this.id,@required this.clientName}) : super(key: key);
   @override
-  _client_dataState createState() => _client_dataState();
+  _client_dataState createState() => _client_dataState(id,clientName);
 }
 
 class _client_dataState extends State<client_data> {
-  TextEditingController clothName;
-  TextEditingController clothtype;
-  TextEditingController clothtupenumber;
-  TextEditingController clothNote;
+
+  int id ;
+  String clientName;
+  _client_dataState(this.id, this.clientName);
+  //make object from our DB
+  DatabaseHelper databaseHelper = DatabaseHelper();
+  ClientType clientType  = new ClientType();
+  List<ClientType> clientTypesList = [];
+  int count = 0 ;
+
+
+  String clothName;
+  String clothtype;
+  String clothtupenumber;
+  String clothNote;
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    updateTypesListView();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +104,21 @@ class _client_dataState extends State<client_data> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   cust_label("اسم العميل"),
-                  cust_txtformfield("اسم العميل", TextInputType.text),
-                  Container_client_cloth(context,clothName, clothtupenumber, clothtype, clothNote),
-                  Container_client_cloth(context,clothName, clothtupenumber, clothtype, clothNote),
-                  Container_client_cloth(context,clothName, clothtupenumber, clothtype, clothNote),
+                  cust_txtformfield(clientName, TextInputType.text),
+                  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: clientTypesList.length,
+                    itemBuilder: (context, int position) {
+                      return GestureDetector(
+                        onLongPress: () {
+                         // showMyDialog(context);
+                        },
+                        child: Container_client_cloth(context, clientTypesList[position].cTName, clientTypesList[position].cTTape, clientTypesList[position].cTMeters, clientTypesList[position].cTNote),
+                      );
+                    },
+                  ),
+
 
                 ],
               ),
@@ -88,75 +127,156 @@ class _client_dataState extends State<client_data> {
         ),
       ),
     );
-  }
-}
-Future<void> addcliendata(BuildContext context) {
-  TextEditingController  clientname=TextEditingController();
-  TextEditingController clothtype=TextEditingController();
-  TextEditingController clothtupenumber=TextEditingController();
-  TextEditingController clothNote=TextEditingController();
-  return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            "إضافه بيانات ",
-            textAlign: TextAlign.right,
-            style: TextStyle(
-                fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-          content: SingleChildScrollView(
-            child: Column(children: <Widget>[
-              cust_txtformfield_dialog("اسم القماش",TextInputType.text,clientname),
-              cust_txtformfield_dialog("عدد الامتار",TextInputType.number,clothtupenumber),
-              cust_txtformfield_dialog("نوع الشريط",TextInputType.text,clothtype),
-              cust_txtformfield_dialog("ملاحظات",TextInputType.multiline,clothNote)
 
-            ],),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                'إالغاء ',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Cairo",
-                    fontSize: 14,
-                    color: Colors.red),
-              ),
-              onPressed: () {
-                Navigator.pop(
-                    context,
-                    PageTransition(
-                        type:
-                        PageTransitionType.leftToRight,
-                        child: ClientPage()));
-              },
-            ),
-            TextButton(
-              child: Text(
-                'حفظ (اضافه) ',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Cairo",
-                    fontSize: 14,
-                    color: Colors.green),
-              ),
-              onPressed: () {
-                //insert function
-                print("Client Name : ${clientname.toString()}");
-                print("Meters : ${clothtupenumber.toString()}");
-                print("Type : ${clothtype.toString()}");
-                print("Note : ${clothNote.toString()}");
-                Navigator.pop(
-                    context,
-                    PageTransition(
-                        type:
-                        PageTransitionType.leftToRight,
-                        child: ClientPage()));
-              },
-            ),
-          ],
-        );
+
+  }
+  void updateTypesListView() async {
+    final Future<Database> dbFuture = databaseHelper.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<Map<String, dynamic>>> clientTypesListFuture =
+      databaseHelper.getSecondTableDataMapList('clientType_table', 'c_n_id', id);
+      clientTypesListFuture.then((typesList) {
+        setState(() {
+          this.clientTypesList= typesList.cast<ClientType>();
+          this.count = typesList.length;
+          print (count);
+        });
       });
+    });
+  }
+  Future<void> addcliendata(BuildContext context) {
+    TextEditingController  clientname=TextEditingController();
+    TextEditingController clothtype=TextEditingController();
+    TextEditingController clothtupenumber=TextEditingController();
+    TextEditingController clothNote=TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "إضافه بيانات ",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            content: SingleChildScrollView(
+              child: Column(children: <Widget>[
+                cust_txtformfield_dialog("اسم القماش",TextInputType.text,clientname),
+                cust_txtformfield_dialog("عدد الامتار",TextInputType.number,clothtupenumber),
+                cust_txtformfield_dialog("نوع الشريط",TextInputType.text,clothtype),
+                cust_txtformfield_dialog("ملاحظات",TextInputType.multiline,clothNote)
+
+              ],),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'إالغاء ',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14,
+                      color: Colors.red),
+                ),
+                onPressed: () {
+                  Navigator.pop(
+                      context,
+                      PageTransition(
+                          type:
+                          PageTransitionType.leftToRight,
+                          child: ClientPage()));
+                },
+              ),
+              TextButton(
+                child: Text(
+                  'حفظ (اضافه) ',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14,
+                      color: Colors.green),
+                ),
+                onPressed: () {
+                  //insert function
+                  this.clientType.cTName = clientname.text;
+                  this.clientType.cTMeters = clothtupenumber.toString();
+                  this.clientType.cTTape = clothtype.text;
+                  this.clientType.cTNote = clothNote.text;
+                  this.clientType.cNId=id;
+                  save();
+                  Navigator.pop(
+                      context,
+                      PageTransition(
+                          type:
+                          PageTransitionType.leftToRight,
+                          child: ClientPage()));
+                },
+              ),
+            ],
+          );
+        });
+
+  }
+
+
+
+
+  //save data to data base
+  void save() async{
+    //moveToLastScreen();
+    //print("In SAVE");
+    if (clientType.cTName.isNotEmpty) {
+      int result; //
+      if (clientType.cTId!= null) {
+        result = await databaseHelper.updateClientType(clientType);
+        print ("update client type");
+      }else{
+        // to check the operation success
+        result = await databaseHelper.insertClientType(clientType);
+
+
+        if (result==0)
+        {
+          print ("save client type");
+          print ("Count : $count");
+        }else{}
+        print ("PROBLEM WITH SAVE");
+        print("RESULT : $result");
+        print("COUNT : $count");
+
+      }
+      //print('LETS GOOOOOO ${factoryTypes.fTName}');
+      if (result !=0) {
+        // Success
+       // _ShowAlertDialog('نجاح' , 'تم الحفظ بنجاح',Colors.green);
+      }else{
+        //Failure
+       // _ShowAlertDialog('فشل' , 'حدث خطأ اثناء الحفظ',Colors.amber);
+      }
+
+    } else{
+      //_ShowAlertDialog("خطأ", "نوع القماش فاضى!",Colors.red);
+    }
+  }
+  void _ShowAlertDialog(String title, String msg, var tcolor) {
+    AlertDialog alertDialog = AlertDialog(
+      title:  Text(title,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            fontFamily: "Cairo",color: tcolor,fontSize: 20,fontWeight: FontWeight.bold
+        ),),
+      content: Text(msg,textAlign: TextAlign.center,
+        style: TextStyle(
+            fontFamily: "Cairo",color: Colors.black,fontSize: 20
+        ),),
+    );
+    showDialog(context: context,
+        builder: (_) => alertDialog);
+  }
+
 }
+
+
+
+
+

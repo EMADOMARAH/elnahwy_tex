@@ -4,10 +4,11 @@ import 'package:elnahwy_tex/widget/textformfieldclothdata.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-Widget Container_client_cloth (BuildContext context,TextEditingController  clothName,
-TextEditingController clothtype,
-TextEditingController clothtupenumber,
-TextEditingController clothNote){
+Widget Container_client_cloth (BuildContext context,
+    String  clothName,
+    String clothtype,
+    String clothtupenumber,
+    String clothNote){
 
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -161,6 +162,7 @@ Future<void> addcliendata(BuildContext context) {
         );
       });
 }
+
 
 
 

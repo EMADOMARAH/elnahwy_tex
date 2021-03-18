@@ -189,7 +189,7 @@ void dispose() {
                                       context,
                                       PageTransition(
                                         type: PageTransitionType.rightToLeft,
-                                        child: client_data(),
+                                        child: client_data(id : clientsNamesList[position].cNId),
                                       ),
                                     );
                                   },

@@ -4,10 +4,11 @@ class FactoryClients{
   String fCMeters ;
   String fCTape ;
   String fCNote ;
+  int fTId;
 
-  FactoryClients({this.fCName, this.fCMeters, this.fCTape, this.fCNote});
+  FactoryClients({this.fCName, this.fCMeters, this.fCTape, this.fCNote,this.fTId});
 
-  FactoryClients.withId({this.fCId, this.fCName, this.fCMeters, this.fCTape, this.fCNote});
+  FactoryClients.withId({this.fCId, this.fCName, this.fCMeters, this.fCTape, this.fCNote,this.fTId});
 
   Map<String,dynamic> toMap(){
     var map = <String , dynamic>{};
@@ -21,6 +22,7 @@ class FactoryClients{
     map['f_c_meters'] = fCMeters;
     map['f_c_tape'] = fCTape;
     map['f_c_note'] = fCNote;
+    map['f_t_id'] = fTId;
 
     return map;
   }
@@ -32,6 +34,7 @@ class FactoryClients{
     this.fCMeters = map['f_c_meters'];
     this.fCTape = map['f_c_tape'];
     this.fCNote = map['f_c_note'];
+    this.fTId = map['f_t_id'];
 
   }
 

@@ -4,10 +4,11 @@ class ClientType{
   String cTMeters ;
   String cTTape ;
   String cTNote ;
+  int cNId;
 
-  ClientType.withId({this.cTId, this.cTName, this.cTMeters, this.cTTape, this.cTNote});
+  ClientType.withId({this.cTId, this.cTName, this.cTMeters, this.cTTape, this.cTNote,this.cNId});
 
-  ClientType({this.cTName, this.cTMeters, this.cTTape, this.cTNote});
+  ClientType({this.cTName, this.cTMeters, this.cTTape, this.cTNote,this.cNId});
 
   Map<String,dynamic> toMap(){
     var map = <String , dynamic>{};
@@ -21,6 +22,7 @@ class ClientType{
     map['c_t_meters'] = cTMeters;
     map['c_t_tape'] = cTTape;
     map['c_t_note'] = cTNote;
+    map['c_n_id'] = cNId;
 
     return map;
   }
@@ -32,6 +34,7 @@ class ClientType{
     this.cTMeters = map['c_t_meters'];
     this.cTTape = map['c_t_tape'];
     this.cTNote = map['c_t_note'];
+    this.cNId = map['c_n_id'];
 
   }
 

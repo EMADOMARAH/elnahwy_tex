@@ -7,6 +7,10 @@ import 'package:elnahwy_tex/widget/factorycontainercustom.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 class clothabout extends StatefulWidget {
+  final int id;
+
+  clothabout({Key key, @required this.id}) : super(key: key);
+
   @override
   _clothaboutState createState() => _clothaboutState();
 }

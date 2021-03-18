@@ -376,7 +376,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
               ),
               onPressed: () {
                 this.factoryTypes.fTName =factoryTypeController.text;
-                this.factoryTypes.fTSource = 'F';
+                this.factoryTypes.fTSource = 'L';
                 Navigator.pop(context);
                 moveToLastScreen();
                 save();

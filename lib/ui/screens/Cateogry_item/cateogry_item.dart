@@ -43,7 +43,7 @@ class _factory_selectState extends State<factory_select>
     super.initState();
     controller = new TabController(length: 4, vsync: this);
     updateTypesListView();
-    databaseHelper.getFactoryTypesList("").then((type){
+    databaseHelper.getFactoryTypesList("F").then((type){
       setState(() {
         allTypes = type;
         items = allTypes;
@@ -198,7 +198,7 @@ class _factory_selectState extends State<factory_select>
                                         context,
                                         PageTransition(
                                           type: PageTransitionType.rightToLeft,
-                                          child: clothabout(),
+                                          child: clothabout(id : factoryTypesList[position].fTId),
                                         ),
                                       );
                                     },
@@ -478,7 +478,7 @@ class _factory_selectState extends State<factory_select>
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
     dbFuture.then((database) {
       Future<List<FactoryTypes>> factoryTypesListFuture =
-      databaseHelper.getFactoryTypesList("");
+      databaseHelper.getFactoryTypesList("F");
       factoryTypesListFuture.then((typesList) {
         setState(() {
           this.factoryTypesList= typesList;

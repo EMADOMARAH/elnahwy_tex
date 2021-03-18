@@ -2,6 +2,7 @@ import 'package:elnahwy_tex/model/clientNameModel.dart';
 import 'package:elnahwy_tex/model/clientTypeModel.dart';
 import 'package:elnahwy_tex/model/factoryClientModel.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';
@@ -56,13 +57,18 @@ class DatabaseHelper{
     return _database;
   }
 
+  //Enable ForeignKey
+  static Future _onConfigure(Database db) async {
+    await db.execute('PRAGMA foreign_keys = ON');
+  }
+
   Future<Database>initializeDatabase() async {
     // Get the Directory path for both android and ios to store data
     Directory directory= await getExternalStorageDirectory();
     String path = directory.path + 'nahwy.db';
 
     // Open/create the database at a given path
-    var nahwyDatabase = await openDatabase(path,version: 1 ,onCreate: _createDb);
+    var nahwyDatabase = await openDatabase(path,version: 2 ,onCreate: _createDb,onConfigure: _onConfigure);
     return nahwyDatabase;
   }
 
@@ -84,7 +90,9 @@ class DatabaseHelper{
         $colFCName TEXT,
         $colFCMeters TEXT,
         $colFCTape TEXT,
-        $colFCNote TEXT
+        $colFCNote TEXT,
+        $colFTId INTEGER,
+        FOREIGN KEY ($colFTId) REFERENCES $factoryTypeTable ($colFTId) ON DELETE NO ACTION ON UPDATE NO ACTION
         )
         '''
     );
@@ -103,7 +111,9 @@ class DatabaseHelper{
          $colCTName TEXT,
         $colCTMeters TEXT,
         $colCTTape TEXT,
-        $colCTNote TEXT
+        $colCTNote TEXT,
+        $colCNId INTEGER,
+        FOREIGN KEY ($colCNId) REFERENCES $clientNamesTable ($colCNId) ON DELETE NO ACTION ON UPDATE NO ACTION
         )
         '''
     );
@@ -113,9 +123,24 @@ class DatabaseHelper{
   //get all Factory Types Table depend on table name you give
   Future<List<Map<String,dynamic>>> getTableDataMapList(String tableName , String source) async{
     Database db = await this.database;
-    var result = await db.query(tableName);
+    var result = await db.query(
+        tableName
+        //,where: '$colFTSource = $source'
+    );
     return result;
   }
+
+  //Get Factory Clients table depend on foreign key
+  Future<List<Map<String,dynamic>>> getSecondTableDataMapList(String tableName , String colName, int foreignKey) async{
+    Database db = await this.database;
+    var result = await db.query(
+      tableName,
+      columns: [colName],
+      where: '$colName = $foreignKey'
+    );
+    return result;
+  }
+
 
   //Insert Operation : Insert a nahwy object to Database
   Future<int> insertFactoryType(FactoryTypes types) async{
@@ -135,6 +160,12 @@ class DatabaseHelper{
   }
   Future<int> insertClientType(ClientType type) async{
     Database db = await this.database;
+    print (type.cTName);
+    print (type.cTMeters);
+    print (type.cTTape);
+    print (type.cTNote);
+    print (type.cTId);
+    print (type.cNId);
     var result = await db.insert(clientTypesTable, type.toMap());
     return result;
   }

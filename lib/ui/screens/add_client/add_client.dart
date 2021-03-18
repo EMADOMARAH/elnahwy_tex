@@ -151,7 +151,7 @@ class _Add_ClientState extends State<Add_Client> {
   //save data to data base
   void save() async{
 
-    moveToLastScreen();
+   // moveToLastScreen();
 
     if (clientNames.cNName.length > 0 ) {
       int result; // to check the operation success

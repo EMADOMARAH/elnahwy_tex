@@ -4,7 +4,7 @@ Widget cust_txtformfield(String title, var typeinput) {
   return Padding(
     padding: EdgeInsets.only(bottom: 8,right: 8,left: 8),
     child: TextFormField(
-      readOnly: false,
+      readOnly: true,
       keyboardType: typeinput,
       cursorColor: Colors.black,
       textDirection: TextDirection.rtl,
@@ -12,11 +12,6 @@ Widget cust_txtformfield(String title, var typeinput) {
       decoration: InputDecoration(
         fillColor: Colors.white.withOpacity(0.2),
         filled: true,
-        hintText: title,
-        hintStyle: TextStyle(
-            fontFamily: "Cairo",
-            fontSize: 18,
-            color: Colors.black.withOpacity(0.7)),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
