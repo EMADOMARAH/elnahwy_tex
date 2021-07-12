@@ -189,13 +189,13 @@ void dispose() {
                                       context,
                                       PageTransition(
                                         type: PageTransitionType.rightToLeft,
-                                        child: client_data(id : clientsNamesList[position].cNId),
+                                        child: client_data(id : clientsNamesList[position].cNId,clientName: clientsNamesList[position].cNName),
                                       ),
                                     );
                                   },
                                   child: custom_data(
                                     this.clientsNamesList[position].cNName.toString(),
-                                    'No_title',
+                                    clientsNamesList.length.toString(),
                                     IconButton(
                                       icon: Icon(Icons.more_vert),
                                       onPressed: () {

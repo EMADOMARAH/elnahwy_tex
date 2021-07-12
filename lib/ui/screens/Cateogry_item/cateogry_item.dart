@@ -29,6 +29,7 @@ class _factory_selectState extends State<factory_select>
   List<FactoryTypes> factoryTypesList = [];
   int count = 0;
   int customPosition;
+  var editingId;
 
   var id , name;
   var showItemList = List<Widget>();
@@ -80,7 +81,7 @@ class _factory_selectState extends State<factory_select>
     return Scaffold(
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            txt_dialog_form(context,"إضافه نوع قماش","إسم القماش");
+            txt_dialog_form(context,"إضافه نوع قماش","إسم القماش", null);
           },
           icon: Icon(
             Icons.add,
@@ -279,7 +280,7 @@ class _factory_selectState extends State<factory_select>
                       color: Colors.green),
                 ),
                 onPressed: () {
-                  txt_dialog_form(context,"تعديل اسم الصنف ",null);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
+                  txt_dialog_form(context,"تعديل اسم الصنف ",null,id);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
                 },
               ),
               TextButton(
@@ -355,7 +356,7 @@ class _factory_selectState extends State<factory_select>
       },
     );
   }
-  Future<void> txt_dialog_form(BuildContext context,String title,String textTitle) async {
+  Future<void> txt_dialog_form(BuildContext context,String title,String textTitle, int id) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -403,6 +404,10 @@ class _factory_selectState extends State<factory_select>
               onPressed: () {
                 this.factoryTypes.fTName =factoryTypeController.text;
                 this.factoryTypes.fTSource = 'F';
+                if(id!=null){
+                  this.factoryTypes.fTId = id;
+                }
+
                 //اضافه عميل جديد
                 Navigator.pop(context);
                 //moveToLastScreen();
@@ -425,9 +430,11 @@ class _factory_selectState extends State<factory_select>
     if (factoryTypes.fTName.isNotEmpty) {
       int result; //
       if (factoryTypes.fTId!= null) {
+        print("بنعدل");
         result = await databaseHelper.updateFactoryType(factoryTypes);
       }else{
         // to check the operation success
+        print("نحفظ");
         result = await databaseHelper.insertFactoryType(factoryTypes);
       }
       //print('LETS GOOOOOO ${factoryTypes.fTName}');

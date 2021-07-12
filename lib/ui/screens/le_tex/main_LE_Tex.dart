@@ -32,16 +32,12 @@ class LE_tex_homeState extends State<LE_tex_home> {
   TextEditingController factoryTypeController = TextEditingController();
   var showItemList = List<Widget>();
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     updateTypesListView();
   }
-
-
-
 
   Future<bool> popfunc() async {
     return true;
@@ -58,7 +54,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
     return Scaffold(
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            txt_dialog_form(context,"إضافه نوع قماش","إسم القماش");
+            txt_dialog_form(context,"إضافه نوع قماش","إسم القماش" , null);
           },
           icon: Icon(
             Icons.add,
@@ -255,7 +251,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
                       color: Colors.green),
                 ),
                 onPressed: () {
-                  txt_dialog_form(context,"تعديل اسم الصنف ",null);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
+                  txt_dialog_form(context,"تعديل اسم الصنف ",null , id);/*edit_screen(ClientNames.withId(id, name)))).then((value) => updateListView());*/
                 },
               ),
               TextButton(
@@ -329,7 +325,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
       },
     );
   }
-  Future<void> txt_dialog_form(BuildContext context,String title,String textTitle) async {
+  Future<void> txt_dialog_form(BuildContext context,String title,String textTitle , int id) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -377,6 +373,9 @@ class LE_tex_homeState extends State<LE_tex_home> {
               onPressed: () {
                 this.factoryTypes.fTName =factoryTypeController.text;
                 this.factoryTypes.fTSource = 'L';
+                if (id != null) {
+                  this.factoryTypes.fTId = id;
+                }
                 Navigator.pop(context);
                 moveToLastScreen();
                 save();
@@ -398,8 +397,15 @@ class LE_tex_homeState extends State<LE_tex_home> {
     //print("In SAVE");
     if (factoryTypes.fTName.isNotEmpty) {
       int result; // to check the operation success
-      result = await databaseHelper.insertFactoryType(factoryTypes);
-      //print('LETS GOOOOOO ${factoryTypes.fTName}');
+      if (factoryTypes.fTId!= null) {
+        print("بنعدل");
+        result = await databaseHelper.updateFactoryType(factoryTypes);
+      }else{
+        // to check the operation success
+        print("نحفظ");
+        result = await databaseHelper.insertFactoryType(factoryTypes);
+      }
+
       if (result !=0) {
         // Success
         _ShowAlertDialog('نجاح' , 'تم الحفظ بنجاح',Colors.green);
@@ -456,7 +462,6 @@ class LE_tex_homeState extends State<LE_tex_home> {
       });
     });
 
-    print("types list count : ${count.toString()}");
   }
 
 

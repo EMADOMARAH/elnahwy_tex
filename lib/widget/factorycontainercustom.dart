@@ -2,10 +2,11 @@ import 'package:elnahwy_tex/widget/textformfieldclothdata.dart';
 import 'package:flutter/material.dart';
 
 Widget factorycust_container(
-    TextEditingController clothName,
-    TextEditingController clothtype,
-    TextEditingController clothtupenumber,
-    TextEditingController clothNote,
+    String clothName,
+    String clothtype,
+    String clothtupenumber,
+    String clothNote,
+    int id,
     BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -25,7 +26,7 @@ Widget factorycust_container(
                 IconButton(
                     icon: Icon(Icons.more_vert),
                     onPressed: () {
-                      edit_delete_dialog_in_data(context);
+                      edit_delete_dialog_in_data(context , id);
                     }),
                 //اسم القماش
                 Flexible(child: textformcloth(clothName.toString())),
@@ -47,7 +48,7 @@ Widget factorycust_container(
   );
 }
 
-Future<void> edit_delete_dialog_in_data(BuildContext context) {
+Future<void> edit_delete_dialog_in_data(BuildContext context , int id) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
