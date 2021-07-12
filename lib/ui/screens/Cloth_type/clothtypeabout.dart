@@ -5,6 +5,7 @@ import 'package:elnahwy_tex/widget/cust_label.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
 import 'package:elnahwy_tex/widget/factorycontainercustom.dart';
+import 'package:elnahwy_tex/widget/textformfieldclothdata.dart';
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -100,20 +101,7 @@ class _clothaboutState extends State<clothabout> {
                     itemCount: listCount,
                     itemBuilder: (context, position) {
                       return GestureDetector(
-                        onLongPress: () {
-                          //showMyDialog(context);
-                        },
-                        onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   PageTransition(
-                          //     type: PageTransitionType.rightToLeft,
-                          //     child: letex_clothtype(),
-                          //   ),
-                          // );
-                        },
-                        child:
-                        factorycust_container(
+                        child: factorycust_container(
                             this.factoryClientsList[position].fCName.toString(),
                             this.factoryClientsList[position].fCTape.toString(),
                             this.factoryClientsList[position].fCMeters.toString(),
@@ -125,29 +113,6 @@ class _clothaboutState extends State<clothabout> {
                   ),
                 ),
 
-                Align(
-                  alignment: FractionalOffset.bottomCenter,
-                  child: RaisedButton(
-                      color: Colors.white,
-                      child: Text(
-                        'رجوع',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Cairo",
-                            fontSize: 18,
-                            color: Colors.green),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(
-                          context,
-                          PageTransition(
-                            type:
-                            PageTransitionType.leftToRight,
-                            child: factory_select(),
-                          ),
-                        );
-                      }),
-                )
               ],
             ),
           ),
@@ -275,19 +240,112 @@ class _clothaboutState extends State<clothabout> {
                   this.factoryClient.fTId = id;
                   Navigator.pop(context);
                   save();
-
-                  // Navigator.pop(
-                  //     context,
-                  //     PageTransition(
-                  //         type:
-                  //         PageTransitionType.leftToRight,
-                  //         child: factory_select()));
+                  updateTypesListView();
                 },
               ),
             ],
           );
         });
   }
+
+  Widget factorycust_container(
+      String clothName,
+      String clothtype,
+      String clothtupenumber,
+      String clothNote,
+      int id,
+      BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          border: Border.all(color: Color(0xffC3FCF2).withGreen(120)),
+          color: Color(0xffC3FCF2).withOpacity(0.5),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(0),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  IconButton(
+                      icon: Icon(Icons.more_vert),
+                      onPressed: () {
+                        edit_delete_dialog_in_data(context , id);
+                      }),
+                  //اسم القماش
+                  Flexible(child: textformcloth(clothName.toString())),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+//عدد الامتار
+                  Flexible(child: textformcloth(clothtupenumber.toString())),
+//نوع الشريط
+                  Flexible(child: textformcloth(clothtype.toString()))
+                ],
+              ),
+              textformcloth(clothNote.toString())
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  Future<void> edit_delete_dialog_in_data(BuildContext context , int id) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "حذف البيانات ",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            content: Text(
+              "هل تريد  حذف هذه البيانات",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontFamily: "Cairo",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Colors.red),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'حذف ',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14,
+                      color: Colors.red),
+                ),
+                onPressed: () {
+                  _deleteClient(context, id);
+                  Navigator.pop(context);
+                  updateTypesListView();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  // delete item from types List<dynamic> listName
+  void _deleteClient(BuildContext context, int  factoryClientsId) async{
+    int result = await databaseHelper.deleteRaw('factoryClient_table', 'f_c_id', factoryClientsId);
+    if (result !=0) {
+      updateTypesListView();
+    }
+
+  }
+
 }
 
 

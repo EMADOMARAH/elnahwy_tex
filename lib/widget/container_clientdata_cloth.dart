@@ -4,7 +4,9 @@ import 'package:elnahwy_tex/widget/textformfieldclothdata.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-Widget Container_client_cloth (BuildContext context,
+Widget Container_client_cloth (
+    BuildContext context,
+    int id,
     String  clothName,
     String clothtype,
     String clothtupenumber,
@@ -28,7 +30,7 @@ Widget Container_client_cloth (BuildContext context,
                 IconButton(
                     icon: Icon(Icons.more_vert),
                     onPressed: () {
-                      edit_delete_dialog_in_data(context);
+                      edit_delete_dialog_in_data(context , id);
                     }),
                 Flexible(child: textformcloth(clothName.toString())),
               ],
@@ -47,19 +49,19 @@ Widget Container_client_cloth (BuildContext context,
     ),
   );
 }
-Future<void> edit_delete_dialog_in_data(BuildContext context) {
+Future<void> edit_delete_dialog_in_data(BuildContext context , int id) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            "حذف او تعديل البيانات ",
+            "حذف البيانات ",
             textAlign: TextAlign.right,
             style: TextStyle(
                 fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
           ),
           content: Text(
-            "هل تريد تعديل ام حذف هذه البيانات",
+            "هل تريد حذف هذه البيانات",
             textAlign: TextAlign.right,
             style: TextStyle(
                 fontFamily: "Cairo",

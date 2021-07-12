@@ -217,7 +217,10 @@ class DatabaseHelper {
   //Delete Operation : Delete any raw from any table in the fucking nahwy database
   Future<int> deleteRaw(String tableName, String idColumnName, int id) async {
     Database db = await this.database;
-    var result = await db.rawDelete('DELETE FROM $tableName WHERE $idColumnName = $id');
+    //var result = await db.rawDelete('DELETE FROM $tableName WHERE "$idColumnName" = "$id"');
+    var result =await db.delete(tableName, where: '$idColumnName = ?', whereArgs: [id]);
+
+
     return result;
   }
 

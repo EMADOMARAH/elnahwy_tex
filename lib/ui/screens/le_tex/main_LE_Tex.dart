@@ -26,18 +26,49 @@ class LE_tex_homeState extends State<LE_tex_home> {
   List<FactoryTypes> factoryTypesList = [];
   int count = 0;
   int customPosition;
+  TabController controller;
 
   var id , name;
 
   TextEditingController factoryTypeController = TextEditingController();
+
+  TextEditingController editingController = TextEditingController();
   var showItemList = List<Widget>();
+  var allTypes = [];
+  var items = List();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     updateTypesListView();
+    databaseHelper.getFactoryTypesList("L").then((type){
+      setState(() {
+        allTypes = type;
+        items = allTypes;
+      });
+    });
   }
+  void filterSearchResults(String query) async {
+    factoryTypesList = [];
+    var dummySearchList = allTypes;
+    if(query.isNotEmpty){
+      setState(() {
+        for(int index =0 ; index < dummySearchList.length; index++){
+          FactoryTypes factoryTypes = dummySearchList[index];
+          if(factoryTypes.name.toString().contains(query)){
+            factoryTypesList.add(factoryTypes);
+          }
+        }
+      });
+    }else{
+      setState(() {
+        updateTypesListView();
+      });
+    }
+  }
+
 
   Future<bool> popfunc() async {
     return true;
@@ -101,7 +132,9 @@ class LE_tex_homeState extends State<LE_tex_home> {
                                 }),
                             Flexible(
                               child: TextFormField(
-                                  onChanged: (value) {},
+                                  onChanged: (value) {
+                                    filterSearchResults(value);
+                                  },
                                   keyboardType: TextInputType.text,
                                   textAlign: TextAlign.center,
                                   decoration: InputDecoration(
@@ -159,7 +192,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
                               child: ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: count,
+                                itemCount: factoryTypesList.length,
                                 itemBuilder: (context, position) {
                                   return GestureDetector(
                                     onLongPress: () {
@@ -170,7 +203,7 @@ class LE_tex_homeState extends State<LE_tex_home> {
                                         context,
                                         PageTransition(
                                           type: PageTransitionType.rightToLeft,
-                                          child: letex_clothtype(),
+                                          child: letex_clothtype(id: factoryTypesList[position].fTId,),
                                         ),
                                       );
                                     },
@@ -377,7 +410,6 @@ class LE_tex_homeState extends State<LE_tex_home> {
                   this.factoryTypes.fTId = id;
                 }
                 Navigator.pop(context);
-                moveToLastScreen();
                 save();
               },
             ),

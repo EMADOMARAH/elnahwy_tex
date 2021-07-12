@@ -7,6 +7,7 @@ import 'package:elnahwy_tex/widget/container_clientdata_cloth.dart';
 import 'package:elnahwy_tex/widget/cust_label.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield.dart';
 import 'package:elnahwy_tex/widget/cust_txtformfield_dialog.dart';
+import 'package:elnahwy_tex/widget/textformfieldclothdata.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -30,10 +31,7 @@ class _client_dataState extends State<client_data> {
   List<ClientType> clientTypesList = [];
   int count = 0;
 
-  String clothName;
-  String clothtype;
-  String clothtupenumber;
-  String clothNote;
+
 
   @override
   void initState() {
@@ -79,42 +77,43 @@ class _client_dataState extends State<client_data> {
             ],
           )),
       body: SafeArea(
-        child: Container(
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: new LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xffC3FCF2),
-                Color(0xff659B91),
-              ],
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: new LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xffC3FCF2),
+                  Color(0xff659B91),
+                ],
+              ),
             ),
-          ),
-          child: SingleChildScrollView(
             child: Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  cust_label("اسم العميل"),
-                  cust_txtformfield(clientName.toString(), null),
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: clientTypesList.length,
-                    itemBuilder: (context, int position) {
-                      return GestureDetector(
-                        onLongPress: () {
-                          // showMyDialog(context);
-                        },
-                        child: Container_client_cloth(
-                            context,
-                            clientTypesList[position].cTName.toString(),
-                            clientTypesList[position].cTTape.toString(),
-                            clientTypesList[position].cTMeters.toString(),
-                            clientTypesList[position].cTNote.toString()),
-                      );
-                    },
+                  Padding(
+                    padding: EdgeInsets.only(top: 27, left: 5, right: 5),
+                    child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: count,
+                      itemBuilder: (context, int position) {
+                        return GestureDetector(
+                          onLongPress: () {
+                            // showMyDialog(context);
+                          },
+                          child: Container_client_cloth(
+                              context,
+                              clientTypesList[position].cTId,
+                              clientTypesList[position].cTName.toString(),
+                              clientTypesList[position].cTTape.toString(),
+                              clientTypesList[position].cTMeters.toString(),
+                              clientTypesList[position].cTNote.toString()),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -125,79 +124,152 @@ class _client_dataState extends State<client_data> {
     );
   }
 
-  void updateTypesListView() async {
-    // try to avoid VoidCallbacks
-    // final Future<Database> dbFuture = databaseHelper.initializeDatabase();
-    // dbFuture.then((database) {
-    //   Future<List<Map<String, dynamic>>> clientTypesListFuture =
-    //   databaseHelper.getSecondTableDataMapList('clientType_table', 'c_n_id', id);
-    //   clientTypesListFuture.then((typesList) {
-    //     setState(() {
-    //       this.clientTypesList= typesList.cast<ClientType>();
-    //       this.count = typesList.length;
-    //       print (count);
-    //     });
-    //   });
-    // });
-    //
-    // final db = await databaseHelper.initializeDatabase();
-    // in 2 lines only
-    // todo (max) : 3 use async await when possible
-    // don't user Future.then when the code base get bigger
-    // it will look like طبق كشري او والله
-    clientTypesList = await databaseHelper.getSecondTableDataMapList('clientType_table', 'c_n_id', id);
+  Widget Container_client_cloth (
+      BuildContext context,
+      int id,
+      String  clothName,
+      String clothtype,
+      String clothtupenumber,
+      String clothNote){
 
-    setState(() => count = clientTypesList.length);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Color(0xffC3FCF2).withOpacity(0.5),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+//اسم القماش
+              Row(
+                children: [
+                  IconButton(
+                      icon: Icon(Icons.more_vert),
+                      onPressed: () {
+                        edit_delete_dialog_in_data(context , id);
+                      }),
+                  Flexible(child: textformcloth(clothName.toString())),
+                ],
+              ),
+              Row(children: <Widget>[
+//عدد الامتار
+                Flexible(child: textformcloth(clothtupenumber.toString())),
+//نوع الشريط
+                Flexible(child: textformcloth(clothtype.toString()))
+              ],
+              ),
+              textformcloth(clothNote.toString())
+            ],
+          ),
+        ),
+      ),
+    );
   }
-
-  Future<void> addcliendata(BuildContext context) {
-    TextEditingController clientname = TextEditingController();
-    TextEditingController clothtype = TextEditingController();
-    TextEditingController clothtupenumber = TextEditingController();
-    TextEditingController clothNote = TextEditingController();
+  Future<void> edit_delete_dialog_in_data(BuildContext context , int id) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
+              "حذف البيانات ",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            content: Text(
+              "هل تريد حذف هذه البيانات",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontFamily: "Cairo",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Colors.red),
+            ),
+            actions: <Widget>[
+              //delete
+              TextButton(
+                child: Text(
+                  'حذف ',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14,
+                      color: Colors.red),
+                ),
+                onPressed: () {
+                  _deleteType(context, id);
+                  Navigator.pop(context);
+                  updateTypesListView();
+                },
+              ),
+              //edit
+
+
+            ],
+          );
+        });
+
+  }
+  Future<void> addcliendata(BuildContext context) {
+    TextEditingController  clothname = TextEditingController();
+    TextEditingController clothtype = TextEditingController();
+    TextEditingController clothtupenumber = TextEditingController();
+    TextEditingController clothNote = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (BuildContext dialogcontext) {
+          return AlertDialog(
+            title: Text(
               "إضافه بيانات ",
               textAlign: TextAlign.right,
-              style: TextStyle(fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(
+                  fontFamily: "Cairo", fontWeight: FontWeight.bold, fontSize: 20),
             ),
             content: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  cust_txtformfield_dialog("اسم القماش", TextInputType.text, clientname),
-                  cust_txtformfield_dialog("عدد الامتار", TextInputType.number, clothtupenumber),
-                  cust_txtformfield_dialog("نوع الشريط", TextInputType.text, clothtype),
-                  cust_txtformfield_dialog("ملاحظات", TextInputType.multiline, clothNote)
-                ],
-              ),
+              child: Column(children: <Widget>[
+                cust_txtformfield_dialog("اسم القماش",TextInputType.text,clothname),
+                cust_txtformfield_dialog("عدد الامتار",TextInputType.number,clothtupenumber),
+                cust_txtformfield_dialog("نوع الشريط",TextInputType.text,clothtype),
+                cust_txtformfield_dialog("ملاحظات",TextInputType.multiline,clothNote)
+
+              ],),
             ),
             actions: <Widget>[
               TextButton(
                 child: Text(
                   'إالغاء ',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "Cairo", fontSize: 14, color: Colors.red),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14,
+                      color: Colors.red),
                 ),
                 onPressed: () {
-                  Navigator.pop(context, PageTransition(type: PageTransitionType.leftToRight, child: ClientPage()));
+                  Navigator.of(dialogcontext).pop();
                 },
               ),
               TextButton(
                 child: Text(
                   'حفظ (اضافه) ',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontFamily: "Cairo", fontSize: 14, color: Colors.green),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      fontSize: 14,
+                      color: Colors.green),
                 ),
                 onPressed: () {
-                  //insert function
-                  this.clientType.cTName = clientname.text;
-                  this.clientType.cTMeters = clothtupenumber.toString();
+                  this.clientType.cTName = clothname.text;
+                  this.clientType.cTMeters = clothtupenumber.text;
                   this.clientType.cTTape = clothtype.text;
                   this.clientType.cTNote = clothNote.text;
-                  this.clientType.cNId = id;
+                  this.clientType.cNId =id;
+                  Navigator.pop(context);
                   save();
-                  Navigator.pop(context, PageTransition(type: PageTransitionType.leftToRight, child: ClientPage()));
+                  updateTypesListView();
                 },
               ),
             ],
@@ -205,30 +277,53 @@ class _client_dataState extends State<client_data> {
         });
   }
 
+  void updateTypesListView() async {
+    final Future<Database> dbFuture = databaseHelper.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<ClientType>> factoryClientsListFuture =
+      databaseHelper.getClientTypesList();
+      factoryClientsListFuture.then((typesList) {
+        setState(() {
+          this.clientTypesList = typesList;
+          this.count = typesList.length;
+        });
+      });
+    });
+
+  }
+
+  // delete item from types List<dynamic> listName
+  void _deleteType(BuildContext context, int  clientTypeId) async{
+    int result = await databaseHelper.deleteRaw('clientType_table', 'c_t_id', clientTypeId);
+    if (result !=0) {
+      updateTypesListView();
+    }
+
+  }
+
+
   //save data to data base
   void save() async {
-    //moveToLastScreen();
-    //print("In SAVE");
-    if (clientType.cTName.isNotEmpty) {
+
+    if (clientType.cTName.isNotEmpty && clientType.cTMeters.isNotEmpty && clientType.cTTape.isNotEmpty) {
       int result; //
       if (clientType.cTId != null) {
         result = await databaseHelper.updateClientType(clientType);
-        print("update client type");
+        print("بنعدل");
       } else {
         // to check the operation success
         result = await databaseHelper.insertClientType(clientType);
-
+        print("نحفظ");
       }
-      //print('LETS GOOOOOO ${factoryTypes.fTName}');
       if (result != 0) {
         // Success
-        // _ShowAlertDialog('نجاح' , 'تم الحفظ بنجاح',Colors.green);
+         _ShowAlertDialog('نجاح' , 'تم الحفظ بنجاح',Colors.green);
       } else {
         //Failure
-        // _ShowAlertDialog('فشل' , 'حدث خطأ اثناء الحفظ',Colors.amber);
+         _ShowAlertDialog('فشل' , 'حدث خطأ اثناء الحفظ',Colors.amber);
       }
     } else {
-      //_ShowAlertDialog("خطأ", "نوع القماش فاضى!",Colors.red);
+      _ShowAlertDialog("خطأ", "نوع القماش فاضى!",Colors.red);
     }
   }
 

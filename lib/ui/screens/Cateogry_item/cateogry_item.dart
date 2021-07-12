@@ -181,50 +181,71 @@ class _factory_selectState extends State<factory_select>
                             ),
                             color: Colors.white,
                           ),
-                          child: Padding(
-                            padding:
-                                EdgeInsets.only(top: 27, left: 5, right: 5),
-                            child: SingleChildScrollView(
-                              child: ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: factoryTypesList.length,
-                                itemBuilder: (context, int position) {
-                                  return GestureDetector(
-                                    onLongPress: () {
-                                      showMyDialog(context);
-                                    },
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.rightToLeft,
-                                          child: clothabout(id : factoryTypesList[position].fTId),
-                                        ),
-                                      );
-                                    },
-                                    child: custom_data(
-                                      this.factoryTypesList[position].fTName.toString(),
-                                      "No_title",
-                                      IconButton(
-                                        icon: Icon(Icons.more_vert),
-                                        onPressed: () {
-                                          id = this
-                                              .factoryTypesList[position]
-                                              .fTId;
-                                          name = this
-                                              .factoryTypesList[position]
-                                              .fTName
-                                              .toString();
-                                          this.customPosition = position;
-                                          _showMyDialog(context, position, factoryTypesList[position].fTId, factoryTypesList[position].fTName);
+                          child: Column(
+                            children: [
+
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 10, left: 5, right: 5),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                              'عدد العملاء فى المصنع : ${factoryTypesList.length}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold ,
+                                              fontSize: 15
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      ListView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: factoryTypesList.length,
+                                        itemBuilder: (context, int position) {
+                                          return GestureDetector(
+                                            onLongPress: () {
+                                              showMyDialog(context);
+                                            },
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  type: PageTransitionType.rightToLeft,
+                                                  child: clothabout(id : factoryTypesList[position].fTId),
+                                                ),
+                                              );
+                                            },
+                                            child: custom_data(
+                                              this.factoryTypesList[position].fTName.toString(),
+                                              "No_title",
+                                              IconButton(
+                                                icon: Icon(Icons.more_vert),
+                                                onPressed: () {
+                                                  id = this
+                                                      .factoryTypesList[position]
+                                                      .fTId;
+                                                  name = this
+                                                      .factoryTypesList[position]
+                                                      .fTName
+                                                      .toString();
+                                                  this.customPosition = position;
+                                                  _showMyDialog(context, position, factoryTypesList[position].fTId, factoryTypesList[position].fTName);
+                                                },
+                                              ),
+                                            ),
+                                          );
                                         },
                                       ),
-                                    ),
-                                  );
-                                },
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ],
@@ -473,6 +494,7 @@ class _factory_selectState extends State<factory_select>
 
   // delete item from types List<dynamic> listName
   void _deleteType(BuildContext context, FactoryTypes factoryTypes) async{
+    print ('MY ID ${factoryTypes.fTId}');
     int result = await databaseHelper.deleteRaw('factoryType_table', 'f_t_id', factoryTypes.fTId);
     if (result !=0) {
       updateTypesListView();
